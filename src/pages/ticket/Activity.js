@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 // ----- components -----
 import Comments from './activity/Comments';
@@ -14,3 +15,8 @@ export default class Activity extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state =>({
+    comments: state.ticket.activty.comments,
+    worklog: state.ticket.activity.worklog
+})

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 // ----- components -----
 import Activty from './ticket/Activity';
@@ -6,22 +7,23 @@ import Attachments from './ticket/Attachements';
 import Description from './ticket/Description';
 import Info from './ticket/Info';
 import InfoSideBar from './ticket/InfoSideBar';
-import Options from './ticket/Options';
-import Related from './ticket/Related';
 
-export default class Ticket extends React.Component {
+export class Ticket extends React.Component {
     render() {
+        const { ticket } = this.props;
         return (
             <div className="ticket">
                 <h1>Title</h1>
                 <Info />
-                <Description />
+                <Description/>
                 <Attachments />
                 <Activty />
                 <InfoSideBar />
-                <Options />
-                <Related />
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({ meta: state.ticket.meta })
+
+export default connect(mapStateToProps)(Ticket)

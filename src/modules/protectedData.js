@@ -6,8 +6,20 @@ import { normalizeResponseErrors } from '../utils/errors';
 export const FETCH_PROTECTED_DATA_SUCCESS = 'app/protectedData/FETCH_PROTECTED_DATA_SUCCESS';
 export const FETCH_PROTECTED_DATA_ERROR = 'app/protectedData/FETCH_PROTECTED_DATA_ERROR';
 
+// ----- intial state -----
+const initialState = {
+    tickets: null,
+    intialGet: true,
+    modified: false,
+}
+
+
 // ----- reducer -----
-export default function protectedDataReducer (state={}, action) {
+export default function protectedDataReducer (state=initialState, action) {
+    if(action.type === FETCH_PROTECTED_DATA_SUCCESS) {
+        console.log(action.data)
+        return Object.assign({}, state, { tickets: action.data });
+    }
     return state;
 }
 
@@ -22,7 +34,7 @@ export const fetchProtectedDataError = error => (
 
 export const fetchProtectedData = () => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/issues`, {
+    return fetch(`${API_BASE_URL}/tickets`, {
         method: 'GET',
         headers: {
             // Provide our auth token as credentials
@@ -31,7 +43,7 @@ export const fetchProtectedData = () => (dispatch, getState) => {
     })
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())
-        .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
+        .then(json => dispatch(fetchProtectedDataSuccess(json)))
         .catch(err => {
             dispatch(fetchProtectedDataError(err));
         });
