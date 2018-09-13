@@ -2,30 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // ----- import actions -----
-import { updateInfoRequest, updateInfo } from '../../modules/ticket';
+import { updateInfoRequest, updateInfo, updateInfoInit } from '../../modules/ticket';
 
 // ----- components -----
+import EditForm from './info/EditForm';
+import Loader from '../../components/Loader';
 
 export class Info extends React.Component {
     constructor(props) {
         super(props);
         this.onClickEdit = this.onClickEdit.bind(this);
-        this.onClickReset = this.onClickReset.bind(this);
     }
 
     onClickEdit () {
-        console.log('onclick working')
-        this.props.dispatch(updateInfoRequest())
-    }
-
-    onClickReset() {
-        this.props.dispatch(updateInfo())
+        this.props.dispatch(updateInfoInit())
     }
 
     render () {
-        const { type, status, priority, resolution, isEditing } = this.props;
+        const { type, status, priority, resolution, isEditing, isUpdating } = this.props;
+
+        if(isUpdating) {
+            return <Loader />
+        }
+
         if(isEditing) { 
-           return <div></div>
+           return <div><EditForm /></div>
         }
 
         return (

@@ -1,11 +1,14 @@
 export const temp_data = {
     ticketId: '1241121',
     meta: {
+        isLoaded: true,
         isEditing: false,
         isModified: false,
         modifiedFields: [],
     },
-    description: 'this is the description',
+    description: {
+        text: 'this is the description'
+    },
     ticketInfo: {
         type: 'incident',
         priority: 'urgent',

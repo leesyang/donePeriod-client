@@ -42,7 +42,7 @@ export class Form extends React.Component {
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
                 />
-                <button>Log In</button>
+                <button type="submit">Log In</button>
             </form>
         )
     };

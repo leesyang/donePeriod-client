@@ -22,13 +22,13 @@ const store = createStore(
     applyMiddleware(thunk)
 );
 
+//console.log(store.getState());
+
 // ----- load authToken from local storage -----
 let authToken = loadAuthToken();
 if (authToken) {
     let token = authToken;
     store.dispatch(setAuthFromJwT(token));
 }
-
-console.log(store.getState())
 
 export default store
