@@ -1,17 +1,20 @@
 import React from 'react';
 import ProtectedRoute from '../components/ProtectedRoute';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+//import { connect } from 'react-redux';
+//import { Link } from 'react-router-dom';
+
+// ----- components -----
+import TicketTable from './overview/TicketTable';
 
 export class Overview extends React.Component {
     render() {
+
         return (
             <div className="overview">
-                this is where the tickets will go
-                <Link to="/issues/12345">Link</Link>
+                <TicketTable />
             </div>
         )
     }
 }
 
-export default ProtectedRoute()(connect()(Overview));
+export default ProtectedRoute()(Overview);

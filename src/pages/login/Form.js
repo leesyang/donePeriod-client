@@ -24,7 +24,6 @@ export class Form extends React.Component {
                 onSubmit={handleSubmit(values => this.onSubmit(values))}
                 className="login-form"
                 >
-                <label htmlFor="username">Username</label>
                 <Field 
                     component={Input}
                     type="text"
@@ -32,8 +31,8 @@ export class Form extends React.Component {
                     id="username"
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
+                    label="Username"
                 />
-                <label htmlFor="password">Password</label>
                 <Field
                     component={Input}
                     type="password"
@@ -41,6 +40,7 @@ export class Form extends React.Component {
                     id="password"
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
+                    label="Password"
                 />
                 <button type="submit">Log In</button>
             </form>

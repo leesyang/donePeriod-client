@@ -5,18 +5,16 @@ import { Link } from 'react-router-dom';
 
 // ----- components -----
 import Form from './newTicket/Form';
+import Loader from '../components/Loader';
 
 export class NewTicket extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onCancel = this.onCancel.bind(this);
-    }
-
-    onCancel() {
-        console.log('clicked cancel');
-    }
-
     render() {
+        const { isLoading } = this.props;
+
+        if(isLoading) {
+            <Loader />
+        }
+
         return (
             <div className="new-ticket-container">
                 <h2>Submit New Ticket</h2>
@@ -30,8 +28,10 @@ export class NewTicket extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
-    return {}
+    console.log(state.protectedData.tickets);
+    return {
+        isLoading: state.protectedData.isLoading
+        }
 }
 
 export default ProtectedRoute()(connect(mapStateToProps)(NewTicket));

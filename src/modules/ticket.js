@@ -2,7 +2,7 @@
 import { temp_data } from './ticketTempData';
 import store from '../store';
 import { checkTickets } from '../utils/tickets';
-import { fetchProtectedData } from '../modules/protectedData';
+import { getTickets } from './ticketsData';
 
 // ----- actions -----
 export const LOAD_TICKET = 'app/ticket/LOAD_TICKET';
@@ -101,7 +101,7 @@ export const loadTicket = (ticketId) => dispatch => {
     }
     else {
         dispatch(loadTicketError);
-        dispatch(fetchProtectedData());
+        dispatch(getTickets());
     }
 
 }

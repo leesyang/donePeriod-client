@@ -7,10 +7,14 @@ import {normalizeResponseErrors} from '../utils/errors';
 import { login } from '../modules/auth';
 
 // ----- actions -----
-export const GET_USER_INFO_SUCCESS = 'app/user/GET_USER_INFO'
+export const GET_USER_INFO_SUCCESS = 'app/user/GET_USER_INFO';
+
+export const GET_USERS_REQUEST = 'app/user/GET_USERS_REQUEST';
+export const GET_USERS_SUCCESS = 'app/user/GET_USERS_SUCCESS';
+export const GET_USERS_ERROR = 'app/user/GET_USERS_ERROR';
 
 // ----- reducer -----
-export default function userReducer (state={}, action) {
+export default function usersReducer (state={}, action) {
     return state;
 }
 

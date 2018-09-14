@@ -6,7 +6,7 @@ import {loadAuthToken } from './utils/auth';
 // ----- import reducers -----
 import authReducer from './modules/auth';
 import ticketReducer from './modules/ticket';
-import protectedDataReducer from './modules/protectedData';
+import protectedDataReducer from './modules/ticketsData';
 
 // ----- import actions -----
 import { setAuthFromJwT } from './modules/auth';

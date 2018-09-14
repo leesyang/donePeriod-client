@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import Loader from '../components/Loader';
 
 // ----- actions -----
-import { fetchProtectedData } from '../modules/protectedData';
+import { getTickets } from '../modules/ticketsData';
 
 export default () => Component => {
     function RequiresLogin(props) {
@@ -17,7 +17,7 @@ export default () => Component => {
         }
 
         if(!dataLoaded) {
-            props.dispatch(fetchProtectedData())
+            props.dispatch(getTickets())
             return <Loader />
         }
 
@@ -27,10 +27,12 @@ export default () => Component => {
     const displayName = Component.displayName || Component.name || 'Component';
     RequiresLogin.displayName = `RequiresLogin(${displayName})`;
 
-    const mapStateToProps = (state, props) => ({
-        loggedIn: state.auth.currentUser !== null,
-        dataLoaded: state.protectedData.initialGet
-    });
+    const mapStateToProps = (state, props) => {
+        return {
+            loggedIn: state.auth.currentUser !== null,
+            dataLoaded: state.protectedData.initialGet
+        }
+};
 
     return connect(mapStateToProps)(RequiresLogin);
 };

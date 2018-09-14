@@ -17,7 +17,7 @@ export class Description extends React.Component {
     }
 
     render () {
-        const { isEditing, isUpdating  } = this.props;
+        const { isEditing, isUpdating, description  } = this.props;
 
         if(isUpdating) {
             return <Loader />
@@ -26,10 +26,10 @@ export class Description extends React.Component {
         if(isEditing){ 
             return <EditFormDescription />
         }
-
+        console.log(description)
         return (
             <div className="description">
-                Description: {this.props.description}
+                Description: {description}
                 <button onClick={this.onClickEdit}>click</button>
             </div>
         )

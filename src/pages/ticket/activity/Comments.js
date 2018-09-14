@@ -19,7 +19,7 @@ export class Comments extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    comments: state.ticket.activity.comments
+    comments: state.ticket.comments
 })
 
 export default connect(mapStateToProps)(Comments)

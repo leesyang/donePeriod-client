@@ -46,7 +46,7 @@ export class EditFormInfo extends React.Component {
                     name="resolution"
                     id="resolution"
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" disable={pristine || submitting }>Submit</button>
             </form>
         )
     }

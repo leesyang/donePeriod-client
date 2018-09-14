@@ -10,6 +10,7 @@ import { SubmissionError } from 'redux-form';
 export const SET_AUTH_TOKEN = 'app/auth/SET_AUTH_TOKEN';
 export const SET_CURRENT_USER = 'app/auth/SET_CURRENT_USER';
 export const CLEAR_AUTH = 'app/auth/CLEAR_AUTH';
+
 export const AUTH_REQUEST = 'app/auth/AUTH_REQUEST';
 export const AUTH_SUCCESS = 'app/auth/AUTH_SUCCESS';
 export const AUTH_ERROR = 'app/auth/AUTH_ERROR';
@@ -85,6 +86,7 @@ export const setAuthFromJwT = (authToken) => dispatch => {
     dispatch(setCurrentUser(decodedToken.user));
 }
 
+// ----- action functions -----
 export const login = (username, password) => dispatch => {
     dispatch(authRequest());
     return (

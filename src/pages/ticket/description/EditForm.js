@@ -7,7 +7,6 @@ import { updateDescription } from '../../../modules/ticket';
 export class EditFormDescription extends React.Component {
     onSubmit (values) {
         const { dispatch } = this.props;
-        console.log(values);
         dispatch(updateDescription(values))
     }
 
@@ -26,7 +25,7 @@ export class EditFormDescription extends React.Component {
                     id="description"
 
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={pristine || submitting}>Submit</button>
             </form>
         )
     }

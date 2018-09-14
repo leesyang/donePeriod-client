@@ -26,3 +26,5 @@ const mapStateToProps = (state, props) => ({
 })
 
 export default connect(mapStateToProps)(Signup);
+
+loggedIn: true
