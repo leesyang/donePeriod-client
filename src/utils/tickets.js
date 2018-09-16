@@ -1,10 +1,13 @@
 import store from '../store';
 
 export const checkTickets = () => {
-    if(store.getState().protectedData.tickets !== undefined) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return store.getState().protectedData.tickets !== undefined? true : false;
+}
+
+export const generateFullName = (obj) => { 
+    return obj? `${obj.firstName} ${obj.lastName}` : undefined;
+}
+
+export const formatDate = (date) => {
+    return date? new Date(date).toDateString() : undefined;
 }

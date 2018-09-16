@@ -12,13 +12,12 @@ export class DropDown extends React.Component {
   
     render() {
       const { input, label, options } = this.props;
-
       return (
         <div>
-          <label htmlFor={label}>{label}</label>
+          <label htmlFor={label}>{label}: </label>
           <select {...input}>
             <option value="">Select</option>
-            {options.map(this.renderSelectOptions)}
+          {options.map(this.renderSelectOptions)}
           </select>
         </div>
       );

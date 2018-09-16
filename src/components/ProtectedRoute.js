@@ -7,19 +7,17 @@ import Loader from '../components/Loader';
 
 // ----- actions -----
 import { getTickets } from '../modules/ticketsData';
+import { getUsers } from '../modules/users';
 
 export default () => Component => {
     function RequiresLogin(props) {
-        const { loggedIn, dataLoaded, ...passThroughProps } = props;
+        const { loggedIn, dataLoaded, usersLoaded, ...passThroughProps } = props;
         
-        if(!loggedIn) {
-            return <Redirect to="/login" />
-        }
+        if(!loggedIn) { return <Redirect to="/login" /> }
 
-        if(!dataLoaded) {
-            props.dispatch(getTickets())
-            return <Loader />
-        }
+        if(!dataLoaded ) { props.dispatch(getTickets()); return <Loader /> }
+
+        if(!usersLoaded) { props.dispatch(getUsers()); return <Loader /> }
 
         return <Component {...passThroughProps} />;
     }
@@ -30,7 +28,8 @@ export default () => Component => {
     const mapStateToProps = (state, props) => {
         return {
             loggedIn: state.auth.currentUser !== null,
-            dataLoaded: state.protectedData.initialGet
+            dataLoaded: state.protectedData.initialGet,
+            usersLoaded: state.users.all
         }
 };
 

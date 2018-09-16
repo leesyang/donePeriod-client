@@ -8,6 +8,8 @@ export default class NavColumn extends React.Component {
         return(
             <div className="nav-column">
                 <NavButton name="asdf" />
+                <NavButton name="asdf" />
+                <NavButton name="asdf" />
             </div>
         )
     }

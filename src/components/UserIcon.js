@@ -1,20 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-export class UserIcon extends React.Component {
+// ----- util functions -----
+import { generateFullName } from '../utils/tickets';
+
+export default class UserIcon extends React.Component {
     render() {
         return (
             <div className="user-icon">
-                USER_IMG, name
+                <div>USER_IMG</div>
+                <div>{generateFullName(this.props.user)}</div>
             </div>
         )
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        
-    }
-}
-
-export default connect(mapStateToProps)(UserIcon)

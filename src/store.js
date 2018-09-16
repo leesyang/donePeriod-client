@@ -7,6 +7,7 @@ import {loadAuthToken } from './utils/auth';
 import authReducer from './modules/auth';
 import ticketReducer from './modules/ticket';
 import protectedDataReducer from './modules/ticketsData';
+import usersReducer from './modules/users';
 
 // ----- import actions -----
 import { setAuthFromJwT } from './modules/auth';
@@ -16,6 +17,7 @@ const store = createStore(
     combineReducers({
         auth: authReducer,
         form: formReducer,
+        users: usersReducer,
         protectedData: protectedDataReducer,
         ticket: ticketReducer
     }),

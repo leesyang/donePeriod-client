@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import store from '../store';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +20,6 @@ export class Ticket extends React.Component {
     }
 
     render() {
-        console.log(store.getState());
         const { isLoaded, dataLoaded } = this.props;
 
         if(!dataLoaded) {
@@ -50,6 +48,7 @@ export class Ticket extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state)
     return { 
         dataLoaded: state.protectedData.initialGet,
         isLoaded: state.ticket.isLoaded,

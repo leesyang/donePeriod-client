@@ -2,27 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// ----- components -----
+import UserIcon from '../../components/UserIcon';
+
 // ----- css -----
 import './TicketTable.css'
+
+// ----- util functions -----
+import { generateFullName, formatDate } from '../../utils/tickets';
 
 export class TicketTable extends React.Component {
     render() {
         const { tickets } = this.props;
-
-        let rows = tickets.map((ticket, index) => {
-            let path = `/issues/${ticket.ticketId}`;
-            
-            return (
-                <div className="divTableRow" key={ticket.ticketId}>
-                    <div className="divTableCell"><Link to={path}>{ticket.ticketId}</Link></div>
-                    <div className="divTableCell">{ticket.description.text}</div>
-                    <div className="divTableCell">{ticket.reporter}</div>
-                    <div className="divTableCell">{"asdf"}</div>
-                    <div className="divTableCell">{ticket.dueDate}</div>
-                    <div className="divTableCell">{ticket.dueDate}</div>
-                </div>
-            )
-        })
 
         let header = (
             <div className="divTableRow">
@@ -34,6 +25,20 @@ export class TicketTable extends React.Component {
                 <div className="divTableCell">Status</div>
             </div>
         )
+
+        let rows = tickets.map((ticket, index) => {
+            let path = `/issues/${ticket.ticketId}`;
+            return (
+                <div className="divTableRow" key={ticket.ticketId}>
+                    <div className="divTableCell"><Link to={path}>{ticket.ticketId}</Link></div>
+                    <div className="divTableCell">{ticket.description.text}</div>
+                    <div className="divTableCell">{generateFullName(ticket.reporter)}</div>
+                    <div className="divTableCell">{generateFullName(ticket.assignee)}</div>
+                    <div className="divTableCell">{formatDate(ticket.dueDate)}</div>
+                    <div className="divTableCell">{ticket.ticketInfo.status}</div>
+                </div>
+            )
+        })
 
         return (
             <div className="divTable">
@@ -47,7 +52,6 @@ export class TicketTable extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.protectedData.tickets);
     return {
         tickets: state.protectedData.tickets
     }

@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 
 export class NewTicket extends React.Component {
     render() {
-        const { isLoading } = this.props;
+        const { isLoading, users } = this.props;
 
         if(isLoading) {
             <Loader />
@@ -18,7 +18,7 @@ export class NewTicket extends React.Component {
         return (
             <div className="new-ticket-container">
                 <h2>Submit New Ticket</h2>
-                <Form />
+                <Form users={users}/>
                 <Link to="/home">
                     <button>Back to Home</button>
                 </Link>
@@ -28,10 +28,10 @@ export class NewTicket extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.protectedData.tickets);
     return {
-        isLoading: state.protectedData.isLoading
-        }
+        isLoading: state.protectedData.isLoading,
+        users: state.users.all,
+    }
 }
 
 export default ProtectedRoute()(connect(mapStateToProps)(NewTicket));

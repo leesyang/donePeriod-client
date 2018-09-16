@@ -91,13 +91,7 @@ export const loadTicket = (ticketId) => dispatch => {
     if(checkTickets()) {
         let currentState = store.getState();
         let ticket = currentState.protectedData.tickets.filter(ticket => ticket.ticketId === ticketId)
-        console.log(ticket);
-        if(ticket.length > 0) {
-            dispatch(loadedTicket(ticket));
-        }
-        else {
-            dispatch(loadTicketError);
-        }
+        ticket.length > 0? dispatch(loadedTicket(ticket)) : dispatch(loadTicketError)
     }
     else {
         dispatch(loadTicketError);

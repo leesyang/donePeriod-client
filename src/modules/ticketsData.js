@@ -35,7 +35,9 @@ export default function protectedDataReducer (state=initialState, action) {
         return Object.assign({}, state, { isPosting: true })
     }
     if(action.type === POST_TICKET_SUCCESS) {
-        return Object.assign({}, state, {isPosting: false, tickets: [...state.tickets, action.data] })
+        let asdf = Object.assign({}, state, {isPosting: false, tickets: [...state.tickets, action.data] })
+        console.log(asdf);
+        return asdf;
     }
     if(action.type === POST_TICKET_ERROR) {
         return Object.assign({}, state, { error: action.error })

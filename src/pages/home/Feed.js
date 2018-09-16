@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 // ----- component -----
 import Entry from './feed/Entry';
 
-export default class Feed extends React.Component {
+export class Feed extends React.Component {
     render() {
         return (
             <div className="feed">
@@ -12,3 +13,11 @@ export default class Feed extends React.Component {
         )
     }
 }
+
+const mapStateToPropse = state => {
+    return {
+        currentWatch: state.auth.currentUser.watching
+    }
+}
+
+export default connect(mapStateToPropse)(Feed)

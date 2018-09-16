@@ -7,6 +7,7 @@ import {required, nonEmpty } from '../../utils/validators';
 // ----- components -----
 import Input from '../../components/forms/Input';
 import DropDown from '../../components/forms/Dropdown';
+import UserSelect from '../../components/forms/UserSelect';
 
 // ----- actions -----
 import { postNewTicket } from '../../modules/ticketsData';
@@ -25,7 +26,7 @@ export class NewTicket extends React.Component {
     }
     
     render() {
-        const { handleSubmit, pristine, submitting, invalid, reset } = this.props
+        const { handleSubmit, pristine, submitting, invalid, reset, users, change } = this.props
         
         const types = [
             { text: 'Incident', value: 'Incident'},
@@ -80,6 +81,17 @@ export class NewTicket extends React.Component {
                     name="description"
                     id="description"
                     label="Description"
+                    validate={[required, nonEmpty]}
+                    disabled={pristine || submitting}
+                />
+                <Field
+                    component={UserSelect}
+                    type="text"
+                    name="assignee"
+                    id="assignee"
+                    label="Assign to"
+                    users={users}
+                    change={change}
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
                 />

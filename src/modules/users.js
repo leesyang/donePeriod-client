@@ -7,25 +7,39 @@ import {normalizeResponseErrors} from '../utils/errors';
 import { login } from '../modules/auth';
 
 // ----- actions -----
-export const GET_USER_INFO_SUCCESS = 'app/user/GET_USER_INFO';
-
 export const GET_USERS_REQUEST = 'app/user/GET_USERS_REQUEST';
 export const GET_USERS_SUCCESS = 'app/user/GET_USERS_SUCCESS';
 export const GET_USERS_ERROR = 'app/user/GET_USERS_ERROR';
 
 // ----- reducer -----
 export default function usersReducer (state={}, action) {
+    if(action.type === GET_USERS_REQUEST) {
+        return Object.assign({}, state, { loading: true })
+    }
+    if(action.type === GET_USERS_SUCCESS) {
+        return Object.assign({}, state, { loading: false, all: action.data })
+    }
+    if(action.type === GET_USERS_ERROR) {
+        return Object.assign({}, state, { loading: false, error: action.error })
+    }
     return state;
 }
 
 // ----- action creators -----
-export const fetchUserSuccess = userInfo => (
-    { type: GET_USER_INFO_SUCCESS, user: userInfo }
+export const getUsersRequest = () => (
+    { type: GET_USERS_REQUEST }
+)
+export const getUsersSuccess = (users) => (
+    { type: GET_USERS_SUCCESS, data: users }
+)
+export const getUsersError = (error) => (
+    { type: GET_USERS_ERROR, error: error }
 )
 
-// -- get user info --
-export const getUserInfo = user => (dispatch, getState) => {
+// ----- get list of users -----
+export const getUsers = () => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
+    dispatch(getUsersRequest());
     return fetch(`${API_BASE_URL}/users`, {
         method: 'GET',
         headers: {
@@ -34,9 +48,13 @@ export const getUserInfo = user => (dispatch, getState) => {
     })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then(userInfo => dispatch(fetchUserSuccess(userInfo)))
+    .then(users => {
+        dispatch(getUsersSuccess(users));
+    })
+    .catch(err => {
+        dispatch(getUsersError(err))
+    })
 }
-
 
 // -- register user and log in --
 export const registerUser = user => dispatch => {
