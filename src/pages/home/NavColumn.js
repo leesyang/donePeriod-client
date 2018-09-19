@@ -1,15 +1,12 @@
 import React from 'react';
-
-// ----- components -----
-import NavButton from '../../components/navigation/NavButton';
+import { Link } from 'react-router-dom';
 
 export default class NavColumn extends React.Component {
     render() {
         return(
             <div className="nav-column">
-                <NavButton name="asdf" />
-                <NavButton name="asdf" />
-                <NavButton name="asdf" />
+                <a className="nav-column-link">Feed</a>
+                <a className="nav-column-link">Notes</a>
             </div>
         )
     }

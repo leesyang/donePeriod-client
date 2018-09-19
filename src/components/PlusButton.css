@@ -1,0 +1,12 @@
+.sign {
+    display: inline-block;
+    font-size: 1.3em;
+    background-color: grey;
+    border-radius: 3px;
+    width:1em;
+    margin: 0.1em;
+    cursor: pointer;
+}
+.text {
+    display: inline-block;
+}

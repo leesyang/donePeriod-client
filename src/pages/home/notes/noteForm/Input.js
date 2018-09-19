@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Input extends React.Component {
+export default class NoteInput extends React.Component {
     render () {
         let errorNotify;
 
@@ -11,7 +11,7 @@ export default class Input extends React.Component {
         }
 
         return (
-            <div className="form-input">
+            <div className="note-form-input">
                 <div className="error-message">{errorNotify}</div>
                 <label htmlFor={this.props.input.name}>{this.props.label}</label>
                 <input

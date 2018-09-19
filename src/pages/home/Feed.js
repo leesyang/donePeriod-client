@@ -4,11 +4,19 @@ import { connect } from 'react-redux';
 // ----- component -----
 import Entry from './feed/Entry';
 
+// ----- css -----
+import './feed/Entry.css'
+
 export class Feed extends React.Component {
     render() {
+        const { currentWatch } = this.props;
+
+        const entries = currentWatch.map((entry, index) => <Entry key={index} entry={entry} />)
+
         return (
             <div className="feed">
-                <Entry />
+                <h2>Watching Issues:</h2>
+                {entries}
             </div>
         )
     }

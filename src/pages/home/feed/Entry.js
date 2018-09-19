@@ -1,11 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Entry extends React.Component {
     render() {
+        const { dueDate, ticketId } = this.props.entry;
+
+        const dueDateObj = new Date(dueDate);
+        const currentDate = Date.now();
+
+        const dueIn = Math.round(Math.abs(dueDateObj - currentDate)/(24*60*60*1000));
+
         return (
-            <div className="feed-entry">
-                This is an entry of the feed
+            <div className="">
+                <div className=""><Link to={`/issues/${ticketId}`}>{ticketId}</Link></div>
+                <div className="">{dueIn} Days</div>
             </div>
         )
+
     }
 }

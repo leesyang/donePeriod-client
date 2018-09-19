@@ -9,7 +9,7 @@ import LoaderSm from '../../components/LoaderSm';
 import { generateFullName } from '../../utils/tickets';
 
 // ----- actions -----
-import { watchTicket, voteTicket} from '../../modules/auth';
+import { watchTicket } from '../../modules/auth';
 
 export class InfoSideBar extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ export class InfoSideBar extends React.Component {
     }
 
     vote(userId) {
-        this.props.dispatch(voteTicket(userId));
+
     }
 
     assign() {
