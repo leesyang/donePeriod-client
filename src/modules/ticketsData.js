@@ -11,16 +11,18 @@ export const POST_TICKET_REQUEST = 'app/protectedData/POST_TICKET_REQUEST';
 export const POST_TICKET_SUCCESS = 'app/protectedData/POST_TICKET_SUCCESS';
 export const POST_TICKET_ERROR = 'app/protectedData/POST_TICKET_ERROR';
 
+export const UPDATE_MODIFIED_TICKET = 'app/auth/UPDATE_MODIFIED_TICKET';
+
 // ----- intial state -----
 const initialState = {
     initialGet: false,
-    modified: false,
     isLoading: false,
     isPosting: false
 }
 
 // ----- reducer -----
 export default function protectedDataReducer (state=initialState, action) {
+    // get tickets
     if(action.type === GET_TICKETS_REQUEST) {
         return Object.assign({}, state, { isLoading: true })
     }
@@ -31,6 +33,8 @@ export default function protectedDataReducer (state=initialState, action) {
         console.log('there was a err')
         return Object.assign({}, state, { isLoading: false, error: true, errorInfo: action.err})
     }
+
+    // post new ticket
     if(action.type === POST_TICKET_REQUEST) {
         return Object.assign({}, state, { isPosting: true })
     }
@@ -42,6 +46,11 @@ export default function protectedDataReducer (state=initialState, action) {
     if(action.type === POST_TICKET_ERROR) {
         return Object.assign({}, state, { error: action.error })
     }
+    // update modified ticket from reducer
+    if(action.type === UPDATE_MODIFIED_TICKET) {
+        return Object.assign({}, state, { tickets: [...state.tickets.filter(ticket => !(ticket.ticketId === action.data.ticketId)), action.data ]})
+    }
+
     return state;
 }
 
@@ -68,6 +77,12 @@ export const postTicketSuccess = (ticket) => (
 export const postTicketError = (error) => (
     { type: POST_TICKET_ERROR, error: error }
 )
+
+// update ticket
+export const updateModifiedTicket = (ticket) => (
+    { type: UPDATE_MODIFIED_TICKET, data: ticket }
+)
+
 
 // ----- action functions -----
 export const getTickets = () => (dispatch, getState) => {
@@ -105,4 +120,9 @@ export const postNewTicket = (ticket) => (dispatch, getState) => {
         .catch(err => {
             dispatch(postTicketError(err))
         });
+}
+
+export const updateTicketfromReducer = () => (dispatch, getState) => {
+    const updatedTicket = getState().ticket;
+    dispatch(updateModifiedTicket(updatedTicket))
 }

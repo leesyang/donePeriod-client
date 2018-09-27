@@ -12,11 +12,17 @@ import InfoSideBar from './ticket/InfoSideBar';
 
 // ----- actions -----
 import { loadTicket } from '../modules/ticket';
+import { updateTicketfromReducer } from '../modules/ticketsData';
 
 export class Ticket extends React.Component {
     constructor(props) {
         super(props);
         this.props.dispatch(loadTicket(this.props.ticketId))
+    }
+
+    componentWillUnmount() {
+        const { isModified, dispatch } = this.props;
+        isModified? dispatch(updateTicketfromReducer()) : null;
     }
 
     render() {
@@ -48,11 +54,11 @@ export class Ticket extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state)
     return { 
         dataLoaded: state.protectedData.initialGet,
         isLoaded: state.ticket.isLoaded,
-        ticketId: ownProps.match.params.ticketId
+        ticketId: ownProps.match.params.ticketId,
+        isModified: state.ticket.isModified
     }
 }
 

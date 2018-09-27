@@ -2,20 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // ----- import actions -----
-import { updateInfoRequest, updateInfo, updateInfoInit } from '../../modules/ticket';
+import { updateInfoInit } from '../../modules/ticket';
 
 // ----- components -----
 import EditForm from './info/EditForm';
 import Loader from '../../components/Loader';
 
 export class Info extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onClickEdit = this.onClickEdit.bind(this);
+    onClickEdit () {
+        this.props.dispatch(updateInfoInit(true))
     }
 
-    onClickEdit () {
-        this.props.dispatch(updateInfoInit())
+    onClickCancel() {
+        this.props.dispatch(updateInfoInit(false))
     }
 
     render () {
@@ -26,12 +25,17 @@ export class Info extends React.Component {
         }
 
         if(isEditing) { 
-           return <div><EditForm /></div>
+           return (
+                <div className="info-edit-form">
+                    <EditForm />
+                    <button onClick={() => this.onClickCancel()}>Cancel</button>
+                </div>
+            )
         }
 
         return (
             <div className="ticket-info">
-                <button onClick={this.onClickEdit}>Edit Fields</button>
+                <button onClick={() => this.onClickEdit()}>Edit Fields</button>
                 <div className="column">Type: {type}</div>
                 <div className="column">Status: {status}</div>
                 <div className="column">Priority: {priority}</div>

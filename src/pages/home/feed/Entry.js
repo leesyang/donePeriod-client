@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default class Entry extends React.Component {
     render() {
-        const { dueDate, ticketId } = this.props.entry;
+        const { dueDate, ticketId, _id } = this.props.entry;
+        const { onClick } = this.props;
 
         const dueDateObj = new Date(dueDate);
         const currentDate = Date.now();
@@ -14,6 +15,7 @@ export default class Entry extends React.Component {
             <div className="">
                 <div className=""><Link to={`/issues/${ticketId}`}>{ticketId}</Link></div>
                 <div className="">{dueIn} Days</div>
+                <button onClick={() => onClick(_id)}>X</button> 
             </div>
         )
 

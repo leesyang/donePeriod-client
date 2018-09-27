@@ -4,11 +4,18 @@ import store from '../store';
 import { checkTickets } from '../utils/tickets';
 import { getTickets } from './ticketsData';
 
+// ----- constants -----
+import { GET, PUT, DELETE, POST } from './auth';
+import { API_BASE_URL } from '../config';
+
+// ----- utils -----
+import { normalizeResponseErrors } from '../utils/errors';
+
 // ----- actions -----
 export const LOAD_TICKET = 'app/ticket/LOAD_TICKET';
 export const LOAD_TICKET_ERROR = 'app/ticket/LOAD_TICKET_ERROR'
 
-export const INIT_UPDATE_INFO = 'app/ticket/INIT_UPDATE_INFO';
+export const UPDATE_INFO = 'app/ticket/INIT_UPDATE_INFO';
 export const UPDATE_INFO_REQUEST = 'app/ticket/UPDATE_INFO_REQUEST';
 export const UPDATE_INFO_SUCCESS = 'app/ticket/UPDATE_INFO_SUCCESS';
 export const UPDATE_INFO_ERROR = 'app/ticket/UPDATE_INFO_ERROR';
@@ -33,32 +40,35 @@ export const POST_COMMENT_ERROR = 'app/ticket/POST_COMMENT_ERROR';
 
 export const POST_WORKLOG_REQUEST = 'app/ticket/POST_WORKLOG_REQUEST';
 export const POST_WORKLOG_SUCCESS = 'app/ticket/POST_WORKLOG_SUCCESS';
-export const POST_WORKLOG_ERROR  = 'app/ticket/POST_WORKLOG_ERROR'
+export const POST_WORKLOG_ERROR  = 'app/ticket/POST_WORKLOG_ERROR';
 
-const initialState = { isLoaded: false, error: false };
+export const VOTE_TICKET_REQUEST = 'app/ticket/VOTE_TICKET_REQUEST';
+export const VOTE_TICKET_SUCCESS = 'app/ticket/VOTE_TICKET_SUCCESS';
+export const VOTE_TICKET_ERROR = 'app/ticket/VOTE_TICKET_ERROR';
 
 // ----- reducer -----
-export default function ticketReducer (state=initialState, action) {
+export default function ticketReducer (state={}, action) {
     if(action.type === LOAD_TICKET){
         let ticketObject = action.state[0];
-        return Object.assign({}, ticketObject, { isLoaded: true })
+        return Object.assign({}, ticketObject, { isLoaded: true, isModified: false, error: false, errorInfo: null })
     }
     if(action.type === LOAD_TICKET_ERROR){
         return Object.assign({}, state, { isLoaded: false, error: true })
     }
 
     // ticket info
-    if(action.type === INIT_UPDATE_INFO) {
-        return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isEditing: true } })
+    if(action.type === UPDATE_INFO) {
+        return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isEditing: action.data } })
     }
     if(action.type === UPDATE_INFO_REQUEST) {
         return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isUpdating: true} })
     }
     if(action.type === UPDATE_INFO_SUCCESS) {
-        return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, ...action.payload, isEditing: false, isUpdating: false }})
+        console.log(action.ticketInfo)
+        return Object.assign({}, state, { ticketInfo: { ...action.ticketInfo, isEditing: false, isUpdating: false }, isModified: true })
     }
     if(action.type === UPDATE_INFO_ERROR) {
-        return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isEditing: false, error: true }})
+        return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isEditing: false, error: true, errorInfo: action.error }})
     }
 
     // ticket description
@@ -69,9 +79,24 @@ export default function ticketReducer (state=initialState, action) {
         return Object.assign({}, state, { description: { ...state.description, isUpdating: true } })
     }
     if(action.type === UPDATE_DESCRIPTION_SUCCESS) {
-        return Object.assign({}, state, { description: { ...state.description, text: action.text, isEditing: false, isUpdating: false }})
+        console.log(action.description.text)
+        return Object.assign({}, state, { description: { ...state.description, text: action.description.text, isEditing: false, isUpdating: false }, isModified: true})
+    }
+    if(action.type === UPDATE_ACTIVITY_ERROR) {
+        return Object.assign({}, state, { description: {...state.description, isEditing: false, error: true, errorInfo: action.error}})
     }
 
+
+    // vote ticket
+    if(action.type === VOTE_TICKET_REQUEST) {
+        return Object.assign({}, state, { voteloading: true })
+    }
+    if(action.type === VOTE_TICKET_SUCCESS) {
+        return Object.assign({}, state, { voteloading: false, votes: action.votes, isModified: true })
+    }
+    if(action.type === VOTE_TICKET_ERROR) {
+        return Object.assign({}, state, { voteloading: false, error: action.error })
+    }
     // ticket comments
 
     return state
@@ -101,14 +126,17 @@ export const loadTicket = (ticketId) => dispatch => {
 }
 
 // -- update info --
-export const updateInfoInit = () => (
-    { type: INIT_UPDATE_INFO }
+export const updateInfoInit = (boolean) => (
+    { type: UPDATE_INFO, data: boolean }
 )
 export const updateInfoRequest = () => (
     { type: UPDATE_INFO_REQUEST }
 )
-export const updateInfoSuccess = (newInfo) => (
-    { type: UPDATE_INFO_SUCCESS, payload: newInfo }
+export const updateInfoSuccess = (data) => (
+    { type: UPDATE_INFO_SUCCESS, ticketInfo: data.ticketInfo }
+)
+export const updateInfoError = (error) => (
+    { type: UPDATE_INFO_ERROR, error: error }
 )
 
 // -- update descritipn --
@@ -118,26 +146,81 @@ export const updateDescriptionInit = () => (
 export const updateDescriptionRequest = () => (
     { type: UPDATE_DESCRIPTION_REQUEST }
 )
-export const updateDescriptionSuccess = (description) => (
-    { type: UPDATE_DESCRIPTION_SUCCESS, text: description }
+export const updateDescriptionSuccess = (data) => (
+    { type: UPDATE_DESCRIPTION_SUCCESS, description: data.description }
+)
+export const updateDescriptionError = (error) => (
+    { type: UPDATE_ACTIVITY_ERROR, error: error}
 )
 
+// -- vote a ticket --
+export const voteTicketRequest = () => (
+    { type: VOTE_TICKET_REQUEST }
+)
+export const voteTicketSuccess = (data) => (
+    { type: VOTE_TICKET_SUCCESS, votes: data.votes}
+)
+export const voteTicketError = (error) => (
+    { type: VOTE_TICKET_ERROR, error: error}
+)
 // -- uploading attachments --
 
+// -- location endpoints --
+const DESCRIPTION = 'description';
+const INFO = 'info';
+const ATTACHMENTS = 'attachments';
+const COMMENTS = 'comments';
+const WORKLOG = 'worklog';
+const VOTE = 'vote';
 
 // ----- action functions -----
-export const updateInfo = (formValues) => dispatch => {
+const fetchTicketPromise = (method, location, data, getState) => {
+    const state = getState();
+    const { authToken } = state.auth;
+    const { _id: ticketId } = state.ticket;
+
+    let DataObj;
+    typeof data === 'string'? DataObj = { data } : DataObj = data;
+    console.log('fetch ticket promise')
+
+    return (
+        fetch(`${API_BASE_URL}/tickets/${ticketId}/${location}`, {
+            method: method,
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: DataObj? JSON.stringify(DataObj) : null
+        })
+    )
+    .then(res => normalizeResponseErrors(res))
+    .then(res => {
+        if(res.status === 204){
+            return { status: res.status, message: res.statusText }
+        }
+        return res.json()
+    })
+}
+
+export const updateInfo = (formValues) => (dispatch, getState) => {
     dispatch(updateInfoRequest());
-    let newInfo = formValues;
-    console.log(newInfo)
-    setTimeout(() => dispatch(updateInfoSuccess(newInfo)), 2000)
+    fetchTicketPromise(PUT, INFO, formValues, getState)
+    .then(ticketInfo => dispatch(updateInfoSuccess(ticketInfo)))
+    .catch(error => dispatch(updateInfoError(error)))
 }
 
-export const updateDescription = (formValues ) => dispatch => {
+export const updateDescription = (formValues) => (dispatch, getState) => {
     dispatch(updateDescriptionRequest());
-    let description = formValues.description;
-    setTimeout(() => dispatch(updateDescriptionSuccess(description)), 2000)
+    fetchTicketPromise(PUT, DESCRIPTION, formValues, getState )
+    .then(description => {
+        dispatch(updateDescriptionSuccess(description))
+    })
+    .catch(error => dispatch(updateDescriptionError(error)))
 }
 
-// async update to ticket --> on success --> incorporate into tickets state
-// 
+export const voteTicket = () => (dispatch, getState) => {
+    dispatch(voteTicketRequest());
+    fetchTicketPromise(POST, VOTE, null, getState)
+    .then(res => dispatch(voteTicketSuccess(res)))
+    .catch(error => dispatch(voteTicketError(error)))
+}

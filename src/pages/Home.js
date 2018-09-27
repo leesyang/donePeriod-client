@@ -15,7 +15,6 @@ export class Home extends React.Component {
                 <Feed />
                 <NavColumn />
                 <Notes />
-                <Link to="/nav">Link</Link>
             </div>
         )
     }

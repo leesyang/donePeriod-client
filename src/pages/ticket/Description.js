@@ -26,7 +26,7 @@ export class Description extends React.Component {
         if(isEditing){ 
             return <EditFormDescription />
         }
-        console.log(description)
+
         return (
             <div className="description">
                 Description: {description}

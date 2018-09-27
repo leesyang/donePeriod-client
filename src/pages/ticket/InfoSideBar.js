@@ -10,41 +10,30 @@ import { generateFullName } from '../../utils/tickets';
 
 // ----- actions -----
 import { watchTicket } from '../../modules/auth';
+import { voteTicket } from '../../modules/ticket';
 
 export class InfoSideBar extends React.Component {
     constructor(props) {
         super(props);
         this.watch = this.watch.bind(this);
         this.vote = this.vote.bind(this);
-        this.assign = this.assign.bind(this);
     }
 
     watch(userId) {
         this.props.dispatch(watchTicket(userId));
     }
 
-    vote(userId) {
-
-    }
-
-    assign() {
-        console.log('assigning a user');
+    vote() {
+        this.props.dispatch(voteTicket())
     }
 
     render () {
-        const { assignee, reporter, currentUser, ticket_Id } = this.props;
-
-        let watcherCount = this.props.watchers.length;
-
-        let votesCount = this.props.votes.length;
-
-        let assignButton = (
-            <button className="assign-button" onClick={this.assign}>Assign a user</button>
-        )
-
+        const { assignee, reporter, currentUser, ticket_Id, votes, voteCount} = this.props;
+        console.log(voteCount)
+        
         let votingLink;
         currentUser.voteloading? votingLink = <LoaderSm /> : 
-            votingLink = <a href="#" onClick={() => this.vote(currentUser.id)}>Vote for this issue</a>;
+            votingLink = <a href="#" onClick={() => this.vote()}>Vote for this issue</a>;
         
         let watchLink;
         currentUser.watchloading? watchLink = <LoaderSm /> : 
@@ -53,14 +42,13 @@ export class InfoSideBar extends React.Component {
         return (
             <div className="info-sidebar">
                 <h1>infosidebar</h1>
-                <div className="assignee">Assignee: {assignee? <UserIcon user={assignee} /> : assignButton }</div>
+                <div className="assignee">Assignee: <UserIcon user={assignee} /></div>
                 <div className="reporter">Reporter: {<UserIcon user={reporter} />}</div>
                 <div className="votes">
-                    <a>Votes: <span className="count">{votesCount}</span></a>
+                    <a>Votes: <span className="count">{voteCount}</span></a>
                     {votingLink}
                 </div>
                 <div className="watchers">
-                    <a>Watchers: {watcherCount}</a>
                     {watchLink}
                 </div>
                 <div className="created">Created: {new Date(this.props.created).toLocaleString('en-US')}</div>
@@ -78,7 +66,7 @@ const mapStateToProps = state => {
         reporter: state.ticket.reporter,
         team: state.ticket.team,
         votes: state.ticket.votes,
-        watchers: state.ticket.watchers,
+        voteCount: state.ticket.votes.length,
         created: state.ticket.created,
         updated: state.ticket.updated
     }

@@ -54,7 +54,7 @@ export class Notes extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.auth.currentUser.notes);
+
     return {
         noteadding: state.auth.currentUser.noteadding,
         noteloading: state.auth.currentUser.noteloading,

@@ -1,6 +1,6 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
+import Input from '../../../components/forms/Input';
 
 // ----- actions -----
 import { updateInfo } from '../../../modules/ticket';
@@ -13,40 +13,41 @@ export class EditFormInfo extends React.Component {
 
     render () {
         const { handleSubmit, pristine, submitting } = this.props
+        console.log(pristine, submitting)
         return (
             <form
                 className="ticket-edit-form"
                 onSubmit={handleSubmit(values => this.onSubmit(values))}
                 >
-                <label htmlFor="type">Type: </label>
                 <Field
-                    component="input"
+                    component={Input}
                     type="text"
                     name="type"
                     id="type"
+                    label="Type"
                 />
-                <label htmlFor="status">Status: </label>
                 <Field
-                    component="input"
+                    component={Input}
                     type="text"
                     name="status"
                     id="status"
+                    label="Status"
                 />
-                <label htmlFor="priority">Priority: </label>
                 <Field
-                    component="input"
+                    component={Input}
                     type="text"
                     name="priority"
                     id="priority"
+                    label="Priority"
                 />
-                <label htmlFor="resolution">Resolution: </label>
                 <Field
-                    component="input"
+                    component={Input}
                     type="text"
                     name="resolution"
                     id="resolution"
+                    label="Resolution"
                 />
-                <button type="submit" disable={pristine || submitting }>Submit</button>
+                <button type="submit" disabled={pristine || submitting}>Submit</button>
             </form>
         )
     }

@@ -18,6 +18,10 @@ export const WATCH_TICKET_REQUEST = 'app/auth/WATCH_TICKET_REQUEST';
 export const WATCH_TICKET_SUCCESS = 'app/auth/WATCH_TICKET_SUCCESS';
 export const WATCH_TICKET_ERROR = 'app/auth/WATCH_TICKET_ERROR';
 
+export const UNWATCH_TICKET_REQUEST = 'app/auth/WATCH_TICKET_REQUEST';
+export const UNWATCH_TICKET_SUCCESS = 'app/auth/WATCH_TICKET_SUCCESS';
+export const UNWATCH_TICKET_ERROR = 'app/auth/WATCH_TICKET_ERROR';
+
 export const VOTE_TICKET_REQUEST = 'app/auth/VOTE_TICKET_REQUEST';
 export const VOTE_TICKET_SUCCESS = 'app/auth/VOTE_TICKET_SUCCESS';
 export const VOTE_TICKET_ERROR = 'app/auth/VOTE_TICKET_ERROR';
@@ -64,6 +68,7 @@ export default function authReducer (state=initialState, action) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, watchloading: true} })
     }
     else if(action.type === WATCH_TICKET_SUCCESS) {
+        console.log(action.data);
         return Object.assign({}, state, { 
             currentUser: {... state.currentUser, 
                 watchloading: false, 
@@ -77,16 +82,26 @@ export default function authReducer (state=initialState, action) {
                 errorInfo: action.error,
                 watchloading: false } })
     }
-    // vote for ticket
-/*     else if(action.type === VOTE_TICKET_REQUEST) {
-        return Object.assign({}, state, { currentUser: {...state.currentUser, voteloading: true} })
+    // un-watch a ticket
+    else if(action.type === UNWATCH_TICKET_REQUEST) {
+        return Object.assign({}, state, { currentUser: {...state.currentUser, unwatchloading: true} })
     }
-    else if(action.type === VOTE_TICKET_SUCCESS) {
-        return Object.assign({}, state, { currentUser: {...state.currentUser, voteloading: false} })
+    else if(action.type === UNWATCH_TICKET_SUCCESS) {
+        console.log(action.data);
+        return Object.assign({}, state, { 
+            currentUser: {... state.currentUser, 
+                unwatchloading: false, 
+                watching: action.data }
+        })
     }
-    else if(action.type === VOTE_TICKET_ERROR) {
-        return Object.assign({}, state, { currentUser: { ...state.currentUser, error: true, errorInfo: action.error} })
-    } */
+    else if(action.type === UNWATCH_TICKET_ERROR) {
+        return Object.assign({}, state, { 
+            currentUser: { ...state.currentUser, 
+                error: true,
+                errorInfo: action.error,
+                unwatchloading: false } })
+    }
+
     // add note
     else if(action.type === NOTE_ADDING) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, noteadding: action.boolean }})
@@ -152,16 +167,16 @@ export const watchTicketError = (error) => (
     { type: WATCH_TICKET_ERROR, error: error }
 )
 
-// vote for ticket
-/* export const voteTicketRequest = () => (
-    { type: VOTE_TICKET_REQUEST }
+//unwatch a ticket
+export const unwatchTicketRequest = () => (
+    { type: UNWATCH_TICKET_REQUEST }
 )
-export const voteTicketSuccess = (userId) => (
-    { type: VOTE_TICKET_SUCCESS, data: userId }
+export const unwatchTicketSuccess = (tickets) => (
+    { type: UNWATCH_TICKET_SUCCESS, data: tickets }
 )
-export const voteTicketError = (error) => (
-    { type: VOTE_TICKET_ERROR, error: error }
-) */
+export const unwatchTicketError = (error) => (
+    { type: UNWATCH_TICKET_ERROR, error: error }
+)
 
 // add a note
 export const noteAdding = (boolean) => (
@@ -185,7 +200,6 @@ export const removeNoteError = (error) => (
     { type: REMOVE_NOTE_ERROR, error: error }
 )
 
-
 // ----- successful auth handler -----
 export const storeAuthInfo = (authToken, dispatch) => {
     const decodedToken = jwtDecode(authToken);
@@ -198,7 +212,7 @@ export const storeAuthInfo = (authToken, dispatch) => {
 export const setAuthFromJwT = (authToken) => dispatch => {
     const decodedToken = jwtDecode(authToken);
     dispatch(setAuthToken(authToken));
-    dispatch(setCurrentUser(decodedToken.user));
+    dispatch(getUser(decodedToken.user.id));
 }
 
 // ----- action functions -----
@@ -238,13 +252,28 @@ export const logout = () => dispatch => {
     dispatch(clearAuth());
 }
 
+export const getUser = (user_Id) => (dispatch, getState) => {
+    const { authToken } = getState().auth;
+    return (
+        fetch(`${API_BASE_URL}/users/${user_Id}/`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            }
+        })
+    )
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then(currentUser => dispatch(setCurrentUser(currentUser)))
+}
 // -- const strings ---
 const WATCH = 'watches';
 const NOTE = 'notes';
-const GET = 'GET';
-const PUT = 'PUT';
-const DELETE = 'DELETE';
-const POST = 'POST';
+export const GET = 'GET';
+export const PUT = 'PUT';
+export const DELETE = 'DELETE';
+export const POST = 'POST';
 
 export const fetchUserPromise = (method, location, data, getState) => {
     const { authToken, currentUser } = getState().auth;
@@ -281,14 +310,19 @@ export const watchTicket = (ticket_Id) => (dispatch, getState) => {
     })
 }
 
+export const unwatchTicket = (ticket_Id) => (dispatch, getState) => {
+    dispatch(unwatchTicketRequest());
+    fetchUserPromise(DELETE, WATCH, ticket_Id, getState )
+    .then(tickets => dispatch(unwatchTicketSuccess(tickets)))
+    .catch(error => {
+        dispatch(unwatchTicketError(error))
+    })
+}
+
 export const addNote = (note) => (dispatch, getState) => {
     dispatch(addNoteRequest());
     fetchUserPromise(POST, NOTE, note, getState)
-    .then(notes => {
-        console.log(notes);
-        console.log(getNewestNote(notes));
-        dispatch(addNoteSuccess(getNewestNote(notes)))
-    })
+    .then(notes => dispatch(addNoteSuccess(getNewestNote(notes))))
     .catch(err => {
         dispatch(addNoteError(err));
     })
