@@ -34,6 +34,11 @@ export const ADD_NOTE_ERROR = 'app/auth/ADD_NOTE_ERROR';
 export const REMOVE_NOTE_SUCCESS = 'app/auth/REMOVE_NOTE_SUCCESS';
 export const REMOVE_NOTE_ERROR = 'app/auth/REMOVE_NOTE_ERROR';
 
+export const UPDATE_USER_PHOTO = 'app/auth/UPDATE_USER_PHOTO';
+export const UPDATE_USER_PHOTO_REQUEST = 'app/auth/UPDATE_USER_PHOTO_REQUEST';
+export const UPDATE_USER_PHOTO_SUCCESS = 'app/auth/UPDATE_USER_PHOTO_SUCCESS';
+export const UPDATE_USER_PHOTO_ERROR = 'app/auth/UPDATE_USER_PHOTO_ERROR';
+
 // ----- initialState -----
 const initialState = {
     authToken: null,
@@ -119,6 +124,22 @@ export default function authReducer (state=initialState, action) {
     else if(action.type === ADD_NOTE_ERROR) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, noteloading: false, error: true, errorInfo: action.error} })
     }
+
+    // update user photo
+    else if(action.type === UPDATE_USER_PHOTO) {
+        return Object.assign({}, state, { currentUser: { ...state.currentUser, isEditing: action.data }})
+    }
+    else if(action.type === UPDATE_USER_PHOTO_REQUEST) {
+        return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: true }})
+    }
+    else if(action.type === UPDATE_USER_PHOTO_SUCCESS) {
+        return Object.assign({}, state, { currentUser: { ... state.currentUser, photoUpdateLoading: false, isEditing: false, profilePicture: action.data }})
+    }
+    else if(action.type === UPDATE_USER_PHOTO_ERROR) {
+        return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: false, error: true, errorInfo: action.error }})
+    }
+
+    // remove note?
     else if(action.type === REMOVE_NOTE_SUCCESS){
         console.log(action.data)
         let _notes = state.currentUser.notes.filter(note => !(note._id === action.data))
@@ -200,6 +221,20 @@ export const removeNoteError = (error) => (
     { type: REMOVE_NOTE_ERROR, error: error }
 )
 
+// upload user picture
+export const updateUserPhoto = (boolean) => (
+    { type: UPDATE_USER_PHOTO, data: boolean }
+)
+export const updateUserPhotoRequest = () => (
+    { type: UPDATE_USER_PHOTO_REQUEST }
+)
+export const updateUserPhotoSuccess = (link) => (
+    { type: UPDATE_USER_PHOTO_SUCCESS, data: link}
+)
+export const updateUserPhotoError = (error) => (
+    { type: UPDATE_USER_PHOTO_ERROR,  error: error }
+)
+
 // ----- successful auth handler -----
 export const storeAuthInfo = (authToken, dispatch) => {
     const decodedToken = jwtDecode(authToken);
@@ -279,17 +314,20 @@ export const fetchUserPromise = (method, location, data, getState) => {
     const { authToken, currentUser } = getState().auth;
     const userId = currentUser.id;
 
-    let DataObj;
-    typeof data === 'string'? DataObj = { data } : DataObj = data;
+    let DataObj = typeof data === 'string'? { data } : data;
+
+    const headers = { Authorization: `Bearer ${authToken}` }
+
+    if(!DataObj.isFormData) {
+        headers['Content-Type'] = 'application/json'
+        DataObj = JSON.stringify(DataObj)
+    }
 
     return (
-        fetch(`${API_BASE_URL}/users/${userId}/${location}`, {
+        fetch(`${API_BASE_URL}/users/${userId}/${location? location: ""}`, {
             method: method,
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(DataObj)
+            headers: headers,
+            body: DataObj
         })
     )
     .then(res => normalizeResponseErrors(res))
@@ -338,4 +376,12 @@ export const deleteNote = (noteId) => (dispatch, getState) => {
     .catch(error => {
         dispatch(removeNoteError(error));
     })
+}
+
+export const uploadProfilePicture = (profilePicture) => (dispatch, getState) => {
+    console.log('got here')
+    dispatch(updateUserPhotoRequest());
+    fetchUserPromise(POST, null, profilePicture, getState)
+    .then(res => dispatch(updateUserPhotoSuccess(res.profilePicture)))
+    .catch(error => console.log(error))
 }
