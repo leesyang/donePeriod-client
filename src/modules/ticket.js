@@ -1,5 +1,4 @@
 // ----- ticket module -----
-import { temp_data } from './ticketTempData';
 import store from '../store';
 import { checkTickets } from '../utils/tickets';
 import { getTickets } from './ticketsData';
@@ -37,6 +36,10 @@ export const UPDATE_ACTIVITY_ERROR = 'app/ticket/UPDATE_ACTIVITY_ERROR';
 export const POST_COMMENT_REQUEST = 'app/ticket/POST_COMMENT_REQUEST';
 export const POST_COMMENT_SUCCESS = 'app/ticket/POST_COMMENT_SUCCESS';
 export const POST_COMMENT_ERROR = 'app/ticket/POST_COMMENT_ERROR';
+
+export const REMOVE_COMMENT_REQUEST = 'app/ticket/REMOVE_COMMENT_REQUEST';
+export const REMOVE_COMMENT_SUCCESS = 'app/ticket/REMOVE_COMMENT_SUCCESS';
+export const REMOVE_COMMENT_ERROR = 'app/ticket/REMOVE_COMMENT_ERROR';
 
 export const POST_WORKLOG_REQUEST = 'app/ticket/POST_WORKLOG_REQUEST';
 export const POST_WORKLOG_SUCCESS = 'app/ticket/POST_WORKLOG_SUCCESS';
@@ -97,7 +100,42 @@ export default function ticketReducer (state={}, action) {
     if(action.type === VOTE_TICKET_ERROR) {
         return Object.assign({}, state, { voteloading: false, error: action.error })
     }
-    // ticket comments
+
+    // add ticket comment
+    if(action.type === POST_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === POST_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === POST_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
+
+        // add ticket comment
+    if(action.type === POST_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === POST_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === POST_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
+
+    // remove ticket comment
+    if(action.type === REMOVE_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === REMOVE_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === REMOVE_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
 
     return state
 }
@@ -163,7 +201,28 @@ export const voteTicketSuccess = (data) => (
 export const voteTicketError = (error) => (
     { type: VOTE_TICKET_ERROR, error: error}
 )
-// -- uploading attachments --
+
+// -- post comment --
+export const postCommentRequest = () => (
+    { type: POST_COMMENT_REQUEST }
+)
+export const postCommentSuccess = (data) => (
+    { type: POST_COMMENT_SUCCESS, comments: data.comments }
+)
+export const postCommentError = (error) => (
+    { type: POST_COMMENT_ERROR, error: error }
+)
+
+// -- remove comment --
+export const removeCommentRequest = () => (
+    { type: POST_COMMENT_REQUEST }
+)
+export const removeCommentSuccess = (data) => (
+    { type: POST_COMMENT_SUCCESS, comments: data.comments }
+)
+export const removeCommentError = (error) => (
+    { type: POST_COMMENT_ERROR, error: error }
+)
 
 // -- location endpoints --
 const DESCRIPTION = 'description';
@@ -174,8 +233,8 @@ const WORKLOG = 'worklog';
 const VOTE = 'vote';
 
 // ----- action functions -----
-const fetchTicketPromise = (method, location, data, getState) => {
-    const state = getState();
+const fetchTicketPromise = (method, location, data) => {
+    const state = store.getState();
     const { authToken } = state.auth;
     const { _id: ticketId } = state.ticket;
 
@@ -202,25 +261,40 @@ const fetchTicketPromise = (method, location, data, getState) => {
     })
 }
 
-export const updateInfo = (formValues) => (dispatch, getState) => {
+export const postComment = (formValues) => dispatch => {
+    dispatch(postCommentRequest());
+    return fetchTicketPromise(POST, COMMENTS, formValues)
+    .then(comments => dispatch(postCommentSuccess(comments)))
+    .catch(error => dispatch(postCommentError(error)))
+}
+
+export const removeComment = (formValues) => dispatch => {
+    dispatch(removeCommentRequest());
+    const comment = { commentId: formValues }
+    fetchTicketPromise(DELETE, COMMENTS, comment)
+    .then(comments => dispatch(removeCommentSuccess(comments)))
+    .catch(error => dispatch(removeCommentError(error)))
+}
+
+export const updateInfo = (formValues) => dispatch => {
     dispatch(updateInfoRequest());
-    fetchTicketPromise(PUT, INFO, formValues, getState)
+    fetchTicketPromise(PUT, INFO, formValues)
     .then(ticketInfo => dispatch(updateInfoSuccess(ticketInfo)))
     .catch(error => dispatch(updateInfoError(error)))
 }
 
-export const updateDescription = (formValues) => (dispatch, getState) => {
+export const updateDescription = (formValues) => dispatch => {
     dispatch(updateDescriptionRequest());
-    fetchTicketPromise(PUT, DESCRIPTION, formValues, getState )
+    fetchTicketPromise(PUT, DESCRIPTION, formValues )
     .then(description => {
         dispatch(updateDescriptionSuccess(description))
     })
     .catch(error => dispatch(updateDescriptionError(error)))
 }
 
-export const voteTicket = () => (dispatch, getState) => {
+export const voteTicket = () => dispatch => {
     dispatch(voteTicketRequest());
-    fetchTicketPromise(POST, VOTE, null, getState)
+    fetchTicketPromise(POST, VOTE, null)
     .then(res => dispatch(voteTicketSuccess(res)))
     .catch(error => dispatch(voteTicketError(error)))
 }
