@@ -4,16 +4,14 @@ import { connect } from 'react-redux';
 // ----- components -----
 import WorkLog from './activity/WorkLog';
 import Comments from './activity/Comments';
-import WorkLogForm from './activity/WorkLogForm';
 
 export class Activity extends React.Component {
     render () {
         return (
             <div className="activity">
-                <h1>Activity</h1>
-                <WorkLog />
+                <h2>Activity</h2>
                 <Comments />
-                <WorkLogForm />
+                <WorkLog />
             </div>
         )
     }

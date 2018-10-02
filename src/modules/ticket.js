@@ -45,6 +45,10 @@ export const POST_WORKLOG_REQUEST = 'app/ticket/POST_WORKLOG_REQUEST';
 export const POST_WORKLOG_SUCCESS = 'app/ticket/POST_WORKLOG_SUCCESS';
 export const POST_WORKLOG_ERROR  = 'app/ticket/POST_WORKLOG_ERROR';
 
+export const REMOVE_WORKLOG_REQUEST = 'app/ticket/REMOVE_WORKLOG_REQUEST';
+export const REMOVE_WORKLOG_SUCCESS = 'app/ticket/REMOVE_WORKLOG_SUCCESS';
+export const REMOVE_WORKLOG_ERROR  = 'app/ticket/REMOVE_WORKLOG_ERROR';
+
 export const VOTE_TICKET_REQUEST = 'app/ticket/VOTE_TICKET_REQUEST';
 export const VOTE_TICKET_SUCCESS = 'app/ticket/VOTE_TICKET_SUCCESS';
 export const VOTE_TICKET_ERROR = 'app/ticket/VOTE_TICKET_ERROR';
@@ -137,6 +141,17 @@ export default function ticketReducer (state={}, action) {
         return Object.assign({}, state, { commentsloading: false, error: action.error })
     }
 
+    // post work log
+    if(action.type === POST_WORKLOG_REQUEST) {
+        return Object.assign({}, state, { workloguploading: true })
+    }
+    if(action.type === POST_WORKLOG_SUCCESS) {
+        return Object.assign({}, state, { workloguploading: false, worklog: action.worklog, isModified: true })
+    }
+    if(action.type === POST_WORKLOG_ERROR) {
+        return Object.assign({}, state, { workloguploading: false, error: action.error })
+    }
+
     return state
 }
 
@@ -224,6 +239,28 @@ export const removeCommentError = (error) => (
     { type: POST_COMMENT_ERROR, error: error }
 )
 
+// -- post worklog --
+export const postWorkLogRequest = () => (
+    { type: POST_WORKLOG_REQUEST }
+)
+export const postWorkLogSuccess = (data) => (
+    { type: POST_WORKLOG_SUCCESS, worklog: data.worklog }
+)
+export const postWorkLogError = (error) => (
+    { type: POST_WORKLOG_ERROR, error: error }
+)
+
+// -- remove worklog --
+export const removeWorkLogRequest = () => (
+    { type: REMOVE_WORKLOG_REQUEST }
+)
+export const removeWorkLogSuccess = (data) => (
+    { type: REMOVE_WORKLOG_SUCCESS, worklog: data.worklog }
+)
+export const removeWorkLogError = (error) => (
+    { type: REMOVE_WORKLOG_ERROR, error: error }
+)
+
 // -- location endpoints --
 const DESCRIPTION = 'description';
 const INFO = 'info';
@@ -238,18 +275,20 @@ const fetchTicketPromise = (method, location, data) => {
     const { authToken } = state.auth;
     const { _id: ticketId } = state.ticket;
 
-    let DataObj;
-    typeof data === 'string'? DataObj = { data } : DataObj = data;
-    console.log('fetch ticket promise')
+    let DataObj = typeof data === 'string'? { data } : data;
+
+    const headers = { Authorization: `Bearer ${authToken}` }
+
+    if(!DataObj.isFormData) {
+        headers['Content-Type'] = 'application/json'
+        DataObj = JSON.stringify(DataObj)
+    }
 
     return (
         fetch(`${API_BASE_URL}/tickets/${ticketId}/${location}`, {
             method: method,
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: DataObj? JSON.stringify(DataObj) : null
+            headers: headers,
+            body: DataObj
         })
     )
     .then(res => normalizeResponseErrors(res))
@@ -259,6 +298,21 @@ const fetchTicketPromise = (method, location, data) => {
         }
         return res.json()
     })
+}
+
+export const postWorkLog = (formValues) => dispatch => {
+    dispatch(postWorkLogRequest());
+    fetchTicketPromise(POST, WORKLOG, formValues)
+    .then(worklog => dispatch(postWorkLogSuccess(worklog)))
+    .catch(error => dispatch(postWorkLogError(error)))
+}
+
+export const removeWorkLog = (formValues) => dispatch => {
+    dispatch(removeWorkLogRequest());
+    const worklog = { worklogId: formValues }
+    fetchTicketPromise(DELETE, WORKLOG, worklog)
+    .then(worklog => console.log(worklog)/* dispatch(removeWorkLogSuccess(worklog)) */)
+    .catch(error => dispatch(removeWorkLogError(error)))
 }
 
 export const postComment = (formValues) => dispatch => {

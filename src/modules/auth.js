@@ -360,14 +360,14 @@ export const unwatchTicket = (ticket_Id) => (dispatch, getState) => {
 export const addNote = (note) => (dispatch, getState) => {
     dispatch(addNoteRequest());
     fetchUserPromise(POST, NOTE, note, getState)
-    .then(notes => dispatch(addNoteSuccess(getNewestNote(notes))))
+    .then(res => dispatch(addNoteSuccess(getNewestNote(res.notes))))
     .catch(err => {
         dispatch(addNoteError(err));
     })
 }
 
 export const deleteNote = (noteId) => (dispatch, getState) => {
-    fetchUserPromise(DELETE, NOTE, noteId, getState)
+    fetchUserPromise(DELETE, NOTE, { noteId }, getState)
     .then(res => {
         if(res.status === 204){
             dispatch(removeNoteSuccess(noteId));

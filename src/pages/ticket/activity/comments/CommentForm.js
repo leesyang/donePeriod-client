@@ -25,7 +25,6 @@ export class CommentForm extends React.Component {
                     name="comment"
                     id="comment"
                     label="Comment"
-
                 />
                 <button type="submit" disabled={pristine || submitting}>Submit</button>
                 <button type="button" disabled={pristine || submitting} onClick={reset}>Reset</button>
