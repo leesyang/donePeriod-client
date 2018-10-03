@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { USER_PHOTO_URL } from '../../config';
+import { AMZ_S3_URL } from '../../config';
 
 // ----- components -----
 import UploadPictureForm  from './userInfo/UploadForm';
@@ -48,7 +48,7 @@ export class UserInfo extends React.Component {
 
         return (
             <div className="user-info">
-                <img src={USER_PHOTO_URL+profilePicture} className="user-img"></img>
+                <img src={AMZ_S3_URL+profilePicture} className="user-img"></img>
                 <a className="user-fullname">{fullName}</a>
                 <a href="#" onClick={this.onClick}>Change Profile Picture</a>
             </div>

@@ -12,8 +12,10 @@ export class WorkLogForm extends React.Component {
         const formData = new FormData();
         formData.append('comment', formValues.comment);
         formData.append('ticketId', ticketId)
-        for (let i = 0; i < formValues.files.length; i++) {
-            formData.append(`files`, formValues.files.item(i))
+        if(formValues.files){
+            for (let i = 0; i < formValues.files.length; i++) {
+                formData.append(`files`, formValues.files.item(i))
+            }
         }
         Object.defineProperty(formData, 'isFormData', { value: true });
         this.props.dispatch(postWorkLog(formData));

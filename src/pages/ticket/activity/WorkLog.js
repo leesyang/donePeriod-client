@@ -12,9 +12,9 @@ export class WorkLog extends React.Component {
         
         const workLogForm = uploading? <LoaderSm /> : <WorkLogForm ticketId={ticketId} />
 
-        const worklogEntries = worklog.map((log, index) => (
+        const worklogEntries = worklog? worklog.map((log, index) => (
             <Comment comment={log} key={index} ticketId={ticketId}/>
-        ))
+        )) : undefined;
 
         return (
             <div className="worklog-container">

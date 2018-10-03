@@ -1,14 +1,22 @@
 import React from 'react';
 
+// ----- consts -----
+import { AMZ_S3_URL } from '../config';
+
 // ----- util functions -----
 import { generateFullName } from '../utils/tickets';
 
+// ----- css -----
+import './UserIcon.css';
+
 export default class UserIcon extends React.Component {
     render() {
+        const { user, user: { profilePicture } } = this.props;
+
         return (
             <div className="user-icon">
-                <div>USER_IMG</div>
-                <div>{generateFullName(this.props.user)}</div>
+                <img src={AMZ_S3_URL+profilePicture} className="user-img-icon"></img>
+                <span>{generateFullName(user)}</span>
             </div>
         )
     }

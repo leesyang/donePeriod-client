@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-    PopupboxManager,
-    PopupboxContainer
-  } from 'react-popupbox';
+import prettyFileIcons from 'pretty-file-icons';
 
 // ----- constants -----
-import { USER_PHOTO_URL } from '../../../../config';
-import { TICKET_ATTACHMENTS_URL } from '../../../../config';
+import { AMZ_S3_URL } from '../../../../config';
 import { formatDateShort } from '../../../../utils/auth';
 
 // ----- actions -----
 import { removeComment, removeWorkLog } from '../../../../modules/ticket';
+
+// ----- css -----
+import './Comment.css';
 
 
 export class Comment extends React.Component {
@@ -28,21 +27,23 @@ export class Comment extends React.Component {
         const { firstName, lastName, profilePicture } = this.props.comment.addedBy;
 
         let fileLinks = files? files.map((file, index) => { 
-            let link = TICKET_ATTACHMENTS_URL+ticketId+'/'+file;
+            const link = AMZ_S3_URL+file;
+            const fileIcon = prettyFileIcons.getIcon(link, 'svg');
             return (
-                <li key={index} >
-                    <a href={link} target="_blank">{file}</a>
+                <li key={index} className="attachment">
+                    <a href={link} target="_blank"><img className="attachement-icon" src={AMZ_S3_URL+'icons/'+fileIcon}/></a>
                 </li>
             )}) : undefined;
 
         return (
             <li className="comment">
-                <img src={USER_PHOTO_URL+profilePicture}></img>
+                <img src={AMZ_S3_URL+profilePicture}></img>
                 <p>{comment}</p>
                 <p>Added By: {firstName} {lastName}</p>
                 <p>Date Added: {formatDateShort(dateAdded)}</p>
-                <ul className="file-list">{fileLinks}</ul>
-                <PopupboxContainer />
+                <ul className="file-list">
+                    Attachments: {fileLinks}
+                </ul>
                 <a href="" onClick={(e) => this.onDelete(e)}>Delete</a>
             </li>
         )

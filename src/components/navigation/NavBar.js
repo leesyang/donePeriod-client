@@ -13,7 +13,7 @@ import './NavBar.css'
 
 export class NavBar extends React.Component {
     render() {
-        const { dispatch } = this.props;
+        const { dispatch, user } = this.props;
         return (
             <div className="navbar">
                 <div className="dropdown">
@@ -25,10 +25,14 @@ export class NavBar extends React.Component {
                         <a href="#" onClick={() => dispatch(logout())}>Log Out</a>
                     </div>
                 </div>
-                <UserIcon />
+                <UserIcon user={user} />
             </div>
         )
     }
 }
 
-export default connect()(NavBar)
+const mapStateToProps = state => ({
+    user: state.auth.currentUser
+})
+
+export default connect(mapStateToProps)(NavBar)

@@ -1,6 +1,9 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 
+// ----- consts -----
+import { ticketOpt } from '../../components/forms/Consts';
+
 // ----- validators -----
 import {required, nonEmpty } from '../../utils/validators';
 
@@ -8,6 +11,7 @@ import {required, nonEmpty } from '../../utils/validators';
 import Input from '../../components/forms/Input';
 import DropDown from '../../components/forms/Dropdown';
 import UserSelect from '../../components/forms/UserSelect';
+import InputWorkLog from '../../pages/ticket/activity/workLog/InputWorkLog';
 
 // ----- actions -----
 import { postNewTicket } from '../../modules/ticketsData';
@@ -18,28 +22,20 @@ export class NewTicket extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(values) {
-        console.log(values);
+    onSubmit(formValues) {
         const { dispatch, reset } = this.props;
-        return dispatch(postNewTicket(values))
+        const formData = new FormData();
+        Object.keys(formValues).filter(word => !(word === 'newTicketFiles'))
+        .forEach(key => formData.append(`${key}`, formValues[key]))
+        for (let i = 0; i < formValues.newTicketFiles.length; i++) {
+            formData.append(`files`, formValues.newTicketFiles.item(i))
+        }
+        return dispatch(postNewTicket(formData))
         .then(() => reset('newTicket'))
     }
     
     render() {
         const { handleSubmit, pristine, submitting, invalid, reset, users, change } = this.props
-        
-        const types = [
-            { text: 'Incident', value: 'Incident'},
-            { text: 'Repair', value: 'Repair'},
-            { text: 'Purchase', value: 'Purchase'},
-        ]
-
-        const priorities = [
-            { text: 'Urgent', value: 'Urgent'},
-            { text: 'High', value: 'High' },
-            { text: 'Normal', value: 'Normal' },
-            { text: 'Low', value: 'Low' }
-        ]
 
         return (
             <form
@@ -52,7 +48,7 @@ export class NewTicket extends React.Component {
                     name="type"
                     id="type"
                     label="Type"
-                    options={types}
+                    options={ticketOpt.type}
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
                 />
@@ -62,7 +58,7 @@ export class NewTicket extends React.Component {
                     name="priority"
                     id="priority"
                     label="Priority"
-                    options={priorities}
+                    options={ticketOpt.priority}
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
                 />
@@ -94,6 +90,14 @@ export class NewTicket extends React.Component {
                     change={change}
                     validate={[required, nonEmpty]}
                     disabled={pristine || submitting}
+                />
+                <Field 
+                    component={InputWorkLog}
+                    type="file"
+                    name="newTicketFiles"
+                    id="newTicketFiles"
+                    disabled={submitting}
+                    label="Upload Files"
                 />
                 <button type="submit" disabled={pristine || submitting || invalid }>
                     Submit

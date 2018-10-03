@@ -80,7 +80,7 @@ export default function ticketReducer (state={}, action) {
 
     // ticket description
     if(action.type === INIT_UPDATE_DESCRIPTION) {
-        return Object.assign({}, state, { description: {...state.description, isEditing: true }})
+        return Object.assign({}, state, { description: {...state.description, isEditing: action.data }})
     }
     if(action.type === UPDATE_DESCRIPTION_REQUEST) {
         return Object.assign({}, state, { description: { ...state.description, isUpdating: true } })
@@ -152,6 +152,17 @@ export default function ticketReducer (state={}, action) {
         return Object.assign({}, state, { workloguploading: false, error: action.error })
     }
 
+    // remove work log
+    if(action.type === REMOVE_WORKLOG_REQUEST) {
+        return Object.assign({}, state, { workloguploading: true })
+    }
+    if(action.type === REMOVE_WORKLOG_SUCCESS) {
+        return Object.assign({}, state, { workloguploading: false, worklog: action.worklog, isModified: true })
+    }
+    if(action.type === REMOVE_WORKLOG_ERROR) {
+        return Object.assign({}, state, { workloguploading: false, error: action.error })
+    }
+
     return state
 }
 
@@ -193,8 +204,8 @@ export const updateInfoError = (error) => (
 )
 
 // -- update descritipn --
-export const updateDescriptionInit = () => (
-    { type: INIT_UPDATE_DESCRIPTION }
+export const updateDescriptionInit = (boolean) => (
+    { type: INIT_UPDATE_DESCRIPTION, data: boolean }
 )
 export const updateDescriptionRequest = () => (
     { type: UPDATE_DESCRIPTION_REQUEST }
@@ -311,7 +322,7 @@ export const removeWorkLog = (formValues) => dispatch => {
     dispatch(removeWorkLogRequest());
     const worklog = { worklogId: formValues }
     fetchTicketPromise(DELETE, WORKLOG, worklog)
-    .then(worklog => console.log(worklog)/* dispatch(removeWorkLogSuccess(worklog)) */)
+    .then(worklog => {console.log(worklog); dispatch(removeWorkLogSuccess(worklog))})
     .catch(error => dispatch(removeWorkLogError(error)))
 }
 
@@ -348,7 +359,7 @@ export const updateDescription = (formValues) => dispatch => {
 
 export const voteTicket = () => dispatch => {
     dispatch(voteTicketRequest());
-    fetchTicketPromise(POST, VOTE, null)
+    fetchTicketPromise(POST, VOTE, {})
     .then(res => dispatch(voteTicketSuccess(res)))
     .catch(error => dispatch(voteTicketError(error)))
 }
