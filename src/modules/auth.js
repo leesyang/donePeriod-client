@@ -141,9 +141,7 @@ export default function authReducer (state=initialState, action) {
 
     // remove note?
     else if(action.type === REMOVE_NOTE_SUCCESS){
-        console.log(action.data)
         let _notes = state.currentUser.notes.filter(note => !(note._id === action.data))
-        console.log(_notes);
         return Object.assign({}, state, {
             currentUser: {...state.currentUser,
                 noteloading: false,

@@ -11,7 +11,12 @@ export class Overview extends React.Component {
 
         return (
             <div className="overview">
-                <TicketTable />
+                <div className="row">
+                    <div className="col-12">
+                        <h2>Current tickets:</h2>
+                        <TicketTable />
+                    </div>
+                </div>
             </div>
         )
     }

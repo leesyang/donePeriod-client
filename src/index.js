@@ -7,7 +7,9 @@ import { Provider } from 'react-redux';
 import store from './store'
 
 // ----- css -----
+import 'normalize.css';
 import './index.css';
+import './components/containers/MainGrid.css';
 
 // ----- components -----
 import App from './App';

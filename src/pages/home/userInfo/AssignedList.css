@@ -1,0 +1,54 @@
+.user-info > table {
+    border: 0;
+    margin: 0 auto;
+}
+
+.user-info >table caption {
+    font-size: 1.3em;
+}
+
+.user-info >table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.user-info >table tr {
+    border-bottom: 3px solid #6554C0;
+    display: block;
+    margin-bottom: .625em;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+.user-info >table td {
+    display: block;
+    font-size: .8em;
+    text-align: right;
+}
+
+.user-info >table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    margin-right: 0.3em;
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.user-info >table td:last-child {
+    border-bottom: 0;
+}
+
+@media screen and (max-width: 600px){
+    .user-info > table td {
+        border: 0em;
+    }
+}

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Ionicon from 'react-ionicons';
+
+import { ticketOpt } from '../../components/forms/Consts';
 
 // ----- components -----
 import UserIcon from '../../components/UserIcon';
@@ -15,38 +18,63 @@ export class TicketTable extends React.Component {
     render() {
         const { tickets } = this.props;
 
-        let header = (
-            <div className="divTableRow">
-                <div className="divTableCell">Id</div>
-                <div className="divTableCell">Description</div>
-                <div className="divTableCell">Reporter</div>
-                <div className="divTableCell">Assigned To</div>
-                <div className="divTableCell">Due Date</div>
-                <div className="divTableCell">Status</div>
-            </div>
+        const genStatusIcon = (status) => {
+            let color;
+
+            ticketOpt.status.forEach(ticketStatus => {
+                if(status === ticketStatus.text) {
+                   color = ticketStatus.iconColor 
+                }
+                if(!color) { color = "#091E42"}
+            })
+
+            return <Ionicon icon="md-information-circle" color={color}/>
+        }
+
+        const header = (
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Reporter</th>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
         )
 
-        let rows = tickets.map((ticket, index) => {
+        const list = tickets.map((ticket, index) => {
+            const {
+                ticketId,
+                description,
+                reporter,
+                assignee,
+                dueDate,
+                ticketInfo
+                } = ticket;
+
             let path = `/issues/${ticket.ticketId}`;
+
             return (
-                <div className="divTableRow" key={ticket.ticketId}>
-                    <div className="divTableCell"><Link to={path}>{ticket.ticketId}</Link></div>
-                    <div className="divTableCell">{ticket.description.text}</div>
-                    <div className="divTableCell">{generateFullName(ticket.reporter)}</div>
-                    <div className="divTableCell">{generateFullName(ticket.assignee)}</div>
-                    <div className="divTableCell">{formatDate(ticket.dueDate)}</div>
-                    <div className="divTableCell">{ticket.ticketInfo.status}</div>
-                </div>
+                <tr key={index}>
+                    <td data-label="Ticket Id"><Link to={path}>{ticketId}</Link></td>
+                    <td data-label="Description">{description.text}</td>
+                    <td data-label="Reporter">{generateFullName(reporter)}</td>
+                    <td data-label="Assigned To">{generateFullName(assignee)}</td>
+                    <td data-label="Due Date">{formatDate(dueDate)}</td>
+                    <td data-label="Status">{genStatusIcon(ticketInfo.status)}{ticketInfo.status}</td>
+                </tr>
             )
-        })
+        })   
 
         return (
-            <div className="divTable">
-                <div className="divTableBody">
-                    {header}
-                    {rows}
-                </div>
-            </div>
+            <table className="overview-table">
+                {header}
+                <tbody>
+                    {list}
+                </tbody>
+            </table>
         )
     }
 }

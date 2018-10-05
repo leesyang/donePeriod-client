@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AMZ_S3_URL } from '../../config';
+import Ionicon from 'react-ionicons';
 
 // ----- components -----
 import UploadPictureForm  from './userInfo/UploadForm';
 import Loader from '../../components/Loader';
+import AssignedList from './userInfo/AssignedList';
 
 // ----- actions -----
 import { updateUserPhoto } from '../../modules/auth';
@@ -29,7 +31,7 @@ export class UserInfo extends React.Component {
     }
 
     render() {
-        const { fullName, profilePicture, isEditing, isUpdating } = this.props;
+        const { fullName, profilePicture, isEditing, isUpdating, assigned } = this.props;
 
         if(isUpdating) {
             return (
@@ -49,22 +51,30 @@ export class UserInfo extends React.Component {
         return (
             <div className="user-info">
                 <img src={AMZ_S3_URL+profilePicture} className="user-img"></img>
-                <a className="user-fullname">{fullName}</a>
-                <a href="#" onClick={this.onClick}>Change Profile Picture</a>
+                <Ionicon icon="md-create" className="pen" onClick={this.onClick} role="button"/>
+                <a className="user-fullname">Hi, {fullName}</a>
+                <h3>Assigned Tickets: </h3>
+                <AssignedList watching={assigned} />
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
-    const { firstName, lastName, profilePicture, isEditing, photoUpdateLoading } = state.auth.currentUser;
+    const { firstName,
+        lastName,
+        profilePicture,
+        isEditing,
+        photoUpdateLoading,
+        assigned,
+    } = state.auth.currentUser;
 
     return {
         fullName: firstName+' '+lastName,
         profilePicture: profilePicture,
         isEditing: isEditing,
-        isUpdating: photoUpdateLoading
+        isUpdating: photoUpdateLoading,
+        assigned: assigned
     }
 }
 

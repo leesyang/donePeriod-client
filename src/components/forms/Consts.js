@@ -14,10 +14,10 @@ ticketOpt.priority = [
 ]
 
 ticketOpt.status = [
-    { text: 'Work in progress', value: 'Work in progress'},
-    { text: 'Delayed', value: 'Delayed'},
-    { text: 'Completed', value: 'Complete'},
-    { text: 'Archived', value: 'Archived'},
+    { text: 'Work in progress', value: 'Work in progress', iconColor: '#FFC400'}, /*pub-mix*/
+    { text: 'Delayed', value: 'Delayed', iconColor: '#FF7452'}, /*salmon-sashimi*/
+    { text: 'Completed', value: 'Complete', iconColor: '#36B37E'}, /*our-kellie*/ 
+    { text: 'Archived', value: 'Archived', iconColor: '#6554C0'}, /*da-juice*/
 ]
 
 ticketOpt.resolution = [

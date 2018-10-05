@@ -1,0 +1,19 @@
+.feed {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    border: lightgray;
+    border-style: solid;
+    border-width: thin;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03), 0 3px 10px 0 rgba(0, 0, 0, 0.03);
+}
+
+.homebanner-img {
+    width: 100%;
+    height: 100%;
+}
+
+.feed p {
+    text-align: center;
+    padding: 0.5em;
+}

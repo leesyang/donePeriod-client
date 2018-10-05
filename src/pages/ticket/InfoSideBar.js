@@ -32,8 +32,7 @@ export class InfoSideBar extends React.Component {
 
     render () {
         const { assignee, reporter, currentUser, votes, voteCount} = this.props;
-        console.log(voteCount)
-        
+
         let votingLink;
         currentUser.voteloading? votingLink = <LoaderSm /> : 
             votingLink = <a href="" onClick={(e) => this.vote(e)}>Vote for this issue</a>;

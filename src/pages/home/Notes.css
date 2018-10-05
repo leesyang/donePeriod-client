@@ -1,0 +1,11 @@
+.notes {
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+    padding: 0.5em;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03), 0 3px 10px 0 rgba(0, 0, 0, 0.03);
+}
+
+.notes ul {
+    padding: 0em;
+}

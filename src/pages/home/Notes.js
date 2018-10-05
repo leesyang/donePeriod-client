@@ -10,6 +10,9 @@ import LoaderSm from '../../components/LoaderSm';
 // ----- actions -----
 import { addNote, noteAdding, deleteNote } from '../../modules/auth';
 
+// ----- css -----
+import './Notes.css';
+
 export class Notes extends React.Component {
     onClick() {
         this.props.dispatch(noteAdding(true));
@@ -20,6 +23,7 @@ export class Notes extends React.Component {
     }
 
     onDelete(noteId) {
+        console.log(noteId)
         this.props.dispatch(deleteNote(noteId))
     }
 
@@ -38,16 +42,23 @@ export class Notes extends React.Component {
 
         let allNotes
         if(notes.length > 0){
-            allNotes = notes.map(note => <Note key={note._id} note={note} onDelete={(noteId) => this.onDelete(noteId)} />)
+            allNotes = notes.map(note => {
+                return <Note key={note._id} note={note} onDelete={(noteId) => this.onDelete(noteId)} />
+                })
         } else {
             allNotes = undefined;
         }
 
         return (
             <div className="notes">
-                <PlusButton text='Add a note' onClick={() => this.onClick()} />
+                <PlusButton
+                    text='Add a note'
+                    onClick={() => this.onClick()}
+                />
                 {noteForm}
-                {allNotes}
+                <ul className="all-notes">
+                    {allNotes}
+                </ul>
             </div>
         )
     }
