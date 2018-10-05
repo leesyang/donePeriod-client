@@ -1,5 +1,4 @@
 // ----- ticket module -----
-import { temp_data } from './ticketTempData';
 import store from '../store';
 import { checkTickets } from '../utils/tickets';
 import { getTickets } from './ticketsData';
@@ -38,9 +37,17 @@ export const POST_COMMENT_REQUEST = 'app/ticket/POST_COMMENT_REQUEST';
 export const POST_COMMENT_SUCCESS = 'app/ticket/POST_COMMENT_SUCCESS';
 export const POST_COMMENT_ERROR = 'app/ticket/POST_COMMENT_ERROR';
 
+export const REMOVE_COMMENT_REQUEST = 'app/ticket/REMOVE_COMMENT_REQUEST';
+export const REMOVE_COMMENT_SUCCESS = 'app/ticket/REMOVE_COMMENT_SUCCESS';
+export const REMOVE_COMMENT_ERROR = 'app/ticket/REMOVE_COMMENT_ERROR';
+
 export const POST_WORKLOG_REQUEST = 'app/ticket/POST_WORKLOG_REQUEST';
 export const POST_WORKLOG_SUCCESS = 'app/ticket/POST_WORKLOG_SUCCESS';
 export const POST_WORKLOG_ERROR  = 'app/ticket/POST_WORKLOG_ERROR';
+
+export const REMOVE_WORKLOG_REQUEST = 'app/ticket/REMOVE_WORKLOG_REQUEST';
+export const REMOVE_WORKLOG_SUCCESS = 'app/ticket/REMOVE_WORKLOG_SUCCESS';
+export const REMOVE_WORKLOG_ERROR  = 'app/ticket/REMOVE_WORKLOG_ERROR';
 
 export const VOTE_TICKET_REQUEST = 'app/ticket/VOTE_TICKET_REQUEST';
 export const VOTE_TICKET_SUCCESS = 'app/ticket/VOTE_TICKET_SUCCESS';
@@ -73,7 +80,7 @@ export default function ticketReducer (state={}, action) {
 
     // ticket description
     if(action.type === INIT_UPDATE_DESCRIPTION) {
-        return Object.assign({}, state, { description: {...state.description, isEditing: true }})
+        return Object.assign({}, state, { description: {...state.description, isEditing: action.data }})
     }
     if(action.type === UPDATE_DESCRIPTION_REQUEST) {
         return Object.assign({}, state, { description: { ...state.description, isUpdating: true } })
@@ -97,7 +104,64 @@ export default function ticketReducer (state={}, action) {
     if(action.type === VOTE_TICKET_ERROR) {
         return Object.assign({}, state, { voteloading: false, error: action.error })
     }
-    // ticket comments
+
+    // add ticket comment
+    if(action.type === POST_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === POST_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === POST_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
+
+        // add ticket comment
+    if(action.type === POST_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === POST_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === POST_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
+
+    // remove ticket comment
+    if(action.type === REMOVE_COMMENT_REQUEST) {
+        return Object.assign({}, state, { commentsloading: true })
+    }
+    if(action.type === REMOVE_COMMENT_SUCCESS) {
+        console.log(action.comments)
+        return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
+    }
+    if(action.type === REMOVE_COMMENT_ERROR) {
+        return Object.assign({}, state, { commentsloading: false, error: action.error })
+    }
+
+    // post work log
+    if(action.type === POST_WORKLOG_REQUEST) {
+        return Object.assign({}, state, { workloguploading: true })
+    }
+    if(action.type === POST_WORKLOG_SUCCESS) {
+        return Object.assign({}, state, { workloguploading: false, worklog: action.worklog, isModified: true })
+    }
+    if(action.type === POST_WORKLOG_ERROR) {
+        return Object.assign({}, state, { workloguploading: false, error: action.error })
+    }
+
+    // remove work log
+    if(action.type === REMOVE_WORKLOG_REQUEST) {
+        return Object.assign({}, state, { workloguploading: true })
+    }
+    if(action.type === REMOVE_WORKLOG_SUCCESS) {
+        return Object.assign({}, state, { workloguploading: false, worklog: action.worklog, isModified: true })
+    }
+    if(action.type === REMOVE_WORKLOG_ERROR) {
+        return Object.assign({}, state, { workloguploading: false, error: action.error })
+    }
 
     return state
 }
@@ -140,8 +204,8 @@ export const updateInfoError = (error) => (
 )
 
 // -- update descritipn --
-export const updateDescriptionInit = () => (
-    { type: INIT_UPDATE_DESCRIPTION }
+export const updateDescriptionInit = (boolean) => (
+    { type: INIT_UPDATE_DESCRIPTION, data: boolean }
 )
 export const updateDescriptionRequest = () => (
     { type: UPDATE_DESCRIPTION_REQUEST }
@@ -163,7 +227,50 @@ export const voteTicketSuccess = (data) => (
 export const voteTicketError = (error) => (
     { type: VOTE_TICKET_ERROR, error: error}
 )
-// -- uploading attachments --
+
+// -- post comment --
+export const postCommentRequest = () => (
+    { type: POST_COMMENT_REQUEST }
+)
+export const postCommentSuccess = (data) => (
+    { type: POST_COMMENT_SUCCESS, comments: data.comments }
+)
+export const postCommentError = (error) => (
+    { type: POST_COMMENT_ERROR, error: error }
+)
+
+// -- remove comment --
+export const removeCommentRequest = () => (
+    { type: POST_COMMENT_REQUEST }
+)
+export const removeCommentSuccess = (data) => (
+    { type: POST_COMMENT_SUCCESS, comments: data.comments }
+)
+export const removeCommentError = (error) => (
+    { type: POST_COMMENT_ERROR, error: error }
+)
+
+// -- post worklog --
+export const postWorkLogRequest = () => (
+    { type: POST_WORKLOG_REQUEST }
+)
+export const postWorkLogSuccess = (data) => (
+    { type: POST_WORKLOG_SUCCESS, worklog: data.worklog }
+)
+export const postWorkLogError = (error) => (
+    { type: POST_WORKLOG_ERROR, error: error }
+)
+
+// -- remove worklog --
+export const removeWorkLogRequest = () => (
+    { type: REMOVE_WORKLOG_REQUEST }
+)
+export const removeWorkLogSuccess = (data) => (
+    { type: REMOVE_WORKLOG_SUCCESS, worklog: data.worklog }
+)
+export const removeWorkLogError = (error) => (
+    { type: REMOVE_WORKLOG_ERROR, error: error }
+)
 
 // -- location endpoints --
 const DESCRIPTION = 'description';
@@ -174,23 +281,25 @@ const WORKLOG = 'worklog';
 const VOTE = 'vote';
 
 // ----- action functions -----
-const fetchTicketPromise = (method, location, data, getState) => {
-    const state = getState();
+const fetchTicketPromise = (method, location, data) => {
+    const state = store.getState();
     const { authToken } = state.auth;
     const { _id: ticketId } = state.ticket;
 
-    let DataObj;
-    typeof data === 'string'? DataObj = { data } : DataObj = data;
-    console.log('fetch ticket promise')
+    let DataObj = typeof data === 'string'? { data } : data;
+
+    const headers = { Authorization: `Bearer ${authToken}` }
+
+    if(!DataObj.isFormData) {
+        headers['Content-Type'] = 'application/json'
+        DataObj = JSON.stringify(DataObj)
+    }
 
     return (
         fetch(`${API_BASE_URL}/tickets/${ticketId}/${location}`, {
             method: method,
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: DataObj? JSON.stringify(DataObj) : null
+            headers: headers,
+            body: DataObj
         })
     )
     .then(res => normalizeResponseErrors(res))
@@ -202,25 +311,55 @@ const fetchTicketPromise = (method, location, data, getState) => {
     })
 }
 
-export const updateInfo = (formValues) => (dispatch, getState) => {
+export const postWorkLog = (formValues) => dispatch => {
+    dispatch(postWorkLogRequest());
+    fetchTicketPromise(POST, WORKLOG, formValues)
+    .then(worklog => dispatch(postWorkLogSuccess(worklog)))
+    .catch(error => dispatch(postWorkLogError(error)))
+}
+
+export const removeWorkLog = (formValues) => dispatch => {
+    dispatch(removeWorkLogRequest());
+    const worklog = { worklogId: formValues }
+    fetchTicketPromise(DELETE, WORKLOG, worklog)
+    .then(worklog => {console.log(worklog); dispatch(removeWorkLogSuccess(worklog))})
+    .catch(error => dispatch(removeWorkLogError(error)))
+}
+
+export const postComment = (formValues) => dispatch => {
+    dispatch(postCommentRequest());
+    return fetchTicketPromise(POST, COMMENTS, formValues)
+    .then(comments => dispatch(postCommentSuccess(comments)))
+    .catch(error => dispatch(postCommentError(error)))
+}
+
+export const removeComment = (formValues) => dispatch => {
+    dispatch(removeCommentRequest());
+    const comment = { commentId: formValues }
+    fetchTicketPromise(DELETE, COMMENTS, comment)
+    .then(comments => dispatch(removeCommentSuccess(comments)))
+    .catch(error => dispatch(removeCommentError(error)))
+}
+
+export const updateInfo = (formValues) => dispatch => {
     dispatch(updateInfoRequest());
-    fetchTicketPromise(PUT, INFO, formValues, getState)
+    fetchTicketPromise(PUT, INFO, formValues)
     .then(ticketInfo => dispatch(updateInfoSuccess(ticketInfo)))
     .catch(error => dispatch(updateInfoError(error)))
 }
 
-export const updateDescription = (formValues) => (dispatch, getState) => {
+export const updateDescription = (formValues) => dispatch => {
     dispatch(updateDescriptionRequest());
-    fetchTicketPromise(PUT, DESCRIPTION, formValues, getState )
+    fetchTicketPromise(PUT, DESCRIPTION, formValues )
     .then(description => {
         dispatch(updateDescriptionSuccess(description))
     })
     .catch(error => dispatch(updateDescriptionError(error)))
 }
 
-export const voteTicket = () => (dispatch, getState) => {
+export const voteTicket = () => dispatch => {
     dispatch(voteTicketRequest());
-    fetchTicketPromise(POST, VOTE, null, getState)
+    fetchTicketPromise(POST, VOTE, {})
     .then(res => dispatch(voteTicketSuccess(res)))
     .catch(error => dispatch(voteTicketError(error)))
 }

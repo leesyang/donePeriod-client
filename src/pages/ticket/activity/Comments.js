@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // ----- components -----
 import Comment from './comments/Comment';
+import CommentForm from './comments/CommentForm';
 
 export class Comments extends React.Component {
     render () {
@@ -12,7 +13,10 @@ export class Comments extends React.Component {
 
         return (
             <div className="comments-container">
-                {comments}
+                <ul className="ticket-comments">
+                    {comments}
+                </ul>
+                <CommentForm />
             </div>
         )
     }

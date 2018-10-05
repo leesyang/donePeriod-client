@@ -1,4 +1,37 @@
+.user-info {
+    text-align: center;
+    border: solid;
+    padding: 0.5em;
+    border-radius: 1em;
+    border-color: #d3d3d333;
+}
+.user-info > h3 {
+    font-size: 1em;
+    text-align: left;
+    font-weight: 600;
+}
+.user-info > .pen {
+    cursor: pointer;
+    width: 15px;
+    margin-left: -8px;
+    margin-bottom: -5px;
+}
+
 .user-img {
+    display: inline-block;
     width: 10em;
     height: 10em;
+    border-radius: 1em;
+    box-shadow: 0 6px 6px -6px rgb(192, 192, 192);
+}
+
+.user-fullname {
+    display: block;
+    margin-bottom: 1em;
+}
+
+@media screen and (max-width: 720px){
+    .user-info > h3 {
+        text-align: center;
+    }
 }

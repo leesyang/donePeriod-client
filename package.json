@@ -4,8 +4,12 @@
   "private": true,
   "dependencies": {
     "jwt-decode": "^2.2.0",
+    "normalize.css": "^8.0.0",
+    "pretty-file-icons": "^2.2.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-ionicons": "^2.1.6",
+    "react-popupbox": "^2.0.8",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",

@@ -1,0 +1,22 @@
+li {
+    list-style-type: none;
+    padding: 0em;
+    margin-bottom: 1em;
+}
+
+.note-info {
+    font-size: 0.7em;
+    margin: 0em;
+    margin-left: 2em;
+}
+
+.note-comment {
+    display: inline-block;
+    margin: 0em;
+    padding: 0em;
+}
+
+.note-delete {
+    cursor: pointer;
+    text-decoration: underline;
+}

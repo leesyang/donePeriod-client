@@ -1,18 +1,24 @@
 import React from 'react';
+import Ionicon from 'react-ionicons';
 
 // ----- utils -----
 import { formatDateShort } from '../../../utils/auth';
 
-export default class Note extends React.Component {
+// ----- css -----
+import './Note.css'
 
+export default class Note extends React.Component {
     render() {
         const { note, onDelete } = this.props;
         return (
-            <div className="note">
-                <div className="note-comment">- {note.comment}</div>
-                <div className="note-date">posted on {formatDateShort(note.created)}</div>
-                <a className="delete" href="#" onClick={() => onDelete(note._id)}>Delete</a>
-            </div>
+            <li className="note">
+                <Ionicon icon="md-arrow-dropright" fontSize="1em" color="#C9C9C9"/>
+                <p className="note-comment">{note.comment}</p>
+                <p className="note-info">
+                    posted: {formatDateShort(note.created)} | <a className="note-delete" href="#" onClick={() => onDelete(note._id)}>Delete</a>
+                </p>
+
+            </li>
         )
     }
 }

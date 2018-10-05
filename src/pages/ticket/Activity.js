@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 
 // ----- components -----
 import WorkLog from './activity/WorkLog';
+import Comments from './activity/Comments';
 
 export class Activity extends React.Component {
     render () {
         return (
             <div className="activity">
+                <h2>Activity</h2>
+                <Comments />
                 <WorkLog />
             </div>
         )
@@ -15,8 +18,6 @@ export class Activity extends React.Component {
 }
 
 const mapStateToProps = state =>({
-    comments: state.ticket.activty.comments,
-    worklog: state.ticket.activity.worklog
 })
 
 export default connect(mapStateToProps)(Activity)

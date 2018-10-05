@@ -103,16 +103,15 @@ export const getTickets = () => (dispatch, getState) => {
         });
 };
 
-export const postNewTicket = (ticket) => (dispatch, getState) => {
+export const postNewTicket = (formData) => (dispatch, getState) => {
     dispatch(postTicketRequest());
     const authToken = getState().auth.authToken;
     return fetch(`${API_BASE_URL}/tickets`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${authToken}`,
-            "Content-Type": "application/json; charset=utf-8"
             },
-        body: JSON.stringify(ticket)
+        body: formData
         })
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())

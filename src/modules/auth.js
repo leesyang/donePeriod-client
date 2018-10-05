@@ -141,9 +141,7 @@ export default function authReducer (state=initialState, action) {
 
     // remove note?
     else if(action.type === REMOVE_NOTE_SUCCESS){
-        console.log(action.data)
         let _notes = state.currentUser.notes.filter(note => !(note._id === action.data))
-        console.log(_notes);
         return Object.assign({}, state, {
             currentUser: {...state.currentUser,
                 noteloading: false,
@@ -360,14 +358,14 @@ export const unwatchTicket = (ticket_Id) => (dispatch, getState) => {
 export const addNote = (note) => (dispatch, getState) => {
     dispatch(addNoteRequest());
     fetchUserPromise(POST, NOTE, note, getState)
-    .then(notes => dispatch(addNoteSuccess(getNewestNote(notes))))
+    .then(res => dispatch(addNoteSuccess(getNewestNote(res.notes))))
     .catch(err => {
         dispatch(addNoteError(err));
     })
 }
 
 export const deleteNote = (noteId) => (dispatch, getState) => {
-    fetchUserPromise(DELETE, NOTE, noteId, getState)
+    fetchUserPromise(DELETE, NOTE, { noteId }, getState)
     .then(res => {
         if(res.status === 204){
             dispatch(removeNoteSuccess(noteId));

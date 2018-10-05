@@ -18,7 +18,7 @@ export class Info extends React.Component {
     }
 
     render () {
-        const { type, status, priority, resolution, isEditing, isUpdating } = this.props;
+        const { type, status, priority, resolution, isEditing, isUpdating } = this.props.ticketInfo;
 
         if(isUpdating) {
             return <Loader />
@@ -27,7 +27,7 @@ export class Info extends React.Component {
         if(isEditing) { 
            return (
                 <div className="info-edit-form">
-                    <EditForm />
+                    <EditForm ticketInfo={this.props.ticketInfo} />
                     <button onClick={() => this.onClickCancel()}>Cancel</button>
                 </div>
             )
@@ -46,7 +46,7 @@ export class Info extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    ...state.ticket.ticketInfo
+    ticketInfo: state.ticket.ticketInfo
 })
 
 export default connect(mapStateToProps)(Info);

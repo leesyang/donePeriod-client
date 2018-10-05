@@ -1,12 +1,13 @@
-.sign {
-    display: inline-block;
-    font-size: 1.3em;
-    background-color: grey;
-    border-radius: 3px;
-    width:1em;
-    margin: 0.1em;
+.icon-plus {
+    background-color: #36B37E;
+    border-radius: 0.1em;
+    margin-right: 0.5em;
     cursor: pointer;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
 }
-.text {
-    display: inline-block;
+
+.plus-button {
+    display: flex;
+    background: none;
+    border: none;
 }

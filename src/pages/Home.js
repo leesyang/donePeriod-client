@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // ----- components -----
 import Notes from './home/Notes';
-import NavColumn from './home/NavColumn';
+//import NavColumn from './home/NavColumn';
 import Feed from './home/Feed';
 import UserInfo from './home/UserInfo';
 
@@ -13,10 +13,19 @@ export class Home extends React.Component {
     render () {
         return (
             <div className="home">
-                <UserInfo />
-                <Feed />
-                <NavColumn />
-                <Notes />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-4">
+                            <UserInfo />
+                        </div>
+                        <div className="col-4">
+                            <Feed />
+                        </div>
+                        <div className="col-4">
+                            <Notes />
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

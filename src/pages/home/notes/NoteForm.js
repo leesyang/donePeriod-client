@@ -9,6 +9,7 @@ import { required, nonEmpty, isTrimmed } from '../../../utils/validators';
 
 export class NoteForm extends React.Component {
     onSubmit(values){
+        console.log(values)
         this.props.dispatch(addNote(values));
     }
 

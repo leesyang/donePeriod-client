@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // ----- components -----
 import Activty from './ticket/Activity';
-//import Attachments from './ticket/Attachements';
+import Attachments from './ticket/Attachements';
 import Description from './ticket/Description';
 import Info from './ticket/Info';
 import InfoSideBar from './ticket/InfoSideBar';
@@ -41,6 +41,7 @@ export class Ticket extends React.Component {
                     </div>
                     <Info />
                     <Description/>
+                    <Attachments />
                     <Activty />
                     <InfoSideBar />
                 </div>

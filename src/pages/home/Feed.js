@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 
 // ----- component -----
 import Entry from './feed/Entry';
+import FeedTable from './feed/FeedTable';
 
 // ----- actions -----
 import { unwatchTicket } from '../../modules/auth';
 
 // ----- css -----
-import './feed/Entry.css'
+import './Feed.css'
+
+// ----- images -----
+import homebanner from '../../images/homebanner.jpg';
 
 export class Feed extends React.Component {
     onUnWatch(ticket_Id) {
@@ -16,14 +20,11 @@ export class Feed extends React.Component {
     }
 
     render() {
-        const { currentWatch } = this.props;
-
-        const entries = currentWatch.map((entry, index) => <Entry key={index} entry={entry} onClick={(ticket_Id) => this.onUnWatch(ticket_Id)}/>)
-
         return (
             <div className="feed">
-                <h3>Watching Issues:</h3>
-                {entries}
+                <img src={homebanner} className="homebanner-img"></img>
+                <p>Stay on track. Currently watching tickets:</p>
+                <FeedTable />
             </div>
         )
     }

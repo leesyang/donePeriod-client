@@ -10,6 +10,9 @@ import NewTicket from '../../pages/NewTicket';
 import Ticket from '../../pages/Ticket';
 import NavBar from '../navigation/NavBar';
 
+// ----- css -----
+import './Main.css'
+
 export class Main extends React.Component {
     constructor(props) {
       super(props)

@@ -11,13 +11,17 @@ export class DropDown extends React.Component {
     )
   
     render() {
-      const { input, label, options } = this.props;
+      const { input, label, options, currentValue } = this.props;
+
+      const defaultSelect = currentValue? <option value={currentValue}>{currentValue}</option>
+       : <option value="">Select</option>
+
       return (
         <div>
           <label htmlFor={label}>{label}: </label>
           <select {...input}>
-            <option value="">Select</option>
-          {options.map(this.renderSelectOptions)}
+            {defaultSelect}
+          {options.filter(option => !(option.text === currentValue)).map(this.renderSelectOptions)}
           </select>
         </div>
       );

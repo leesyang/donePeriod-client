@@ -19,25 +19,27 @@ export class InfoSideBar extends React.Component {
         this.vote = this.vote.bind(this);
     }
 
-    watch(userId) {
-        this.props.dispatch(watchTicket(userId));
+    watch(e) {
+        e.preventDefault();
+        const { ticket_Id } = this.props;
+        this.props.dispatch(watchTicket(ticket_Id));
     }
 
-    vote() {
+    vote(e) {
+        e.preventDefault();
         this.props.dispatch(voteTicket())
     }
 
     render () {
-        const { assignee, reporter, currentUser, ticket_Id, votes, voteCount} = this.props;
-        console.log(voteCount)
-        
+        const { assignee, reporter, currentUser, votes, voteCount} = this.props;
+
         let votingLink;
         currentUser.voteloading? votingLink = <LoaderSm /> : 
-            votingLink = <a href="#" onClick={() => this.vote()}>Vote for this issue</a>;
+            votingLink = <a href="" onClick={(e) => this.vote(e)}>Vote for this issue</a>;
         
         let watchLink;
         currentUser.watchloading? watchLink = <LoaderSm /> : 
-            watchLink = <a href="#" onClick={() => this.watch(ticket_Id)}>Watch this ticket</a>;
+            watchLink = <a href="" onClick={(e) => this.watch(e)}>Watch this ticket</a>;
 
         return (
             <div className="info-sidebar">
