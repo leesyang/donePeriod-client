@@ -16,12 +16,17 @@ export class NewTicket extends React.Component {
         }
 
         return (
-            <div className="new-ticket-container">
+            <div className="new-ticket-container container">
                 <h2>Submit New Ticket</h2>
                 <Form users={users}/>
-                <Link to="/home">
-                    <button>Back to Home</button>
-                </Link>
+                <div className="row">
+                    <div className="col-12">
+                        <Link to="/home">
+                            <button className="link-back">Back to Home</button>
+                        </Link>
+                    </div>
+                </div>
+
             </div>
         )
     }

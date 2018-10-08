@@ -51,10 +51,7 @@ export class Notes extends React.Component {
 
         return (
             <div className="notes">
-                <PlusButton
-                    text='Add a note'
-                    onClick={() => this.onClick()}
-                />
+                <PlusButton onClick={() => this.onClick()}/>
                 {noteForm}
                 <ul className="all-notes">
                     {allNotes}

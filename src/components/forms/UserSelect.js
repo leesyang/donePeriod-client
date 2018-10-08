@@ -5,21 +5,24 @@ export class UserSelect extends React.Component {
     super(props);
   }
 
-  onClick(e, userId) {
+  onClick(e, userId, fullName) {
     const { change } = this.props;
+    change('userSelect', fullName);
     change('assignee', userId );
   }
 
   renderSelectOptions = (users) => {
     return users.map(user => {
       const fullName = user.firstName + ' ' + user.lastName;
-      return <div
-        className="user-select-option"
-        key={user.id}
-        onClick={e => this.onClick(e, user.id)}
-        >
-        {fullName}
-      </div>
+      return (
+        <button className="user-select"
+          className="user-select-option"
+          key={user.id}
+          onClick={e => this.onClick(e, user.id, fullName)}
+          >
+          {fullName}
+        </button>
+      )
     })
   };
 
@@ -37,9 +40,18 @@ export class UserSelect extends React.Component {
 
   render() {
     const { input, label, users } = this.props;
+
+    let errorNotify;
+    if (this.props.meta.touched && this.props.meta.error) {
+      errorNotify = (
+          <div className="input-error">{this.props.meta.error}</div>
+      )
+    }
+
     return (
       <div>
         <label htmlFor={label}>{label}: </label>
+        <div className="error-message">{errorNotify}</div>
         <input type="text" {...input}></input>
         <div className="user-options">
           {this.renderSelectOptions(this.filterUsers(users))}

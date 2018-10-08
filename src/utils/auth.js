@@ -26,6 +26,10 @@ export const getNewestNote = array => {
 }
 
 export const formatDateShort = (date) => {
-    //let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return date? new Date(date).toLocaleDateString("en-US") : undefined;
+}
+
+export const dateTimer = (date) => {
+    const daysDiff = new Date(Date.now()).getDate() - new Date(date).getDate();
+    return daysDiff;
 }

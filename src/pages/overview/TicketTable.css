@@ -4,19 +4,9 @@
 }
 
 [data-label="Ticket Id"] a {
-	text-decoration: none;
-	padding: 0.5em;
-	margin: 0.5em;
-	box-shadow: -1px -1px 7px 0px rgba(192, 192, 192, 0.363);
 }
 
 [data-label="Ticket Id"] a:hover {
-	background-color: #00B8D9;
-	transition-duration: 100ms;
-	color: white;
-	box-shadow: -1px -1px 7px 0px rgba(192, 192, 192, 0.363);
-}
 
-[data-label="Ticket Id"] a:visited {
-	color: black;
+	box-shadow: -1px -1px 7px 0px rgba(192, 192, 192, 0.363);
 }
