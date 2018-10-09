@@ -82,6 +82,7 @@ export class EditFormInfo extends React.Component {
                     />
                 </div>
                 <button type="submit" disabled={pristine || submitting}>Submit</button>
+                <button type="button" onClick={() => this.props.onCancel()}>Cancel</button>
             </form>
         )
     }

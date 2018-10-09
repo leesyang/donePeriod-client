@@ -4,6 +4,9 @@ import prettyFileIcons from 'pretty-file-icons';
 // ----- urls -----
 import { AMZ_S3_URL } from '../config'
 
+// ----- css -----
+import './FileList.css';
+
 export default class FileList extends React.Component {
     render() {
         const { files } = this.props;

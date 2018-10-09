@@ -1,0 +1,10 @@
+.file-list-container {
+    border-style: dashed;
+    border-color: grey;
+    padding: 0.8em;
+}
+
+.file-list {
+    display: inline-block;
+    vertical-align: middle;
+}

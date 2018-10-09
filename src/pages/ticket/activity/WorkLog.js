@@ -18,7 +18,6 @@ export class WorkLog extends React.Component {
 
         return (
             <div className="worklog-container">
-                <h2>Work Log</h2>
                 {worklogEntries}
                 {workLogForm}
             </div>

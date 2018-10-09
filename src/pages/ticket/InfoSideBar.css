@@ -1,0 +1,24 @@
+.icon-container {
+    margin-bottom: 0.5em;
+}
+
+.votes > button {
+    background-color: #FF5630;
+}
+.votes > button:hover {
+    background-color: #36B37E;
+}
+
+.watchers > button {
+    background-color: #FF5630;
+}
+.watchers > button:hover {
+    background-color: #36B37E;
+}
+
+.count {
+    color: black;
+    background: #EBECF0;
+    padding: 0.3em;
+    border-radius: 50%;
+}

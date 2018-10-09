@@ -36,8 +36,7 @@ export class Description extends React.Component {
 
         if(isEditing){ editingForm = (
             <div className="edit-form-container">
-                <EditFormDescription />
-                <button onClick={this.onCancel}>Cancel</button>
+                <EditFormDescription onCancel={this.onCancel}/>
             </div>
             )}
         

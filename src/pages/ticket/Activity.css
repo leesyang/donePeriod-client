@@ -1,0 +1,20 @@
+.activity {
+    margin-top: 1em;
+}
+
+.button-nav {
+    background-color: #172B4D;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    margin: 0;
+}
+
+.selected {
+    background-color: #0052CC;
+}
+
+nav {
+    border-bottom: 0.2em solid #0052CC;
+}

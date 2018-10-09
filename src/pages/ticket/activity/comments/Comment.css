@@ -1,7 +1,53 @@
+.comment {
+    cursor: context-menu;
+}
+
 .attachment {
     display: inline-block;
 }
 .attachement-icon {
     width: 2em;
     height: 2em;
+}
+
+.comment-text {
+    display: block;
+    margin: 0em;
+    border-left: 0.5em solid;
+    border-color: #0052CC;
+    padding: 0.5em;
+    background-color: #F4F5F7;
+}
+
+.comment-text:hover {
+    border-color:rgb(0, 64, 160);
+    transition: 500ms;
+}
+
+.comment-user {
+    width: 2em;
+    border-radius: 1em;
+    height: 100%;
+    display: inline-block;
+    margin-right: 0.5em;
+    vertical-align: text-bottom;
+}
+
+.comment-info {
+    font-size: 0.7em;
+    margin: 0;
+}
+
+.comment > .button-delete {
+    display: inline-block;
+}
+
+.arrow-icon {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.worklog-attachments {
+    font-size: 0.9em;
+    background-color: #F4F5F7;
 }

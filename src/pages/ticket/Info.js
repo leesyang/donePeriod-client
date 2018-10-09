@@ -30,15 +30,16 @@ export class Info extends React.Component {
         if(isEditing) { 
            return (
                 <div className="info-edit-form">
-                    <EditForm ticketInfo={this.props.ticketInfo} />
-                    <button onClick={() => this.onClickCancel()}>Cancel</button>
+                    <EditForm
+                        ticketInfo={this.props.ticketInfo}
+                        onCancel={() => this.onClickCancel()}
+                    />
                 </div>
             )
         }
 
         return (
             <section className="ticket-info">
-                <button className="button-edit" onClick={() => this.onClickEdit()}>Edit Fields</button>
                 <ul className="row border-top">
                     <li className="col-6">
                         <b>Type: </b>{type}
@@ -55,6 +56,7 @@ export class Info extends React.Component {
                         <b>Resolution: </b>{resolution}
                     </li>
                 </ul>
+                <button className="button-edit" onClick={() => this.onClickEdit()}>Edit</button>
             </section>
         )
     }

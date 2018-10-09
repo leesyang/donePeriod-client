@@ -8,10 +8,12 @@ export class Attachments extends React.Component {
     render () {
         const { attachments } = this.props;
         return (
-            <div className="attachments-container">
-                Attachments: 
-                <FileList files={attachments}/>
-            </div>
+            <section className="attachments-container">
+                <header>Attachments:</header>
+                <div className="file-list-container">
+                    <FileList files={attachments}/>
+                </div>
+            </section>
         )
     }
 }

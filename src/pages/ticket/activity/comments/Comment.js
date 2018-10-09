@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Ionicon from 'react-ionicons';
 
 // ----- constants -----
 import { AMZ_S3_URL } from '../../../../config';
@@ -24,17 +25,22 @@ export class Comment extends React.Component {
 
     render() {
         const {comment, dateAdded, files } = this.props.comment;
-        //const { ticketId } = this.props;
         const { firstName, lastName, profilePicture } = this.props.comment.addedBy;
+
+        let attachments = files? <div className="worklog-attachments">Attachments: <FileList files={files}/></div> : undefined;
 
         return (
             <li className="comment">
-                <img src={AMZ_S3_URL+profilePicture}></img>
-                <p>{comment}</p>
-                <p>Added By: {firstName} {lastName}</p>
-                <p>Date Added: {formatDateShort(dateAdded)}</p>
-                <FileList files={files}/>
-                <a href="" onClick={(e) => this.onDelete(e)}>Delete</a>
+                <p className="comment-text">
+                    <img className="comment-user" src={AMZ_S3_URL+profilePicture}></img>
+                    <Ionicon icon="md-arrow-dropright" className="arrow-icon" color="#172B4D" />
+                    {comment}
+                </p>
+                {attachments}
+                <p className="comment-info">
+                    Posted by {firstName} {lastName} on {formatDateShort(dateAdded)}
+                    <button onClick={(e) => this.onDelete(e)} className="button-delete">Delete</button>
+                </p>
             </li>
         )
 

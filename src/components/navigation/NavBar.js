@@ -25,7 +25,7 @@ export class NavBar extends React.Component {
                         <a href="#" onClick={() => dispatch(logout())}>Log Out</a>
                     </div>
                 </div>
-                <UserIcon user={user} />
+                {/* <UserIcon user={user} /> */}
             </div>
         )
     }

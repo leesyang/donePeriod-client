@@ -53,11 +53,13 @@ export const VOTE_TICKET_REQUEST = 'app/ticket/VOTE_TICKET_REQUEST';
 export const VOTE_TICKET_SUCCESS = 'app/ticket/VOTE_TICKET_SUCCESS';
 export const VOTE_TICKET_ERROR = 'app/ticket/VOTE_TICKET_ERROR';
 
+export const CHANGE_ACT_VIEW = 'app/ticket/CHANGE_ACT_VIEW';
+
 // ----- reducer -----
 export default function ticketReducer (state={}, action) {
     if(action.type === LOAD_TICKET){
         let ticketObject = action.state[0];
-        return Object.assign({}, ticketObject, { isLoaded: true, isModified: false, error: false, errorInfo: null })
+        return Object.assign({}, ticketObject, { isLoaded: true, isModified: false, error: false, errorInfo: null, activityView: 'comments' })
     }
     if(action.type === LOAD_TICKET_ERROR){
         return Object.assign({}, state, { isLoaded: false, error: true })
@@ -163,6 +165,11 @@ export default function ticketReducer (state={}, action) {
         return Object.assign({}, state, { workloguploading: false, error: action.error })
     }
 
+    // change activity view
+    if(action.type === CHANGE_ACT_VIEW) {
+        return Object.assign({}, state, { activityView: action.data })
+    }
+
     return state
 }
 
@@ -196,9 +203,10 @@ export const updateInfoInit = (boolean) => (
 export const updateInfoRequest = () => (
     { type: UPDATE_INFO_REQUEST }
 )
-export const updateInfoSuccess = (data) => (
-    { type: UPDATE_INFO_SUCCESS, ticketInfo: data.ticketInfo }
-)
+export const updateInfoSuccess = (data) => {
+    console.log(data);
+    return { type: UPDATE_INFO_SUCCESS, ticketInfo: data.ticketInfo }
+}
 export const updateInfoError = (error) => (
     { type: UPDATE_INFO_ERROR, error: error }
 )
@@ -270,6 +278,11 @@ export const removeWorkLogSuccess = (data) => (
 )
 export const removeWorkLogError = (error) => (
     { type: REMOVE_WORKLOG_ERROR, error: error }
+)
+
+// -- change act view --
+export const changeActView = (view) => (
+    { type: CHANGE_ACT_VIEW, data: view }
 )
 
 // -- location endpoints --

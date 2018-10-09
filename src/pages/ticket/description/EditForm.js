@@ -31,6 +31,7 @@ export class EditFormDescription extends React.Component {
                     id="description"
                 />
                 <button type="submit" disabled={pristine || submitting}>Submit</button>
+                <button type="button" onClick={this.props.onCancel}>Cancel</button>
             </form>
         )
     }
