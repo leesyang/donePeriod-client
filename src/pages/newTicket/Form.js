@@ -33,7 +33,7 @@ export class NewTicket extends React.Component {
         Object.keys(formValues).filter(word => !(word === 'newTicketFiles'))
         .forEach(key => formData.append(`${key}`, formValues[key]))
 
-        if(formValues.newTicketFiles.length) {
+        if(formValues.newTicketFiles) {
             for (let i = 0; i < formValues.newTicketFiles.length; i++) {
                 formData.append(`files`, formValues.newTicketFiles.item(i))
             }

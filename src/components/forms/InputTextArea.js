@@ -14,7 +14,7 @@ export default class InputTextArea extends React.Component {
         return (
             <div className="form-input">
                 <div className="error-message">{errorNotify}</div>
-                <label htmlFor={this.props.input.name}>{label}: </label>
+                <label htmlFor={this.props.input.name}>{label? `${label}: `: undefined} </label>
                 <textarea
                     {...this.props.input}
                     id={this.props.input.name}

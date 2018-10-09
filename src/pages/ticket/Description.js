@@ -8,6 +8,9 @@ import Loader from '../../components/Loader';
 // ----- actions -----
 import { updateDescriptionInit } from '../../modules/ticket';
 
+// ----- css -----
+import './Description.css';
+
 export class Description extends React.Component {
     constructor(props) {
         super(props);
@@ -29,18 +32,27 @@ export class Description extends React.Component {
 
         if(isUpdating) { return <Loader /> }
 
-        if(isEditing){ return (
+        let editingForm;
+
+        if(isEditing){ editingForm = (
             <div className="edit-form-container">
                 <EditFormDescription />
                 <button onClick={this.onCancel}>Cancel</button>
             </div>
             )}
+        
+        let descriptionText = (
+            <p>
+                {description}
+                <button className="button-edit" onClick={this.onClickEdit}>Edit</button>
+            </p>
+        );
 
         return (
-            <div className="description">
-                Description: {description}
-                <button onClick={this.onClickEdit}>Edit</button>
-            </div>
+            <section className="description border-top">
+                <header>Description</header>
+                {editingForm? editingForm  : descriptionText}
+            </section>
         )
     }
 }

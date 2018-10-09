@@ -15,11 +15,6 @@ export class EditFormDescription extends React.Component {
         dispatch(updateDescription(values))
     }
 
-/*     onReset() {
-        const { dispatch, clearFields } = this.props;
-        dispatch(clearFields('editDescription', false, true, ['description']));
-        console.log('asdf')
-    } */
 
     render () {
         const { handleSubmit, pristine, submitting } = this.props;
@@ -34,10 +29,8 @@ export class EditFormDescription extends React.Component {
                     type="text"
                     name="description"
                     id="description"
-                    label="Description"
                 />
                 <button type="submit" disabled={pristine || submitting}>Submit</button>
-                {/* <button type="button" onClick={() => this.onReset()}>Reset</button> */}
             </form>
         )
     }

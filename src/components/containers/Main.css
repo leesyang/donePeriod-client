@@ -20,7 +20,7 @@ textarea {
     width:50%;
 }
 
-button, .link-back, .user-select-option, .user-selected {
+button, .link-back, .user-select-option, .user-selected, .button-edit {
     border: none;
     margin: 0.5em;
     background-color: #6554C0;
@@ -29,12 +29,8 @@ button, .link-back, .user-select-option, .user-selected {
     color: white;
     cursor: pointer;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    font-size: 0.8em;
 }
-
-.link-back {
-    background-color: #00B8D9;
-}
-
 button:hover {
     background-color: rgb(61, 52, 114);
     transition-duration: 500ms;
@@ -43,6 +39,9 @@ button:disabled {
     background-color: gray;
 }
 
+.link-back {
+    background-color: #00B8D9;
+}
 .link-back:hover {
     background-color: rgb(0, 137, 161);
     transition-duration: 500ms;
@@ -57,4 +56,11 @@ button:disabled {
 
 .user-selected {
     background-color: #FF5630;
+}
+.button-edit {
+    background-color: rgb(218, 218, 218);
+    color:black;
+}
+.button-edit:hover {
+    background-color: rgb(204, 204, 204);;
 }

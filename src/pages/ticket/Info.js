@@ -8,6 +8,9 @@ import { updateInfoInit } from '../../modules/ticket';
 import EditForm from './info/EditForm';
 import Loader from '../../components/Loader';
 
+// ----- css -----
+import './Info.css';
+
 export class Info extends React.Component {
     onClickEdit () {
         this.props.dispatch(updateInfoInit(true))
@@ -34,13 +37,25 @@ export class Info extends React.Component {
         }
 
         return (
-            <div className="ticket-info">
-                <button onClick={() => this.onClickEdit()}>Edit Fields</button>
-                <div className="column">Type: {type}</div>
-                <div className="column">Status: {status}</div>
-                <div className="column">Priority: {priority}</div>
-                <div className="column">Resolution: {resolution}</div>
-            </div>
+            <section className="ticket-info">
+                <button className="button-edit" onClick={() => this.onClickEdit()}>Edit Fields</button>
+                <ul className="row border-top">
+                    <li className="col-6">
+                        <b>Type: </b>{type}
+                    </li>
+                    <li className="col-6">
+                        <b>Status: </b>{status}
+                    </li>
+                </ul>
+                <ul className="row">
+                    <li className="col-6">
+                        <b>Priority: </b>{priority}
+                    </li>
+                    <li className="col-6">
+                        <b>Resolution: </b>{resolution}
+                    </li>
+                </ul>
+            </section>
         )
     }
 }

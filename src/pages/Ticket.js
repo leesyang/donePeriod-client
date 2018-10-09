@@ -34,16 +34,22 @@ export class Ticket extends React.Component {
 
         if(isLoaded){
             return (
-                <div className="ticket">
+                <div className="ticket container">
                     <h1>Title</h1>
                     <div className="ticket-nav">
                         <Link to="/overview">Return to Overview</Link>
                     </div>
-                    <Info />
-                    <Description/>
-                    <Attachments />
-                    <Activty />
-                    <InfoSideBar />
+                    <div className="row">
+                        <div className="col-9">
+                            <Info />
+                            <Description/>
+                            <Attachments />
+                            <Activty />
+                        </div>
+                        <div className="col-3">
+                            <InfoSideBar />
+                        </div>
+                    </div>
                 </div>
             )
         }

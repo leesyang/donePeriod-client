@@ -32,50 +32,55 @@ export class EditFormInfo extends React.Component {
                 className="ticket-edit-form"
                 onSubmit={handleSubmit(values => this.onSubmit(values))}
                 >
-                <Field
-                    component={DropDown}
-                    type="text"
-                    name="type"
-                    id="type"
-                    label="Type"
-                    options={ticketOpt.type}
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                    currentValue={type}
-                />
-                <Field
-                    component={DropDown}
-                    type="text"
-                    name="status"
-                    id="status"
-                    label="Status"
-                    options={ticketOpt.status}
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                    currentValue={status}
-                />
-                <Field
-                    component={DropDown}
-                    type="text"
-                    name="priority"
-                    id="priority"
-                    label="Priority"
-                    options={ticketOpt.priority}
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                    currentValue={priority}
-                />
-                <Field
-                    component={DropDown}
-                    type="text"
-                    name="resolution"
-                    id="resolution"
-                    label="Resolution"
-                    options={ticketOpt.resolution}
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                    currentValue={resolution}
-                />
+                <div className="col-6">
+                    <Field
+                        component={DropDown}
+                        type="text"
+                        name="type"
+                        id="type"
+                        label="Type"
+                        options={ticketOpt.type}
+                        validate={[required, nonEmpty]}
+                        disabled={pristine || submitting}
+                        currentValue={type}
+                    />
+                    <Field
+                        component={DropDown}
+                        type="text"
+                        name="priority"
+                        id="priority"
+                        label="Priority"
+                        options={ticketOpt.priority}
+                        validate={[required, nonEmpty]}
+                        disabled={pristine || submitting}
+                        currentValue={priority}
+                    />
+
+                </div>
+                <div className="col-6">
+                    <Field
+                        component={DropDown}
+                        type="text"
+                        name="status"
+                        id="status"
+                        label="Status"
+                        options={ticketOpt.status}
+                        validate={[required, nonEmpty]}
+                        disabled={pristine || submitting}
+                        currentValue={status}
+                    /> 
+                    <Field
+                        component={DropDown}
+                        type="text"
+                        name="resolution"
+                        id="resolution"
+                        label="Resolution"
+                        options={ticketOpt.resolution}
+                        validate={[required, nonEmpty]}
+                        disabled={pristine || submitting}
+                        currentValue={resolution}
+                    />
+                </div>
                 <button type="submit" disabled={pristine || submitting}>Submit</button>
             </form>
         )

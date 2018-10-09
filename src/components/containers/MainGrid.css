@@ -31,7 +31,10 @@ h6 {
 }
 
 p {
-  font-size: 1.125rem;
+/*   font-size: 1.125rem;
+  font-weight: 200;
+  line-height: 1.8; */
+  font-size: 1rem;
   font-weight: 200;
   line-height: 1.8;
 }
@@ -218,6 +221,11 @@ p {
   .hidden-sm {
     display: block;
   }
+}
+
+/* STYLING */
+.border-top {
+  border-top: 0.2em solid rgb(231, 231, 231);
 }
 
 @media only screen and (min-width: 60em) { /* 960px */

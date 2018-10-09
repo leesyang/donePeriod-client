@@ -1,0 +1,7 @@
+.ticket-info {
+    margin-bottom: 1em;
+}
+
+.ticket-info > ul {
+    padding: 0em;
+}
