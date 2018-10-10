@@ -16,7 +16,7 @@ import InputWorkLog from '../../pages/ticket/activity/workLog/InputWorkLog';
 import InputTextArea from '../../components/forms/InputTextArea'
 
 // ----- actions -----
-import { postNewTicket } from '../../modules/ticketsData';
+import { postNewTicket, uploadNewTicketAttachments } from '../../modules/ticketsData';
 
 // ----- css -----
 import './Form.css';
@@ -28,19 +28,29 @@ export class NewTicket extends React.Component {
     }
 
     onSubmit(formValues) {
+        // creates form data obj, confirm valid assignee, then upload file using new form data
         const { dispatch, reset } = this.props;
         const formData = new FormData();
         Object.keys(formValues).filter(word => !(word === 'newTicketFiles'))
         .forEach(key => formData.append(`${key}`, formValues[key]))
 
-        if(formValues.newTicketFiles) {
-            for (let i = 0; i < formValues.newTicketFiles.length; i++) {
-                formData.append(`files`, formValues.newTicketFiles.item(i))
-            }
-        }
-
         return dispatch(postNewTicket(formData))
-        .then(() => reset('newTicket'))
+        .then(res => {
+            if(!res.error){
+                const ticket_Id = res._id;
+
+                let formDataFiles = new FormData();
+
+                formDataFiles.append('ticketId', res.ticketId)
+                if(formValues.newTicketFiles) {
+                    for (let i = 0; i < formValues.newTicketFiles.length; i++) {
+                        formDataFiles.append(`files`, formValues.newTicketFiles.item(i))
+                    }
+                }
+                return dispatch(uploadNewTicketAttachments(formDataFiles, ticket_Id))
+                .then(() => reset('newTicket'))
+            }
+        })
     }
 
     onClickAssign() {
@@ -112,6 +122,8 @@ export class NewTicket extends React.Component {
                             type="hidden"
                             name="assignee"
                             id="assignee"
+                            validate={[required, nonEmpty]}
+                            disabled={pristine || submitting}
                         />
                     </div>
                     <div className="col-6">

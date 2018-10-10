@@ -103,6 +103,24 @@ export const getTickets = () => (dispatch, getState) => {
         });
 };
 
+/* export const postNewTicket = (formData) => (dispatch, getState) => {
+    dispatch(postTicketRequest());
+    const authToken = getState().auth.authToken;
+    return fetch(`${API_BASE_URL}/tickets`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+            },
+        body: formData
+        })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then(json => {dispatch(postTicketSuccess(json))})
+        .catch(err => {
+            dispatch(postTicketError(err))
+        });
+} */
+
 export const postNewTicket = (formData) => (dispatch, getState) => {
     dispatch(postTicketRequest());
     const authToken = getState().auth.authToken;
@@ -115,10 +133,22 @@ export const postNewTicket = (formData) => (dispatch, getState) => {
         })
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())
-        .then(json => {console.log(json); dispatch(postTicketSuccess(json))})
-        .catch(err => {
-            dispatch(postTicketError(err))
-        });
+        .catch(err => dispatch(postTicketError(err)));
+}
+
+export const uploadNewTicketAttachments = (formData, ticket_Id) => (dispatch, getState) => {
+    const authToken = getState().auth.authToken;
+    return fetch(`${API_BASE_URL}/tickets/${ticket_Id}/attachments`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${authToken}`
+            },
+        body: formData
+        })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then(ticket => dispatch(postTicketSuccess(ticket)))
+        .catch(err => dispatch(postTicketError(err)));
 }
 
 export const updateTicketfromReducer = () => (dispatch, getState) => {

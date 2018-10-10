@@ -377,7 +377,6 @@ export const deleteNote = (noteId) => (dispatch, getState) => {
 }
 
 export const uploadProfilePicture = (profilePicture) => (dispatch, getState) => {
-    console.log('got here')
     dispatch(updateUserPhotoRequest());
     fetchUserPromise(POST, null, profilePicture, getState)
     .then(res => dispatch(updateUserPhotoSuccess(res.profilePicture)))

@@ -48,6 +48,7 @@ button:hover {
 }
 button:disabled {
     background-color: gray;
+    cursor: context-menu;
 }
 button:focus {
     outline: 0;
