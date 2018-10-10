@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ticketOpt } from '../../components/forms/Consts';
 
 // ----- validators -----
-import {required, nonEmpty } from '../../utils/validators';
+import {required, nonEmpty, length } from '../../utils/validators';
 
 // ----- components -----
 import Input from '../../components/forms/Input';
@@ -20,6 +20,8 @@ import { postNewTicket, uploadNewTicketAttachments } from '../../modules/tickets
 
 // ----- css -----
 import './Form.css';
+
+const titleLength = length({min: 2, max: 61});
 
 export class NewTicket extends React.Component {
     constructor(props) {
@@ -140,6 +142,15 @@ export class NewTicket extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-12">
+                    <Field
+                        component={Input}
+                        type="text"
+                        name="title"
+                        id="title"
+                        label="Title"
+                        validate={[required, nonEmpty, titleLength]}
+                        disabled={pristine || submitting}
+                    />
                     <Field
                         component={InputTextArea}
                         type="text"

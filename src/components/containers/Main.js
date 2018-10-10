@@ -9,32 +9,26 @@ import Overview from '../../pages/Overview';
 import NewTicket from '../../pages/NewTicket';
 import Ticket from '../../pages/Ticket';
 import NavBar from '../navigation/NavBar';
+import SideBarTickets from '../navigation/SideBarTickets';
 
 // ----- css -----
 import './Main.css'
 
-export class Main extends React.Component {
-    constructor(props) {
-      super(props)
-    }
 
+export class Main extends React.Component {
     render() {
       return (
         <div className="main">
           { /* Routes Requiring Login */}
           <NavBar />
           <Route exact path='/home' component={Home} />
-          <Route exact path='/overview' component={Overview} />
           <Route exact path='/overview/new' component={NewTicket} />
+          <Route exact path='/issues' component={Overview} />
           <Route exact path='/issues/:ticketId' component={Ticket} />
         </div>
       );
     }
   }
 
-const mapStateToProps = state => {
-  //console.log(state);
-  return {}
-}
 
-export default ProtectedRoute()(connect(mapStateToProps)(Main));
+export default ProtectedRoute()(connect()(Main));

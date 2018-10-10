@@ -29,6 +29,12 @@
     margin-bottom: 1em;
 }
 
+.ticket-color-info > ul {
+    background-color: #F4F5F7;
+    text-align: left;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
 @media screen and (max-width: 720px){
     .user-info > h3 {
         text-align: center;

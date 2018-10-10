@@ -20,6 +20,7 @@ input, textarea, select {
     margin: 0.5em 0em 0.5em 0em;
     padding: 0.2em;
     box-sizing: border-box;
+    width: 100%;
 }
 
 
@@ -89,4 +90,10 @@ button > a {
 }
 .button-delete:hover {
     background-color: rgb(47, 151, 108);
+}
+
+@media only screen and (min-width: 720px)  {
+    input {
+        width: inherit;
+    }
 }

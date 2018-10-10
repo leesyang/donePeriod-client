@@ -17,7 +17,7 @@
 
 .feed > table th,
 table td {
-    padding: .625em;
+    padding: .525em;
     text-align: center;
 }
 
@@ -28,12 +28,16 @@ table td {
 .feed > table th {
     font-size: .85em;
     letter-spacing: .1em;
-    text-transform: uppercase;
+}
+
+.icon-action {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1100px) {
 table {
     border: 0;
+    width: 80%;
 }
 
 table caption {
@@ -54,7 +58,11 @@ table thead {
 table tr {
     border-bottom: 3px solid #ddd;
     display: block;
-    margin-bottom: .625em;
+    border-style: outset;
+    border-color: #d3d3d333;
+    border-radius: 1em;
+    padding: 0.5em;
+    margin: 0.3em;
 }
 
 table td {
@@ -73,7 +81,6 @@ table td::before {
     content: attr(data-label);
     float: left;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
 table td:last-child {

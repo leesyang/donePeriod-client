@@ -20,7 +20,7 @@ export class NavBar extends React.Component {
                     <button className="dropbtn">Places</button>
                     <div className="dropdown-content">
                         <Link to="/home">Home</Link>
-                        <Link to="/overview">Overview</Link>
+                        <Link to="/issues">Overview</Link>
                         <Link to="/overview/new">Submit New</Link>
                         <a href="#" onClick={() => dispatch(logout())}>Log Out</a>
                     </div>

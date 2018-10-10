@@ -53,8 +53,21 @@ export class UserInfo extends React.Component {
                 <img src={AMZ_S3_URL+profilePicture} className="user-img"></img>
                 <Ionicon icon="md-create" className="pen" onClick={this.onClick} role="button"/>
                 <a className="user-fullname">Hi, {fullName}</a>
-                <h3>Assigned Tickets: </h3>
+                <header>Assigned Tickets: </header>
                 <AssignedList watching={assigned} />
+                <div className="ticket-color-info">
+                    <ul>
+                        <li>
+                            <Ionicon icon="md-open" icon="md-open" color="#FF5630"/> Overdue
+                        </li>
+                        <li>
+                            <Ionicon icon="md-open" icon="md-open" color="#FF991F"/> Due Soon
+                        </li>
+                        <li>
+                            <Ionicon icon="md-open" icon="md-open" color="#36B37E"/> Got time
+                        </li>
+                    </ul>
+                </div>
             </div>
         )
     }

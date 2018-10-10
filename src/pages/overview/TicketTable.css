@@ -1,12 +1,11 @@
 .overview-table {
 	margin: 0 auto;
-	width: 80%;
-}
-
-[data-label="Ticket Id"] a {
+	border-style: outset;
+    border-color: #d3d3d333;
+    border-radius: 1em;
+    padding: 0.5em;
 }
 
 [data-label="Ticket Id"] a:hover {
-
 	box-shadow: -1px -1px 7px 0px rgba(192, 192, 192, 0.363);
 }

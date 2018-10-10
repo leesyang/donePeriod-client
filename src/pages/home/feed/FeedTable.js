@@ -29,7 +29,7 @@ export class FeedTable extends React.Component {
                 <tr key={index}>
                     <td data-label="Ticket">
                         <Link to={`/issues/${ticketId}`}><Ionicon icon="md-open"/></Link>
-                        <Ionicon icon="md-close" onClick={() => this.onDeleteWatch(_id)} />
+                        <Ionicon icon="md-trash" className="icon-action" onClick={() => this.onDeleteWatch(_id)} />
                     </td>
                     <td data-label="Due In">{dateTimer(dueDate) < 0? 'Overdue' : `${dateTimer(dueDate)} Days`}</td>
                 </tr>
