@@ -18,7 +18,6 @@ export class Activity extends React.Component {
     }
 
     render () {
-        console.log(this.props.activityView)
 
         const { activityView } = this.props;
 

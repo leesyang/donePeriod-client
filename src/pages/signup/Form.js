@@ -14,9 +14,8 @@ const passwordLength = length({min: 10, max: 72});
 const usernameLength = length({min: 2, max: 10});
 const matchesPassword = matches('password');
 
-export class Form extends React.Component {
+export class SignUpForm extends React.Component {
     onSubmit(values) {
-        console.log(values);
         const { dispatch, reset } = this.props;
         return dispatch(registerUser(values)).then(() => reset('login'))
     };
@@ -26,7 +25,7 @@ export class Form extends React.Component {
         return (
             <form
                 onSubmit={handleSubmit(values => this.onSubmit(values))}
-                className="login-form"
+                className="auth-form"
                 >
                 <label htmlFor="firstName">First Name</label>
                 <Field 
@@ -90,4 +89,4 @@ export class Form extends React.Component {
 
 export default reduxForm ({
     form: 'login'
-})(Form)
+})(SignUpForm)

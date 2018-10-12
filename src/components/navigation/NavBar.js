@@ -25,10 +25,9 @@ export class NavBar extends React.Component {
                         <Link to="/home">Home</Link>
                         <Link to="/issues">Tickets</Link>
                         <Link to="/overview/new">Submit New</Link>
-                        <a href="#" onClick={() => dispatch(logout())}>Log Out</a>
+                        <Link to="/" onClick={() => dispatch(logout())}>Log Out</Link>
                     </div>
                 </div>
-                {/* <UserIcon user={user} /> */}
             </div>
         )
     }

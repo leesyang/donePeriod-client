@@ -31,7 +31,6 @@ export default function protectedDataReducer (state=initialState, action) {
         return Object.assign({}, state, { initialGet: true, isLoading: false, tickets: action.data});
     }
     if(action.type === GET_TICKETS_ERROR) {
-        console.log('there was a err')
         return Object.assign({}, state, { isLoading: false, error: true, errorInfo: action.err});
     }
 
@@ -46,7 +45,6 @@ export default function protectedDataReducer (state=initialState, action) {
     }
     if(action.type === POST_TICKET_SUCCESS) {
         let asdf = Object.assign({}, state, {isPosting: false, tickets: [...state.tickets, action.data] })
-        console.log(asdf);
         return asdf;
     }
     if(action.type === POST_TICKET_ERROR) {

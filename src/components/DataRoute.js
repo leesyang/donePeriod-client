@@ -6,8 +6,7 @@ import { fetchProtectedData } from '../modules/protectedData';
 export default () => Component => {
     function RequiresData(props) {
         const { loggedIn, hasData, data, ...passThroughProps } = props;
-        console.log(hasData)
-        console.log(data);
+
         if(!hasData){
             fetchProtectedData();
         }

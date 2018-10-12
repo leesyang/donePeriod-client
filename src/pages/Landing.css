@@ -64,17 +64,14 @@
 .login-container p {
     text-align: center;
     font-family: 'Roboto Condensed';
-    font-size: 2em;
+    color: white;
+    font-size: 3em;
+    background-image: url(/static/media/login-bg.4ae4f848.jpg);
+    background-size: cover;
+    text-shadow: beige;
+    text-shadow: 1px 1px #000000;
 }
 
-.login-form {
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #00C7E5;
-    height: fit-content;
-}
 
 @media screen and (min-width: 600px) {
     .landing-container h1 {

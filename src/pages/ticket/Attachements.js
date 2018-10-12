@@ -19,7 +19,6 @@ export class Attachments extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
         attachments: state.ticket.attachments
     }

@@ -45,6 +45,9 @@ export const UPDATE_USER_PHOTO_REQUEST = 'app/auth/UPDATE_USER_PHOTO_REQUEST';
 export const UPDATE_USER_PHOTO_SUCCESS = 'app/auth/UPDATE_USER_PHOTO_SUCCESS';
 export const UPDATE_USER_PHOTO_ERROR = 'app/auth/UPDATE_USER_PHOTO_ERROR';
 
+export const VISIBILITY_TOGGLE_LOGIN = 'app/auth/VISIBILITY_TOGGLE_LOGIN';
+export const VISIBILITY_TOGGLE_SIGNUP = 'app/auth/VISIBILITY_TOGGLE_SIGNUP';
+
 // ----- initialState -----
 const initialState = {
     authToken: null,
@@ -60,35 +63,35 @@ export default function authReducer (state=initialState, action) {
     if(action.type === SET_AUTH_TOKEN) {
         return Object.assign({}, state, { authToken: action.authToken } )
     }
-    else if(action.type === SET_CURRENT_USER) {
+    if(action.type === SET_CURRENT_USER) {
         return Object.assign({}, state, { currentUser: action.currentUser })
     }
-    else if(action.type === CLEAR_AUTH) {
+    if(action.type === CLEAR_AUTH) {
         return Object.assign({}, initialState )
     }
     // auth request
-    else if(action.type === AUTH_REQUEST) {
+    if(action.type === AUTH_REQUEST) {
         return Object.assign({}, state, { loading: true, error: null })
     }
-    else if(action.type === AUTH_SUCCESS) {
+    if(action.type === AUTH_SUCCESS) {
         return Object.assign({}, state, { loading: false, currentUser: action.currentUser })
     }
-    else if(action.type === AUTH_ERROR) {
+    if(action.type === AUTH_ERROR) {
         return Object.assign({}, state, { loading: false, error: action.error })
     }
     // watch a ticket
-    else if(action.type === WATCH_TICKET_REQUEST) {
+    if(action.type === WATCH_TICKET_REQUEST) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, watchloading: true} })
     }
-    else if(action.type === WATCH_TICKET_SUCCESS) {
-        console.log(action.data);
+    if(action.type === WATCH_TICKET_SUCCESS) {
+
         return Object.assign({}, state, { 
             currentUser: {... state.currentUser, 
                 watchloading: false, 
                 watching: action.data }
         })
     }
-    else if(action.type === WATCH_TICKET_ERROR) {
+    if(action.type === WATCH_TICKET_ERROR) {
         return Object.assign({}, state, { 
             currentUser: { ...state.currentUser, 
                 error: true,
@@ -96,18 +99,17 @@ export default function authReducer (state=initialState, action) {
                 watchloading: false } })
     }
     // un-watch a ticket
-    else if(action.type === UNWATCH_TICKET_REQUEST) {
+    if(action.type === UNWATCH_TICKET_REQUEST) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, unwatchloading: true} })
     }
-    else if(action.type === UNWATCH_TICKET_SUCCESS) {
-        console.log(action.data);
+    if(action.type === UNWATCH_TICKET_SUCCESS) {
         return Object.assign({}, state, { 
             currentUser: {... state.currentUser, 
                 unwatchloading: false, 
                 watching: action.data }
         })
     }
-    else if(action.type === UNWATCH_TICKET_ERROR) {
+    if(action.type === UNWATCH_TICKET_ERROR) {
         return Object.assign({}, state, { 
             currentUser: { ...state.currentUser, 
                 error: true,
@@ -116,39 +118,39 @@ export default function authReducer (state=initialState, action) {
     }
 
     // add note
-    else if(action.type === NOTE_ADDING) {
+    if(action.type === NOTE_ADDING) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, noteadding: action.boolean }})
     }
-    else if(action.type === ADD_NOTE_REQUEST) {
+    if(action.type === ADD_NOTE_REQUEST) {
         return Object.assign({}, state, { currentUser: {...state.currentUser, noteloading: true} })
     }
-    else if(action.type === ADD_NOTE_SUCCESS) {
+    if(action.type === ADD_NOTE_SUCCESS) {
         return Object.assign({}, state, { 
             currentUser: {...state.currentUser, 
                 noteloading: false,
                 noteadding: false,
                 notes: [ ...state.currentUser.notes, action.data] }})
     }
-    else if(action.type === ADD_NOTE_ERROR) {
+    if(action.type === ADD_NOTE_ERROR) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, noteloading: false, error: true, errorInfo: action.error} })
     }
 
     // update user photo
-    else if(action.type === UPDATE_USER_PHOTO) {
+    if(action.type === UPDATE_USER_PHOTO) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, isEditing: action.data }})
     }
-    else if(action.type === UPDATE_USER_PHOTO_REQUEST) {
+    if(action.type === UPDATE_USER_PHOTO_REQUEST) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: true }})
     }
-    else if(action.type === UPDATE_USER_PHOTO_SUCCESS) {
+    if(action.type === UPDATE_USER_PHOTO_SUCCESS) {
         return Object.assign({}, state, { currentUser: { ... state.currentUser, photoUpdateLoading: false, isEditing: false, profilePicture: action.data }})
     }
-    else if(action.type === UPDATE_USER_PHOTO_ERROR) {
+    if(action.type === UPDATE_USER_PHOTO_ERROR) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: false, error: true, errorInfo: action.error }})
     }
 
     // remove note?
-    else if(action.type === REMOVE_NOTE_SUCCESS){
+    if(action.type === REMOVE_NOTE_SUCCESS) {
         let _notes = state.currentUser.notes.filter(note => !(note._id === action.data))
         return Object.assign({}, state, {
             currentUser: {...state.currentUser,
@@ -156,6 +158,15 @@ export default function authReducer (state=initialState, action) {
                 noteadding: false,
                 notes: _notes
         }})
+    }
+
+    // toggle login
+    if(action.type === VISIBILITY_TOGGLE_LOGIN) {
+        return Object.assign({}, state, { logIn: action.data, signUp: false })
+    }
+    //toggle signup
+    if(action.type === VISIBILITY_TOGGLE_SIGNUP) {
+        return Object.assign({}, state, { signUp: action.data, logIn: false })
     }
     return state;
 }
@@ -241,10 +252,17 @@ export const updateUserPhotoError = (error) => (
     { type: UPDATE_USER_PHOTO_ERROR,  error: error }
 )
 
+// hide and show login on landing page
+export const toggleLogin = (boolean) => {
+    return { type: VISIBILITY_TOGGLE_LOGIN, data: boolean }
+}
+export const toggleSignup = (boolean) => (
+    { type: VISIBILITY_TOGGLE_SIGNUP, data: boolean }
+)
+
 // ----- successful auth handler -----
 export const storeAuthInfo = (authToken, dispatch) => {
     const decodedToken = jwtDecode(authToken);
-    console.log(decodedToken.user)
     dispatch(setAuthToken(authToken));
     dispatch(authSuccess(decodedToken.user));
     saveAuthToken(authToken);

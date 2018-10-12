@@ -23,7 +23,6 @@ export class Notes extends React.Component {
     }
 
     onDelete(noteId) {
-        console.log(noteId)
         this.props.dispatch(deleteNote(noteId))
     }
 
@@ -34,8 +33,7 @@ export class Notes extends React.Component {
 
         noteadding? noteForm = 
             (<div className="note-form">
-                <NoteForm />
-                <button onClick={() => this.onCancel()}>Close</button>
+                <NoteForm onClick={() => this.onCancel()}/>
             </div>) : undefined;
 
         noteloading? noteForm = <LoaderSm /> : undefined;

@@ -4,9 +4,11 @@ import './App.css';
 
 // ----- imports: components -----
 import Landing from './pages/Landing';
-import Login  from './pages/Login';
-import Signup from './pages/Signup';
 import Main from './components/containers/Main';
+
+// ----- css -----
+import './pages/Login.css';
+import './pages/Signup.css';
 
 class App extends React.Component {
   render() {
@@ -15,8 +17,6 @@ class App extends React.Component {
         { /* Routes*/}
         <Switch>
           <Route exact path='/' component={Landing} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/signup' component={Signup} />
           <Main />
         </Switch>
       </div>

@@ -7,8 +7,10 @@ export default class NavButton extends React.Component {
                 className="nav-button"
                 type="button"
                 name={this.props.name}
-                value=''>
-                {this.props.name}
+                value=''
+                onClick={this.props.onClick}
+                >
+                    {this.props.name}
             </button>
         )
     }

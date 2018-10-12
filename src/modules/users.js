@@ -82,7 +82,6 @@ export const registerUser = user => dispatch => {
             userInfo = {};
         })
         .catch(err => {
-            console.log(err)
             const {reason, message, location} = err;
             if (reason === 'ValidationError') { 
                 // Convert ValidationErrors into SubmissionErrors for Redux Form

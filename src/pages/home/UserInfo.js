@@ -22,7 +22,6 @@ export class UserInfo extends React.Component {
     }
 
     onClick() {
-        console.log('upload photo');
         this.props.dispatch(updateUserPhoto(true))
     }
 

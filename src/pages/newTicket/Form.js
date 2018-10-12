@@ -43,7 +43,7 @@ export class NewTicket extends React.Component {
         .then(res => {
             if(!res.error){
                 const ticket_Id = res._id;
-                console.log(res)
+
                 newTicketId = res.ticketId;
 
                 let formDataFiles = new FormData();
@@ -57,7 +57,6 @@ export class NewTicket extends React.Component {
                 return dispatch(uploadNewTicketAttachments(formDataFiles, ticket_Id))
                 .then(() => {
                     reset('newTicket');
-                    console.log(newTicketId)
                     this.props.history.push(`/issues/${newTicketId}`);
                 })
             }

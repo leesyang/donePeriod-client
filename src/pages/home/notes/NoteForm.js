@@ -9,7 +9,6 @@ import { required, nonEmpty, isTrimmed } from '../../../utils/validators';
 
 export class NoteForm extends React.Component {
     onSubmit(values){
-        console.log(values)
         this.props.dispatch(addNote(values));
     }
 
@@ -31,6 +30,7 @@ export class NoteForm extends React.Component {
                     type="submit"
                     disable={[pristine, submitting, invalid]}
                 >Add</button>
+                <button type="button" onClick={this.props.onClick}>Cancel</button>
             </form>
         )
     }

@@ -31,3 +31,7 @@
 .nav-button:nth-child(3):hover {
     background-color: rgb(196, 118, 23);
 }
+
+.home-logo {
+    cursor: pointer;
+}

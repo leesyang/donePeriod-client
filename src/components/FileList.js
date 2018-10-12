@@ -10,7 +10,6 @@ import './FileList.css';
 export default class FileList extends React.Component {
     render() {
         const { files } = this.props;
-        console.log(files)
 
         let fileLinks = files? files.map((file, index) => { 
             const link = AMZ_S3_URL+file;

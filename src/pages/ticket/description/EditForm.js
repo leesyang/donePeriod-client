@@ -18,7 +18,7 @@ export class EditFormDescription extends React.Component {
 
     render () {
         const { handleSubmit, pristine, submitting } = this.props;
-        console.log(this.props)
+
         return (
             <form
                 className="description-edit-form"

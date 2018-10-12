@@ -82,7 +82,7 @@ export default function ticketReducer (state=trInitialState, action) {
         return Object.assign({}, state, { ticketInfo: { ...state.ticketInfo, isUpdating: true} })
     }
     if(action.type === UPDATE_INFO_SUCCESS) {
-        console.log(action.ticketInfo)
+
         return Object.assign({}, state, { ticketInfo: { ...action.ticketInfo, isEditing: false, isUpdating: false }, isModified: true })
     }
     if(action.type === UPDATE_INFO_ERROR) {
@@ -97,7 +97,6 @@ export default function ticketReducer (state=trInitialState, action) {
         return Object.assign({}, state, { description: { ...state.description, isUpdating: true } })
     }
     if(action.type === UPDATE_DESCRIPTION_SUCCESS) {
-        console.log(action.description.text)
         return Object.assign({}, state, { description: { ...state.description, text: action.description.text, isEditing: false, isUpdating: false }, isModified: true})
     }
     if(action.type === UPDATE_ACTIVITY_ERROR) {
@@ -121,7 +120,6 @@ export default function ticketReducer (state=trInitialState, action) {
         return Object.assign({}, state, { commentsloading: true })
     }
     if(action.type === POST_COMMENT_SUCCESS) {
-        console.log(action.comments)
         return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
     }
     if(action.type === POST_COMMENT_ERROR) {
@@ -133,7 +131,6 @@ export default function ticketReducer (state=trInitialState, action) {
         return Object.assign({}, state, { commentsloading: true })
     }
     if(action.type === POST_COMMENT_SUCCESS) {
-        console.log(action.comments)
         return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
     }
     if(action.type === POST_COMMENT_ERROR) {
@@ -145,7 +142,6 @@ export default function ticketReducer (state=trInitialState, action) {
         return Object.assign({}, state, { commentsloading: true })
     }
     if(action.type === REMOVE_COMMENT_SUCCESS) {
-        console.log(action.comments)
         return Object.assign({}, state, { commentsloading: false, comments: action.comments, isModified: true })
     }
     if(action.type === REMOVE_COMMENT_ERROR) {
@@ -213,7 +209,6 @@ export const updateInfoRequest = () => (
     { type: UPDATE_INFO_REQUEST }
 )
 export const updateInfoSuccess = (data) => {
-    console.log(data);
     return { type: UPDATE_INFO_SUCCESS, ticketInfo: data.ticketInfo }
 }
 export const updateInfoError = (error) => (

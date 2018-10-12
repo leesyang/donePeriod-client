@@ -14,7 +14,6 @@ import './FeedTable.css';
 
 export class FeedTable extends React.Component {
     onDeleteWatch(id) {
-        console.log(id)
         const { dispatch } = this.props;
         dispatch(unwatchTicket(id));
     }
