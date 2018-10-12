@@ -3,14 +3,14 @@
 }
 
 .votes > button {
-    background-color: #FF5630;
+    background-color: #00C7E5;
 }
 .votes > button:hover {
     background-color: #36B37E;
 }
 
 .watchers > button {
-    background-color: #FF5630;
+    background-color: #00C7E5;
 }
 .watchers > button:hover {
     background-color: #36B37E;

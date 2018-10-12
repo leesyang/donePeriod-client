@@ -1,6 +1,6 @@
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: #0079BF;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 2em;
 }
@@ -24,14 +24,15 @@
     border: none;
     outline: none;
     color: white;
-    padding: 14px 16px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    padding-right: 2em;
+    padding-left: 1em;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
+    background-color: #DE350B;
 }
 
 .dropdown-content {
@@ -58,4 +59,9 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.nav-logo {
+    width: 1.5em;
+    height: 100%;
 }

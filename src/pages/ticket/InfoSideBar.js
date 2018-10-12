@@ -45,7 +45,7 @@ export class InfoSideBar extends React.Component {
             watchLink = <button onClick={(e) => this.watch(e)}>Watch this ticket</button>;
 
         return (
-            <section className="info-sidebar">
+            <section className="info-sidebar" id="info-sidebar">
                 <h3>More Info:</h3>
                 <div className="icon-container"><b>Assignee: </b><UserIcon user={assignee} /></div>
                 <div className="icon-container"><b>Reporter: </b>{<UserIcon user={reporter} />}</div>

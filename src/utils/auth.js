@@ -30,6 +30,6 @@ export const formatDateShort = (date) => {
 }
 
 export const dateTimer = (date) => {
-    const daysDiff = new Date(Date.now()).getDate() - new Date(date).getDate();
+    const daysDiff = new Date(date).getDate() - new Date(Date.now()).getDate();
     return daysDiff;
 }

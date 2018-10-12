@@ -12,7 +12,8 @@ import { normalizeResponseErrors } from '../utils/errors';
 
 // ----- actions -----
 export const LOAD_TICKET = 'app/ticket/LOAD_TICKET';
-export const LOAD_TICKET_ERROR = 'app/ticket/LOAD_TICKET_ERROR'
+export const LOAD_TICKET_ERROR = 'app/ticket/LOAD_TICKET_ERROR';
+export const CLEAR_TICKET = 'app/ticket/CLEAR_TICKET';
 
 export const UPDATE_INFO = 'app/ticket/INIT_UPDATE_INFO';
 export const UPDATE_INFO_REQUEST = 'app/ticket/UPDATE_INFO_REQUEST';
@@ -55,14 +56,22 @@ export const VOTE_TICKET_ERROR = 'app/ticket/VOTE_TICKET_ERROR';
 
 export const CHANGE_ACT_VIEW = 'app/ticket/CHANGE_ACT_VIEW';
 
+const trInitialState = {};
+
 // ----- reducer -----
-export default function ticketReducer (state={}, action) {
+export default function ticketReducer (state=trInitialState, action) {
+    // load ticket from ticket data
     if(action.type === LOAD_TICKET){
         let ticketObject = action.state[0];
         return Object.assign({}, ticketObject, { isLoaded: true, isModified: false, error: false, errorInfo: null, activityView: 'comments' })
     }
     if(action.type === LOAD_TICKET_ERROR){
         return Object.assign({}, state, { isLoaded: false, error: true })
+    }
+
+    // clear ticket data from reducer
+    if(action.type === CLEAR_TICKET) {
+        return Object.assign({}, trInitialState);
     }
 
     // ticket info
@@ -283,6 +292,11 @@ export const removeWorkLogError = (error) => (
 // -- change act view --
 export const changeActView = (view) => (
     { type: CHANGE_ACT_VIEW, data: view }
+)
+
+// -- clear ticket --
+export const clearTicket = () => (
+    { type: CLEAR_TICKET }
 )
 
 // -- location endpoints --

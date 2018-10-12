@@ -12,8 +12,8 @@ export default class Input extends React.Component {
 
         return (
             <div className="form-input">
-                <div className="error-message">{errorNotify}</div>
                 <label htmlFor={this.props.input.name}>{this.props.label}</label>
+                <div className="error-message">{errorNotify}</div>
                 <input
                     {...this.props.input}
                     id={this.props.input.name}

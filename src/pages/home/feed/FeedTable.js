@@ -37,7 +37,7 @@ export class FeedTable extends React.Component {
         })        
 
         return (
-            <table>
+            <table className="feed-table">
                 <thead>
                     <tr>
                     <th scope="col">Ticket</th>

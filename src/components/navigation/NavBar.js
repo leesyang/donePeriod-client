@@ -8,8 +8,11 @@ import UserIcon from '../UserIcon';
 // ----- actions -----
 import { logout } from '../../modules/auth';
 
+// ----- images -----
+import logo from '../../images/logo-white.png';
+
 // ----- css -----
-import './NavBar.css'
+import './NavBar.css';
 
 export class NavBar extends React.Component {
     render() {
@@ -17,10 +20,10 @@ export class NavBar extends React.Component {
         return (
             <div className="navbar">
                 <div className="dropdown">
-                    <button className="dropbtn">Places</button>
+                    <button className="dropbtn"><img src={logo} className="nav-logo"></img></button>
                     <div className="dropdown-content">
                         <Link to="/home">Home</Link>
-                        <Link to="/issues">Overview</Link>
+                        <Link to="/issues">Tickets</Link>
                         <Link to="/overview/new">Submit New</Link>
                         <a href="#" onClick={() => dispatch(logout())}>Log Out</a>
                     </div>

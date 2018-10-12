@@ -12,8 +12,7 @@ export default class Note extends React.Component {
         const { note, onDelete } = this.props;
         return (
             <li className="note">
-                <Ionicon icon="md-arrow-dropright" fontSize="1em" color="#C9C9C9"/>
-                <p className="note-comment">{note.comment}</p>
+                <p className="note-comment"><Ionicon icon="md-arrow-dropright" fontSize="1em" color="#C9C9C9"/>{note.comment}</p>
                 <p className="note-info">
                     posted: {formatDateShort(note.created)} | <a className="note-delete" href="#" onClick={() => onDelete(note._id)}>Delete</a>
                 </p>

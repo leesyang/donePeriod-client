@@ -10,9 +10,12 @@ import { login } from '../modules/auth';
 export const GET_USERS_REQUEST = 'app/user/GET_USERS_REQUEST';
 export const GET_USERS_SUCCESS = 'app/user/GET_USERS_SUCCESS';
 export const GET_USERS_ERROR = 'app/user/GET_USERS_ERROR';
+export const CLEAR_USERS = 'app/user/CLEAR_USERS';
+
+const urInitialState = {};
 
 // ----- reducer -----
-export default function usersReducer (state={}, action) {
+export default function usersReducer (state=urInitialState, action) {
     if(action.type === GET_USERS_REQUEST) {
         return Object.assign({}, state, { loading: true })
     }
@@ -21,6 +24,9 @@ export default function usersReducer (state={}, action) {
     }
     if(action.type === GET_USERS_ERROR) {
         return Object.assign({}, state, { loading: false, error: action.error })
+    }
+    if(action.type === CLEAR_USERS) {
+        return Object.assign({}, urInitialState)
     }
     return state;
 }
@@ -34,6 +40,9 @@ export const getUsersSuccess = (users) => (
 )
 export const getUsersError = (error) => (
     { type: GET_USERS_ERROR, error: error }
+)
+export const clearUsers = (error) => (
+    { type: CLEAR_USERS }
 )
 
 // ----- get list of users -----

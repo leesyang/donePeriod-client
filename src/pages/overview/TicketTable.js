@@ -35,7 +35,7 @@ export class TicketTable extends React.Component {
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Reporter</th>
                     <th scope="col">Assigned To</th>
                     <th scope="col">Due Date</th>
@@ -51,7 +51,8 @@ export class TicketTable extends React.Component {
                 reporter,
                 assignee,
                 dueDate,
-                ticketInfo
+                ticketInfo,
+                title
                 } = ticket;
 
             let path = `/issues/${ticket.ticketId}`;
@@ -59,7 +60,7 @@ export class TicketTable extends React.Component {
             return (
                 <tr key={index}>
                     <td data-label="Ticket Id"><Link to={path}>{ticketId}</Link></td>
-                    <td data-label="Description">{description.text}</td>
+                    <td data-label="Title">{title}</td>
                     <td data-label="Reporter">{generateFullName(reporter)}</td>
                     <td data-label="Assigned To">{generateFullName(assignee)}</td>
                     <td data-label="Due Date">{formatDate(dueDate)}</td>

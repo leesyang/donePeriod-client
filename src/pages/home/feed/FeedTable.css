@@ -35,55 +35,64 @@ table td {
 }
 
 @media screen and (max-width: 1100px) {
-table {
-    border: 0;
-    width: 80%;
-}
+    table {
+        border: 0;
+        width: 80%;
+    }
 
-table caption {
-    font-size: 1.3em;
-}
+    table caption {
+        font-size: 1.3em;
+    }
 
-table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
 
-table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    border-style: outset;
-    border-color: #d3d3d333;
-    border-radius: 1em;
-    padding: 0.5em;
-    margin: 0.3em;
-}
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        border-style: outset;
+        border-color: #d3d3d333;
+        border-radius: 1em;
+        padding: 0.5em;
+        margin: 0.3em;
+    }
 
-table td {
-    border-bottom: 1px solid #ddd;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-}
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
 
-table td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    margin-right: 0.2em;
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-}
+    .feed-table td {
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        font-size: .8em;
+        text-align: left;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-table td:last-child {
-    border-bottom: 0;
-}
+    table td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        margin-right: 0.2em;
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
 }

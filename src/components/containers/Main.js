@@ -9,7 +9,6 @@ import Overview from '../../pages/Overview';
 import NewTicket from '../../pages/NewTicket';
 import Ticket from '../../pages/Ticket';
 import NavBar from '../navigation/NavBar';
-import SideBarTickets from '../navigation/SideBarTickets';
 
 // ----- css -----
 import './Main.css'

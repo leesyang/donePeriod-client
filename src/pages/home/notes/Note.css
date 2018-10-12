@@ -12,7 +12,8 @@ li {
 .note-comment {
     display: inline-block;
     margin: 0em;
-    padding: 0em;
+    padding-left: 1.4em;
+    text-indent: -1.2em;
 }
 
 .note-delete {

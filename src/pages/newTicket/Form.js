@@ -1,6 +1,7 @@
 import React from 'react';
 import { reduxForm, Field, getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 // ----- consts -----
 import { ticketOpt } from '../../components/forms/Consts';
@@ -35,11 +36,15 @@ export class NewTicket extends React.Component {
         const formData = new FormData();
         Object.keys(formValues).filter(word => !(word === 'newTicketFiles'))
         .forEach(key => formData.append(`${key}`, formValues[key]))
+        
+        let newTicketId;
 
         return dispatch(postNewTicket(formData))
         .then(res => {
             if(!res.error){
                 const ticket_Id = res._id;
+                console.log(res)
+                newTicketId = res.ticketId;
 
                 let formDataFiles = new FormData();
 
@@ -50,7 +55,11 @@ export class NewTicket extends React.Component {
                     }
                 }
                 return dispatch(uploadNewTicketAttachments(formDataFiles, ticket_Id))
-                .then(() => reset('newTicket'))
+                .then(() => {
+                    reset('newTicket');
+                    console.log(newTicketId)
+                    this.props.history.push(`/issues/${newTicketId}`);
+                })
             }
         })
     }
@@ -197,6 +206,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(reduxForm ({
+export default withRouter(connect(mapStateToProps)(reduxForm ({
     form: 'newTicket'
-})(NewTicket))
+})(NewTicket)))

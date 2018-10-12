@@ -11,12 +11,13 @@ import Description from './ticket/Description';
 import Info from './ticket/Info';
 import InfoSideBar from './ticket/InfoSideBar';
 
-// ----- css -----
-import './Ticket.css';
-
 // ----- actions -----
 import { loadTicket } from '../modules/ticket';
 import { updateTicketfromReducer } from '../modules/ticketsData';
+// ----- util -----
+import { formatDateShort } from '../utils/auth'
+// ----- css -----
+import './Ticket.css';
 
 export class Ticket extends React.Component {
     constructor(props) {
@@ -31,9 +32,12 @@ export class Ticket extends React.Component {
     }
 
     scrollToComments() {
-        let comments = document.getElementById('activity');
-        comments.scrollIntoView({behavior: "smooth"});
+        document.getElementById('activity').scrollIntoView({behavior: "smooth"});
     }
+    scrollToInfo() {
+        document.getElementById('info-sidebar').scrollIntoView({behavior: "smooth"});
+    }
+
 
     render() {
         const { isLoaded, dataLoaded } = this.props;
@@ -43,13 +47,16 @@ export class Ticket extends React.Component {
         }
 
         if(isLoaded){
+            const { title, dueDate } = this.props;
             return (
                 <div className="ticket container">
-                    <h1>Title</h1>
-                    <div className="ticket-nav">
-                        <button><Link to="/overview">Overview</Link></button>
-                        <button onClick={this.scrollToComments}><Ionicon icon="md-text" fontSize="1em" color="#ffffff" className="nav-icon" />Comment</button>
-                    </div>
+                    <h1>{title}</h1>
+                    <div className="dueDate">Due on {formatDateShort(dueDate)}</div>
+                    <nav className="ticket-nav">
+                        <button><Link to="/issues">Overview</Link></button>
+                        <button onClick={this.scrollToComments}>Comment</button>
+                        <button onClick={this.scrollToInfo}>Info</button>
+                    </nav>
                     <div className="row">
                         <div className="col-9">
                             <Info />
@@ -72,6 +79,8 @@ export class Ticket extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
+        dueDate: state.ticket.dueDate,
+        title: state.ticket.title,
         dataLoaded: state.protectedData.initialGet,
         isLoaded: state.ticket.isLoaded,
         ticketId: ownProps.match.params.ticketId,

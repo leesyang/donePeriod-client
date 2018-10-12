@@ -4,6 +4,8 @@
     padding: 0.5em;
     border-right: 0.5em solid #FF5630;
     cursor: context-menu;
+    white-space: nowrap;
+    width: 50%;
 }
 
 .user-img-icon {
@@ -13,4 +15,10 @@
     border-radius: 0.2em;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.01);
     margin-right:0.5em;
+}
+
+@media only screen and (min-width: 720px)  {
+    .user-icon {
+        width: 100%;
+    }
 }

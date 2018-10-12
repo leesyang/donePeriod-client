@@ -12,6 +12,7 @@ export const POST_TICKET_SUCCESS = 'app/protectedData/POST_TICKET_SUCCESS';
 export const POST_TICKET_ERROR = 'app/protectedData/POST_TICKET_ERROR';
 
 export const UPDATE_MODIFIED_TICKET = 'app/auth/UPDATE_MODIFIED_TICKET';
+export const CLEAR_TICKET_DATA = 'app/auth/CLEAR_TICKET_DATA';
 
 // ----- intial state -----
 const initialState = {
@@ -31,7 +32,12 @@ export default function protectedDataReducer (state=initialState, action) {
     }
     if(action.type === GET_TICKETS_ERROR) {
         console.log('there was a err')
-        return Object.assign({}, state, { isLoading: false, error: true, errorInfo: action.err})
+        return Object.assign({}, state, { isLoading: false, error: true, errorInfo: action.err});
+    }
+
+    // clear tickets
+    if(action.type === CLEAR_TICKET_DATA) {
+        return Object.assign({}, initialState);
     }
 
     // post new ticket
@@ -83,6 +89,11 @@ export const updateModifiedTicket = (ticket) => (
     { type: UPDATE_MODIFIED_TICKET, data: ticket }
 )
 
+// clear tickets
+export const clearTickets = () => (
+    { type: CLEAR_TICKET_DATA }
+)
+
 
 // ----- action functions -----
 export const getTickets = () => (dispatch, getState) => {
@@ -102,24 +113,6 @@ export const getTickets = () => (dispatch, getState) => {
             dispatch(getTicketsError(err));
         });
 };
-
-/* export const postNewTicket = (formData) => (dispatch, getState) => {
-    dispatch(postTicketRequest());
-    const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/tickets`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${authToken}`,
-            },
-        body: formData
-        })
-        .then(res => normalizeResponseErrors(res))
-        .then(res => res.json())
-        .then(json => {dispatch(postTicketSuccess(json))})
-        .catch(err => {
-            dispatch(postTicketError(err))
-        });
-} */
 
 export const postNewTicket = (formData) => (dispatch, getState) => {
     dispatch(postTicketRequest());

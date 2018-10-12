@@ -2,6 +2,7 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 //import Input from '../../../components/forms/Input';
 import DropDown from '../../../components/forms/Dropdown';
+import { connect } from 'react-redux';
 
 // ----- consts -----
 import { ticketOpt } from '../../../components/forms/Consts';
@@ -41,7 +42,6 @@ export class EditFormInfo extends React.Component {
                         label="Type"
                         options={ticketOpt.type}
                         validate={[required, nonEmpty]}
-                        disabled={pristine || submitting}
                         currentValue={type}
                     />
                     <Field
@@ -52,7 +52,6 @@ export class EditFormInfo extends React.Component {
                         label="Priority"
                         options={ticketOpt.priority}
                         validate={[required, nonEmpty]}
-                        disabled={pristine || submitting}
                         currentValue={priority}
                     />
 
@@ -66,7 +65,6 @@ export class EditFormInfo extends React.Component {
                         label="Status"
                         options={ticketOpt.status}
                         validate={[required, nonEmpty]}
-                        disabled={pristine || submitting}
                         currentValue={status}
                     /> 
                     <Field
@@ -77,7 +75,6 @@ export class EditFormInfo extends React.Component {
                         label="Resolution"
                         options={ticketOpt.resolution}
                         validate={[required, nonEmpty]}
-                        disabled={pristine || submitting}
                         currentValue={resolution}
                     />
                 </div>
@@ -88,6 +85,6 @@ export class EditFormInfo extends React.Component {
     }
 }
 
-export default reduxForm ({
-    form: 'editInfo'
-})(EditFormInfo)
+let editFormRedux = reduxForm ({ form: 'editInfo' })(EditFormInfo)
+
+export default connect(state => ({ initialValues: state.ticket.ticketInfo }))(editFormRedux)

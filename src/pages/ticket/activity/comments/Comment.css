@@ -45,6 +45,7 @@
 .arrow-icon {
     display: inline-block;
     vertical-align: text-bottom;
+    margin: 0;
 }
 
 .worklog-attachments {

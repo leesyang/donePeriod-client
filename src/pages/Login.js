@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 // ----- components -----
 import Form from './login/Form'
 
+// ----- css -----
+import './Login.css';
+
 export class Login extends React.Component {
     render() {
         if (this.props.loggedIn) {
@@ -12,6 +15,7 @@ export class Login extends React.Component {
         }
         return (
             <div className="login">
+                <h1>Login</h1>
                 <Form />
             </div>
         )
