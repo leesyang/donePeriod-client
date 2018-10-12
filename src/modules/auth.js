@@ -49,17 +49,17 @@ export const VISIBILITY_TOGGLE_LOGIN = 'app/auth/VISIBILITY_TOGGLE_LOGIN';
 export const VISIBILITY_TOGGLE_SIGNUP = 'app/auth/VISIBILITY_TOGGLE_SIGNUP';
 
 // ----- initialState -----
-const initialState = {
+export const authStateInitial = {
     authToken: null,
     currentUser: null,
     loading: false,
     error: null,
     logIn: false,
     signUp: false,
-}
+};
 
 // ----- reducer -----
-export default function authReducer (state=initialState, action) {
+export default function authReducer (state=authStateInitial, action) {
     if(action.type === SET_AUTH_TOKEN) {
         return Object.assign({}, state, { authToken: action.authToken } )
     }
@@ -67,7 +67,7 @@ export default function authReducer (state=initialState, action) {
         return Object.assign({}, state, { currentUser: action.currentUser })
     }
     if(action.type === CLEAR_AUTH) {
-        return Object.assign({}, initialState )
+        return Object.assign({}, authStateInitial)
     }
     // auth request
     if(action.type === AUTH_REQUEST) {
@@ -168,6 +168,7 @@ export default function authReducer (state=initialState, action) {
     if(action.type === VISIBILITY_TOGGLE_SIGNUP) {
         return Object.assign({}, state, { signUp: action.data, logIn: false })
     }
+
     return state;
 }
 
@@ -407,7 +408,7 @@ export const deleteNote = (noteId) => (dispatch, getState) => {
 
 export const uploadProfilePicture = (profilePicture) => (dispatch, getState) => {
     dispatch(updateUserPhotoRequest());
-    fetchUserPromise(POST, null, profilePicture, getState)
+    fetchUserPromise(PUT, null, profilePicture, getState)
     .then(res => dispatch(updateUserPhotoSuccess(res.profilePicture)))
     .catch(error => console.log(error))
 }

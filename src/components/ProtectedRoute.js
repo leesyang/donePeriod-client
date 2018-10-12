@@ -13,7 +13,7 @@ export default () => Component => {
     function RequiresLogin(props) {
         const { loggedIn, dataLoaded, usersLoaded, ...passThroughProps } = props;
         
-        if(!loggedIn) { return <Redirect to="/login" /> }
+        if(!loggedIn) { return <Redirect to="/" /> }
 
         if(!dataLoaded ) { props.dispatch(getTickets()); return <Loader /> }
 

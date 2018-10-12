@@ -5,6 +5,9 @@ import Input from './Input';
 // ----- action -----
 import { uploadProfilePicture } from '../../../modules/auth';
 
+// ----- validators -----
+import { containsFile } from '../../../utils/validators';
+
 export class UploadPictureForm extends React.Component {
     onSubmit(value) {
         const formData = new FormData();
@@ -15,7 +18,7 @@ export class UploadPictureForm extends React.Component {
     };
 
     render() {
-        const { submitting, handleSubmit } = this.props;
+        const { submitting, handleSubmit, pristine, invalid } = this.props;
         return (
             <form 
                 onSubmit={handleSubmit(value => this.onSubmit(value))}
@@ -28,8 +31,9 @@ export class UploadPictureForm extends React.Component {
                     id="profilePicture"
                     disabled={submitting}
                     label="Upload a picture"
+                    validate={containsFile}
                 />
-                <button>Submit</button>
+                <button type="submit" disabled={invalid || pristine}>Submit</button>
             </form>
         )
     }

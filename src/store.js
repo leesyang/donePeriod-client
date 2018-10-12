@@ -15,8 +15,8 @@ import { setAuthFromJwT } from './modules/auth';
 // ----- create store -----
 const store = createStore(
     combineReducers({
-        auth: authReducer,
         form: formReducer,
+        auth: authReducer,
         users: usersReducer,
         protectedData: protectedDataReducer,
         ticket: ticketReducer

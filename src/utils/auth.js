@@ -1,6 +1,8 @@
 // ----- local storage -----
 export const loadAuthToken = () => {
-    return localStorage.getItem('authToken');
+    try {
+        return localStorage.getItem('authToken');
+    } catch (e) {}
 };
 
 export const saveAuthToken = authToken => {
