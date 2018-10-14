@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 
 // ----- imports: components -----
@@ -15,10 +16,12 @@ class App extends React.Component {
     return (
       <div className="App">
         { /* Routes*/}
-        <Switch>
-          <Route exact path='/' component={Landing} />
-          <Main />
-        </Switch>
+        <Router>
+          <Switch>
+            <Route exact path='/' component={Landing} />
+            <Main />
+          </Switch>
+        </Router>
       </div>
     );
   }

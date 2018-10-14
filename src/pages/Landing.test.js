@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import { TopNav } from './TopNav';
+import { Landing } from './Landing';
 
-describe('<TopNav />', () => {
+describe('<Landing />', () => {
     it('Renders without crashing', () => {
-        shallow(<TopNav />)
+        shallow(<Landing />)
     });
 
 })

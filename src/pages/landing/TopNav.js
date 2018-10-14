@@ -15,6 +15,13 @@ import logoWhite from '../../images/logo-white.png';
 import './TopNav.css';
 
 export class TopNav extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClickDemo = this.onClickDemo.bind(this);
+        this.onClickLogin = this.onClickLogin.bind(this);
+        this.onClickHome = this.onClickHome.bind(this);
+        this.onClickSignup = this.onClickSignup.bind(this);
+    }
     onClickLogin() {
         this.props.dispatch(toggleLogin(true));
     }
@@ -36,9 +43,9 @@ export class TopNav extends React.Component {
             <div className="top-nav">
                 <img src={logoWhite} onClick={() => this.onClickHome()} className="home-logo"></img>
                 <nav className="top-nav-buttons">
-                    <NavButton name='Login' onClick={() => this.onClickLogin()}/>
-                    <NavButton name='Signup' onClick={() => this.onClickSignup()}/>
-                    <NavButton name="Demo" onClick={() => this.onClickDemo()} />
+                    <NavButton name='Login' onClick={this.onClickLogin}/>
+                    <NavButton name='Signup' onClick={this.onClickSignup}/>
+                    <NavButton name="Demo" onClick={this.onClickDemo} />
                 </nav>
             </div>
         )

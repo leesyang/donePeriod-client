@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProtectedRoute from '../components/ProtectedRoute';
 import { Link } from 'react-router-dom';
-import Ionicon from 'react-ionicons';
 
 // ----- components -----
 import Activty from './ticket/Activity';
@@ -14,8 +13,10 @@ import InfoSideBar from './ticket/InfoSideBar';
 // ----- actions -----
 import { loadTicket } from '../modules/ticket';
 import { updateTicketfromReducer } from '../modules/ticketsData';
+
 // ----- util -----
-import { formatDateShort } from '../utils/auth'
+import { formatDateShort } from '../utils/auth';
+
 // ----- css -----
 import './Ticket.css';
 
@@ -38,7 +39,6 @@ export class Ticket extends React.Component {
         document.getElementById('info-sidebar').scrollIntoView({behavior: "smooth"});
     }
 
-
     render() {
         const { isLoaded, dataLoaded } = this.props;
 
@@ -48,6 +48,7 @@ export class Ticket extends React.Component {
 
         if(isLoaded){
             const { title, dueDate } = this.props;
+            
             return (
                 <div className="ticket container">
                     <h1>{title}</h1>

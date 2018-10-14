@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 // ----- components -----
 import Notes from './home/Notes';
-//import NavColumn from './home/NavColumn';
 import Feed from './home/Feed';
 import UserInfo from './home/UserInfo';
 

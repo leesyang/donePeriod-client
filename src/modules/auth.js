@@ -5,12 +5,6 @@ import jwtDecode from 'jwt-decode';
 import { saveAuthToken, clearAuthToken, getNewestNote } from '../utils/auth';
 import { SubmissionError } from 'redux-form';
 
-
-// ----- logout actions -----
-import { clearTicket } from './ticket';
-import { clearTickets } from './ticketsData';
-import { clearUsers } from './users';
-
 // ----- actions -----
 export const SET_AUTH_TOKEN = 'app/auth/SET_AUTH_TOKEN';
 export const SET_CURRENT_USER = 'app/auth/SET_CURRENT_USER';
@@ -310,9 +304,6 @@ export const login = (username, password) => dispatch => {
 export const logout = () => dispatch => {
     clearAuthToken();
     dispatch(clearAuth());
-    dispatch(clearTicket());
-    dispatch(clearTickets());
-    dispatch(clearUsers());
 }
 
 export const getUser = (user_Id) => (dispatch, getState) => {
