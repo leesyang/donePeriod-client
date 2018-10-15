@@ -7,13 +7,15 @@ A help desk web app that is clean and simple. Modern design. Built on React for 
 I wanted to create an app that is useful for helping small teams track issues in their organization and make sure these issues get addressed in a timely way. Get things done and stop worrying.
 
 ## Live Demo
-https://doneperiod.herokuapp.com/
+https://mighty-depths-77465.herokuapp.com/
 
 ## Tools
 - React
 - Mongo DB
 - Express
 - Node JS
+- mLab
+- Heroku
 
 ## Credits
 - Create-React-App : https://github.com/facebook/create-react-app
