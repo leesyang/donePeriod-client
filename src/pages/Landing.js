@@ -51,13 +51,13 @@ export class Landing extends React.Component {
             {signUpView}
             {landingBanner}
             <div className="landing-container l-section2">
-                <img src={homeDash}></img>
-                <img src={homeDashFeed}></img>
+                <img src={homeDash} alt="home page dashboard example"></img>
+                <img src={homeDashFeed} alt="home page feed example"></img>
                 <p>a no-frills approach to the dashboard. see just what you need to see.</p>
             </div>
             <div className="landing-container l-section2 l-section3 ">
                 <p>tasks that make sense</p>
-                <img src={ticketImg}></img>
+                <img src={ticketImg} alt="ticket view example"></img>
                 <p>easily see progress</p>
             </div>
             <div className="landing-container l-section4">

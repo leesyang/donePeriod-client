@@ -29,7 +29,7 @@ export class Ticket extends React.Component {
 
     componentWillUnmount() {
         const { isModified, dispatch } = this.props;
-        isModified? dispatch(updateTicketfromReducer()) : null;
+        if(isModified) {  dispatch(updateTicketfromReducer()) };
     }
 
     scrollToComments() {

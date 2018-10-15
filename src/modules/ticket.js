@@ -4,7 +4,7 @@ import { checkTickets } from '../utils/tickets';
 import { getTickets } from './ticketsData';
 
 // ----- constants -----
-import { GET, PUT, DELETE, POST } from './auth';
+import { PUT, DELETE, POST } from './auth';
 import { API_BASE_URL } from '../config';
 
 // ----- utils -----
@@ -297,7 +297,7 @@ export const clearTicket = () => (
 // -- location endpoints --
 const DESCRIPTION = 'description';
 const INFO = 'info';
-const ATTACHMENTS = 'attachments';
+//const ATTACHMENTS = 'attachments';
 const COMMENTS = 'comments';
 const WORKLOG = 'worklog';
 const VOTE = 'vote';

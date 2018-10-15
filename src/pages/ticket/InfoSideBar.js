@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import UserIcon from '../../components/UserIcon';
 import LoaderSm from '../../components/LoaderSm';
 
-// ----- util functions -----
-import { generateFullName } from '../../utils/tickets';
-
 // ----- actions -----
 import { watchTicket } from '../../modules/auth';
 import { voteTicket } from '../../modules/ticket';
@@ -34,7 +31,7 @@ export class InfoSideBar extends React.Component {
     }
 
     render () {
-        const { assignee, reporter, currentUser, votes, voteCount} = this.props;
+        const { assignee, reporter, currentUser, voteCount} = this.props;
 
         let votingLink;
         currentUser.voteloading? votingLink = <LoaderSm /> : 

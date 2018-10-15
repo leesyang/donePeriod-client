@@ -11,17 +11,11 @@ import './AssignedList.css';
 
 export class AssignedList extends React.Component {
 
-
-
     render() {
         const { watching } = this.props;
 
-        const trimmedDescript = (description) => {
-            return description.slice(0, 20)+'...'
-        }
-
         const list = watching.map((ticket, index) => {
-            const { dueDate, ticketId, description } = ticket;
+            const { dueDate, ticketId } = ticket;
 
             let color;
             const dueIn = dateTimer(dueDate);

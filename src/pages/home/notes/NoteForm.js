@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form';
 import { addNote } from '../../../modules/auth';
 
 // ----- validators -----
-import { required, nonEmpty, isTrimmed } from '../../../utils/validators';
+import { required, nonEmpty } from '../../../utils/validators';
 
 export class NoteForm extends React.Component {
     onSubmit(values){

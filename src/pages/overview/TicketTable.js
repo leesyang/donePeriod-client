@@ -5,9 +5,6 @@ import Ionicon from 'react-ionicons';
 
 import { ticketOpt } from '../../components/forms/Consts';
 
-// ----- components -----
-import UserIcon from '../../components/UserIcon';
-
 // ----- css -----
 import './TicketTable.css'
 
@@ -47,7 +44,6 @@ export class TicketTable extends React.Component {
         const list = tickets.map((ticket, index) => {
             const {
                 ticketId,
-                description,
                 reporter,
                 assignee,
                 dueDate,

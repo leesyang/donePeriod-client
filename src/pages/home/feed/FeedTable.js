@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Ionicon from 'react-ionicons';
 
 // ----- utils -----
-import {formatDateShort, dateTimer } from '../../../utils/auth'
+import { dateTimer } from '../../../utils/auth'
 
 // ----- actions -----
 import { unwatchTicket } from '../../../modules/auth';

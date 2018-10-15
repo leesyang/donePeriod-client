@@ -80,7 +80,7 @@ export default function authReducer (state=authStateInitial, action) {
     if(action.type === WATCH_TICKET_SUCCESS) {
 
         return Object.assign({}, state, { 
-            currentUser: {... state.currentUser, 
+            currentUser: {...state.currentUser, 
                 watchloading: false, 
                 watching: action.data }
         })
@@ -98,7 +98,7 @@ export default function authReducer (state=authStateInitial, action) {
     }
     if(action.type === UNWATCH_TICKET_SUCCESS) {
         return Object.assign({}, state, { 
-            currentUser: {... state.currentUser, 
+            currentUser: {...state.currentUser, 
                 unwatchloading: false, 
                 watching: action.data }
         })
@@ -137,7 +137,7 @@ export default function authReducer (state=authStateInitial, action) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: true }})
     }
     if(action.type === UPDATE_USER_PHOTO_SUCCESS) {
-        return Object.assign({}, state, { currentUser: { ... state.currentUser, photoUpdateLoading: false, isEditing: false, profilePicture: action.data }})
+        return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: false, isEditing: false, profilePicture: action.data }})
     }
     if(action.type === UPDATE_USER_PHOTO_ERROR) {
         return Object.assign({}, state, { currentUser: { ...state.currentUser, photoUpdateLoading: false, error: true, errorInfo: action.error }})

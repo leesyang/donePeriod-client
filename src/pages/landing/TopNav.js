@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // ----- components -----
@@ -41,7 +40,7 @@ export class TopNav extends React.Component {
     render () {
         return (
             <div className="top-nav">
-                <img src={logoWhite} onClick={() => this.onClickHome()} className="home-logo"></img>
+                <img src={logoWhite} alt="app logo" onClick={() => this.onClickHome()} className="home-logo"></img>
                 <nav className="top-nav-buttons">
                     <NavButton name='Login' onClick={this.onClickLogin}/>
                     <NavButton name='Signup' onClick={this.onClickSignup}/>

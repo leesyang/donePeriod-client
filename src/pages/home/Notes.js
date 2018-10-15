@@ -8,7 +8,7 @@ import NoteForm from './notes/NoteForm';
 import LoaderSm from '../../components/LoaderSm';
 
 // ----- actions -----
-import { addNote, noteAdding, deleteNote } from '../../modules/auth';
+import { noteAdding, deleteNote } from '../../modules/auth';
 
 // ----- css -----
 import './Notes.css';
@@ -27,18 +27,16 @@ export class Notes extends React.Component {
     }
 
     render() { 
-        const { noteadding, noteloading, notes, error, errorInfo } = this.props;
+        const { noteadding, noteloading, notes } = this.props;
 
-        let noteForm;
-
-        noteadding? noteForm = 
+        let noteForm = noteadding?
             (<div className="note-form">
                 <NoteForm onClick={() => this.onCancel()}/>
             </div>) : undefined;
 
-        noteloading? noteForm = <LoaderSm /> : undefined;
+        if(noteloading) { noteForm = <LoaderSm /> }
 
-        let allNotes
+        let allNotes;
         if(notes.length > 0){
             allNotes = notes.map(note => {
                 return <Note key={note._id} note={note} onDelete={(noteId) => this.onDelete(noteId)} />

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ProtectedRoute from '../components/ProtectedRoute';
-import { Link } from 'react-router-dom';
 
 // ----- components -----
 import Notes from './home/Notes';

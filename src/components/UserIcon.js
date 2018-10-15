@@ -15,7 +15,7 @@ export default class UserIcon extends React.Component {
 
         return (
             <div className="user-icon">
-                <img src={AMZ_S3_URL+profilePicture} className="user-img-icon"></img>
+                <img src={AMZ_S3_URL+profilePicture} alt="user icon" className="user-img-icon"></img>
                 <span>{generateFullName(user)}</span>
             </div>
         )

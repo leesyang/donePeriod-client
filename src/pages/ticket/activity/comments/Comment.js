@@ -32,7 +32,7 @@ export class Comment extends React.Component {
         return (
             <li className="comment">
                 <p className="comment-text">
-                    <img className="comment-user" src={AMZ_S3_URL+profilePicture}></img>
+                    <img className="comment-user" src={AMZ_S3_URL+profilePicture} alt="user"></img>
                     <Ionicon icon="md-arrow-dropright" className="arrow-icon" color="#172B4D" />
                     {comment}
                 </p>

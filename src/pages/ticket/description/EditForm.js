@@ -3,7 +3,6 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
 // ----- components -----
-import Input from '../../../components/forms/Input';
 import InputTextArea from '../../../components/forms/InputTextArea'
 
 // ----- actions -----

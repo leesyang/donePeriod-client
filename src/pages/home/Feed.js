@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // ----- component -----
-import Entry from './feed/Entry';
 import FeedTable from './feed/FeedTable';
 
 // ----- actions -----
@@ -22,7 +21,7 @@ export class Feed extends React.Component {
     render() {
         return (
             <div className="feed">
-                <img src={homebanner} className="homebanner-img"></img>
+                <img src={homebanner} alt="home banner" className="homebanner-img"></img>
                 <p>Stay on track. Currently watching tickets:</p>
                 <FeedTable />
             </div>

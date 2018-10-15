@@ -14,7 +14,7 @@ export default class Note extends React.Component {
             <li className="note">
                 <p className="note-comment"><Ionicon icon="md-arrow-dropright" fontSize="1em" color="#C9C9C9"/>{note.comment}</p>
                 <p className="note-info">
-                    posted: {formatDateShort(note.created)} | <a className="note-delete" href="#" onClick={() => onDelete(note._id)}>Delete</a>
+                    posted: {formatDateShort(note.created)} | <a className="note-delete" onClick={() => onDelete(note._id)}>Delete</a>
                 </p>
 
             </li>

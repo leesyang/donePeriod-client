@@ -11,9 +11,7 @@ export class NewTicket extends React.Component {
     render() {
         const { isLoading, users } = this.props;
 
-        if(isLoading) {
-            <Loader />
-        }
+        if(isLoading) { return <Loader /> }
 
         return (
             <div className="new-ticket-container container">

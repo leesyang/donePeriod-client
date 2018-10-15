@@ -1,10 +1,6 @@
 import React from 'react';
 
 export class UserSelect extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onClick(e, userId, fullName) {
     const { change } = this.props;
     change('userSelect', fullName);
@@ -14,8 +10,9 @@ export class UserSelect extends React.Component {
   renderSelectOptions = (users) => {
     return users.map(user => {
       const fullName = user.firstName + ' ' + user.lastName;
+      
       return (
-        <button className="user-select"
+        <button
           className="user-select-option"
           key={user.id}
           onClick={e => this.onClick(e, user.id, fullName)}

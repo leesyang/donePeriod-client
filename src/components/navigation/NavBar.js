@@ -1,9 +1,6 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-// ----- components -----
-import UserIcon from '../UserIcon';
 
 // ----- actions -----
 import { logout } from '../../modules/auth';
@@ -16,11 +13,11 @@ import './NavBar.css';
 
 export class NavBar extends React.Component {
     render() {
-        const { dispatch, user } = this.props;
+        const { dispatch } = this.props;
         return (
             <div className="navbar">
                 <div className="dropdown">
-                    <button className="dropbtn"><img src={logo} className="nav-logo"></img></button>
+                    <button className="dropbtn"><img src={logo} alt="app logo" className="nav-logo"></img></button>
                     <div className="dropdown-content">
                         <Link to="/home">Home</Link>
                         <Link to="/issues">Tickets</Link>
