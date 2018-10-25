@@ -17,7 +17,7 @@ export default () => Component => {
 
         if(!dataLoaded ) { props.dispatch(getTickets()); return <Loader /> }
 
-        if(!usersLoaded) { props.dispatch(getUsers()); return <Loader /> }
+        if(loggedIn && !usersLoaded) { props.dispatch(getUsers()); return <Loader /> }
 
         return <Component {...passThroughProps} />;
     }

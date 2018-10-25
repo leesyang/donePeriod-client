@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // ----- components -----
 import NavButton from '../../components/navigation/NavButton';
+import LoaderExtraSm from '../../components/LoaderExtraSm';
 
 // ----- actions -----
 import { toggleLogin, toggleSignup, login } from '../../modules/auth';
@@ -38,17 +39,37 @@ export class TopNav extends React.Component {
     }
 
     render () {
-        return (
-            <div className="top-nav">
-                <img src={logoWhite} alt="app logo" onClick={() => this.onClickHome()} className="home-logo"></img>
+        const { loggingIn } = this.props;
+
+        let navButtons;
+        if (loggingIn) {
+            navButtons = (
                 <nav className="top-nav-buttons">
                     <NavButton name='Login' onClick={this.onClickLogin}/>
                     <NavButton name='Signup' onClick={this.onClickSignup}/>
                     <NavButton name="Demo" onClick={this.onClickDemo} />
-                </nav>
+                    <LoaderExtraSm />
+                </nav>)
+        } else {
+            navButtons = (
+                <nav className="top-nav-buttons">
+                    <NavButton name='Login' onClick={this.onClickLogin}/>
+                    <NavButton name='Signup' onClick={this.onClickSignup}/>
+                    <NavButton name="Demo" onClick={this.onClickDemo} />
+                </nav>)
+        }
+
+        return (
+            <div className="top-nav">
+                <img src={logoWhite} alt="app logo" onClick={() => this.onClickHome()} className="home-logo"></img>
+                {navButtons}
             </div>
         )
     }
 }
 
-export default connect()(TopNav);
+const mapStateToProps = state => ({
+    loggingIn: state.auth.loading
+})
+
+export default connect(mapStateToProps)(TopNav);
