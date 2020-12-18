@@ -27,5 +27,17 @@
   "devDependencies": {
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0"
-  }
+  },
+  "description": "## Summary A help desk web app that is clean and simple. Modern design. Built on React for speed.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leesyang/donePeriod-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leesyang/donePeriod-client/issues"
+  },
+  "homepage": "https://github.com/leesyang/donePeriod-client#readme"
 }
