@@ -39,7 +39,6 @@
   "bugs": {
     "url": "https://github.com/leesyang/donePeriod-client/issues"
   },
-  "homepage": "",
   "browserslist": {
     "production": [
       ">0.2%",
