@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "jwt-decode": "^2.2.0",
-    "merge": ">=1.2.1",
+    "merge": ">=2.1.1",
     "normalize.css": "^8.0.0",
     "pretty-file-icons": "^2.2.1",
     "react": "^16.4.2",
