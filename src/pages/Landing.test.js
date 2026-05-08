@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
-import { Landing } from './Landing';
+import { renderWithProviders } from '../test-utils';
+import Landing from './Landing';
 
 describe('<Landing />', () => {
-    it('Renders without crashing', () => {
-        shallow(<Landing />)
+    it('renders without crashing', () => {
+        renderWithProviders(<Landing />);
     });
-
-})
+});

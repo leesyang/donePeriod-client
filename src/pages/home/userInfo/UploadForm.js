@@ -1,44 +1,32 @@
 import React from 'react';
-import { reduxForm , Field } from 'redux-form';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import Input from './Input';
-
-// ----- action -----
 import { uploadProfilePicture } from '../../../modules/auth';
-
-// ----- validators -----
 import { containsFile } from '../../../utils/validators';
 
-export class UploadPictureForm extends React.Component {
-    onSubmit(value) {
-        const formData = new FormData();
-        const fileField = value.profilePicture[0];
-        formData.append('profilePicture', fileField);
-        Object.defineProperty(formData, 'isFormData', { value: true });
-        this.props.dispatch(uploadProfilePicture(formData));
-    };
+export function UploadPictureForm() {
+    const dispatch = useDispatch();
+    const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm({ mode: 'onChange' });
 
-    render() {
-        const { submitting, handleSubmit, pristine, invalid } = this.props;
-        return (
-            <form 
-                onSubmit={handleSubmit(value => this.onSubmit(value))}
-                className="upload-pic-form"
-                >
-                <Field 
-                    component={Input}
-                    type="file"
-                    name="profilePicture"
-                    id="profilePicture"
-                    disabled={submitting}
-                    label="Upload a picture"
-                    validate={containsFile}
-                />
-                <button type="submit" disabled={invalid || pristine}>Submit</button>
-            </form>
-        )
+    function onSubmit(values) {
+        const formData = new FormData();
+        formData.append('profilePicture', values.profilePicture[0]);
+        Object.defineProperty(formData, 'isFormData', { value: true });
+        dispatch(uploadProfilePicture(formData));
     }
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="upload-pic-form">
+            <Input
+                type="file"
+                label="Upload a picture"
+                error={errors.profilePicture}
+                {...register('profilePicture', { validate: containsFile })}
+            />
+            <button type="submit" disabled={!isValid || isSubmitting}>Submit</button>
+        </form>
+    );
 }
 
-export default reduxForm ({
-    form: 'uploadPicture'
-})(UploadPictureForm)
+export default UploadPictureForm;

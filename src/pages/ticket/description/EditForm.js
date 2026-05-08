@@ -1,47 +1,27 @@
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
-import { connect } from 'react-redux';
-
-// ----- components -----
-import InputTextArea from '../../../components/forms/InputTextArea'
-
-// ----- actions -----
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import InputTextArea from '../../../components/forms/InputTextArea';
 import { updateDescription } from '../../../modules/ticket';
 
-export class EditFormDescription extends React.Component {
-    onSubmit(values) {
-        const { dispatch } = this.props;
-        dispatch(updateDescription(values))
+export function EditFormDescription({ onCancel }) {
+    const dispatch = useDispatch();
+    const currentText = useSelector(s => s.ticket.description.text);
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm({
+        defaultValues: { description: currentText },
+    });
+
+    function onSubmit(values) {
+        dispatch(updateDescription(values));
     }
 
-
-    render () {
-        const { handleSubmit, pristine, submitting } = this.props;
-
-        return (
-            <form
-                className="description-edit-form"
-                onSubmit={handleSubmit(description => this.onSubmit(description))}
-                >
-                <Field
-                    component={InputTextArea}
-                    type="text"
-                    name="description"
-                    id="description"
-                />
-                <button type="submit" disabled={pristine || submitting}>Submit</button>
-                <button type="button" onClick={this.props.onCancel}>Cancel</button>
-            </form>
-        )
-    }
+    return (
+        <form className="description-edit-form" onSubmit={handleSubmit(onSubmit)}>
+            <InputTextArea {...register('description')} />
+            <button type="submit" disabled={isSubmitting}>Submit</button>
+            <button type="button" onClick={onCancel}>Cancel</button>
+        </form>
+    );
 }
 
-const mapStateToProps = state => {
-    const current = state.ticket.description.text;
-    const initialValues = { description: current }
-    return { initialValues }
-}
-
-export default connect(mapStateToProps)(reduxForm ({
-    form: 'editDescription'
-})(EditFormDescription))
+export default EditFormDescription;

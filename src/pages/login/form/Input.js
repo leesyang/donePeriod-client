@@ -1,27 +1,15 @@
 import React from 'react';
 
-export default class Input extends React.Component {
-    render () {
-        let errorNotify;
-
-        if (this.props.meta.touched && this.props.meta.error) {
-            errorNotify = (
-                <div className="input-error">{this.props.meta.error}</div>
-            )
-        }
-
-        return (
-            <div className="form-input">
-                <label htmlFor={this.props.input.name}>{this.props.label}</label>
-                <div className="error-message">{errorNotify}</div>
-                <input
-                    {...this.props.input}
-                    id={this.props.input.name}
-                    type={this.props.type}
-                    ref={input => (this.input = input)}
-                    autoComplete={this.props.autoComplete}
-                />
+const Input = React.forwardRef(function Input({ label, error, type, autoComplete, ...rest }, ref) {
+    return (
+        <div className="form-input">
+            {label && <label htmlFor={rest.name}>{label}</label>}
+            <div className="error-message">
+                {error && <div className="input-error">{error.message}</div>}
             </div>
-        )
-    }
-}
+            <input type={type} autoComplete={autoComplete} ref={ref} {...rest} />
+        </div>
+    );
+});
+
+export default Input;

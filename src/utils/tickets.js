@@ -1,10 +1,4 @@
-import store from '../store';
-
-export const checkTickets = () => {
-    return store.getState().protectedData.tickets !== undefined? true : false;
-}
-
-export const generateFullName = (obj) => { 
+export const generateFullName = (obj) => {
     return obj? `${obj.firstName} ${obj.lastName}` : undefined;
 }
 

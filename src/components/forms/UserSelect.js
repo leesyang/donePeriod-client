@@ -1,61 +1,34 @@
 import React from 'react';
 
-export class UserSelect extends React.Component {
-  onClick(e, userId, fullName) {
-    const { change } = this.props;
-    change('userSelect', fullName);
-    change('assignee', userId );
-  }
-
-  renderSelectOptions = (users) => {
-    return users.map(user => {
-      const fullName = user.firstName + ' ' + user.lastName;
-      
-      return (
-        <button
-          className="user-select-option"
-          key={user.id}
-          onClick={e => this.onClick(e, user.id, fullName)}
-          >
-          {fullName}
-        </button>
-      )
-    })
-  };
-
-  filterUsers(users) {
-    let input = this.props.input.value.toUpperCase();
-    if(!input) { input = null }
-
-    const evalField = (field) => field.toUpperCase().indexOf(input)
-    
-    return users.filter(user => {
-      const fullName = user.firstName + ' ' + user.lastName;
-      return evalField(fullName) > -1
-    })
-  };
-
-  render() {
-    const { input, label, users } = this.props;
-
-    let errorNotify;
-    if (this.props.meta.touched && this.props.meta.error) {
-      errorNotify = (
-          <div className="input-error">{this.props.meta.error}</div>
-      )
+export function UserSelect({ value = '', onChange, onSelect, users, error }) {
+    function filterUsers(list) {
+        if (!value) return list;
+        const q = value.toUpperCase();
+        return list.filter(u => (u.firstName + ' ' + u.lastName).toUpperCase().includes(q));
     }
 
     return (
-      <div>
-        <label htmlFor={label}>{label}: </label>
-        <div className="error-message">{errorNotify}</div>
-        <input type="text" {...input}></input>
-        <div className="user-options">
-          {this.renderSelectOptions(this.filterUsers(users))}
+        <div>
+            <label>Assign to: </label>
+            {error && <div className="error-message"><div className="input-error">{error.message}</div></div>}
+            <input type="text" value={value} onChange={onChange} />
+            <div className="user-options">
+                {filterUsers(users).map(user => {
+                    const fullName = user.firstName + ' ' + user.lastName;
+                    return (
+                        <button
+                            className="user-select-option"
+                            key={user.id}
+                            type="button"
+                            onClick={() => onSelect(user.id, fullName)}
+                        >
+                            {fullName}
+                        </button>
+                    );
+                })}
+            </div>
         </div>
-      </div>
     );
-  }
 }
 
 export default UserSelect;

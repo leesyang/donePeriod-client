@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 // ----- components -----
 import Loader from '../components/Loader';
@@ -11,27 +11,22 @@ import { getUsers } from '../modules/users';
 
 export default () => Component => {
     function RequiresLogin(props) {
-        const { loggedIn, dataLoaded, usersLoaded, ...passThroughProps } = props;
-        
-        if(!loggedIn) { return <Redirect to="/" /> }
+        const dispatch = useDispatch();
+        const loggedIn = useSelector(state => state.auth.currentUser !== null);
+        const dataLoaded = useSelector(state => state.protectedData.initialGet);
+        const usersLoaded = useSelector(state => state.users.all);
 
-        if(!dataLoaded ) { props.dispatch(getTickets()); return <Loader /> }
+        if(!loggedIn) { return <Navigate to="/" replace /> }
 
-        if(loggedIn && !usersLoaded) { props.dispatch(getUsers()); return <Loader /> }
+        if(!dataLoaded) { dispatch(getTickets()); return <Loader /> }
 
-        return <Component {...passThroughProps} />;
+        if(loggedIn && !usersLoaded) { dispatch(getUsers()); return <Loader /> }
+
+        return <Component {...props} />;
     }
 
     const displayName = Component.displayName || Component.name || 'Component';
     RequiresLogin.displayName = `RequiresLogin(${displayName})`;
 
-    const mapStateToProps = (state, props) => {
-        return {
-            loggedIn: state.auth.currentUser !== null,
-            dataLoaded: state.protectedData.initialGet,
-            usersLoaded: state.users.all
-        }
-};
-
-    return connect(mapStateToProps)(RequiresLogin);
+    return RequiresLogin;
 };

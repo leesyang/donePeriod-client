@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { renderWithProviders } from '../test-utils';
+import Overview from './Overview';
 
-import { Overview } from './Overview';
-
-describe('', () => {
-    it('Renders without crashing', () => {
-        shallow(<Overview />)
+describe('<Overview />', () => {
+    it('renders without crashing', () => {
+        renderWithProviders(<Overview />);
     });
-
-})
+});

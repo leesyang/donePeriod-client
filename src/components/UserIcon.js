@@ -9,15 +9,13 @@ import { generateFullName } from '../utils/tickets';
 // ----- css -----
 import './UserIcon.css';
 
-export default class UserIcon extends React.Component {
-    render() {
-        const { user, user: { profilePicture } } = this.props;
+export default function UserIcon({ user }) {
+    const { profilePicture } = user;
 
-        return (
-            <div className="user-icon">
-                <img src={AMZ_S3_URL+profilePicture} alt="user icon" className="user-img-icon"></img>
-                <span>{generateFullName(user)}</span>
-            </div>
-        )
-    }
+    return (
+        <div className="user-icon">
+            <img src={AMZ_S3_URL+profilePicture} alt="user icon" className="user-img-icon"></img>
+            <span>{generateFullName(user)}</span>
+        </div>
+    )
 }

@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
-import { TopNav } from './TopNav';
+import { renderWithProviders } from '../../test-utils';
+import TopNav from './TopNav';
 
 describe('<TopNav />', () => {
-    it('Renders without crashing', () => {
-        shallow(<TopNav />)
+    it('renders without crashing', () => {
+        renderWithProviders(<TopNav />);
     });
-
-})
+});

@@ -1,32 +1,18 @@
 import React from 'react';
 
-export class DropDown extends React.Component {
-    constructor(props) {
-        super(props);
-        this.renderSelectOptions = this.renderSelectOptions.bind(this);
-    }
-
-    renderSelectOptions = (option) => (
-      <option key={option.value} value={option.value}>{option.text}</option>
-    )
-  
-    render() {
-      const { input, label, options, currentValue } = this.props;
-
-      const defaultSelect = currentValue? <option value={currentValue}>{currentValue}</option>
-       : <option value="">Select</option>
-
-      return (
+export function DropDown({ label, options, error, ...rest }) {
+    return (
         <div>
-          <label htmlFor={label}>{label}: </label>
-          <select {...input}>
-            {defaultSelect}
-          {options.filter(option => !(option.text === currentValue)).map(this.renderSelectOptions)}
-          </select>
+            <label htmlFor={rest.name}>{label}: </label>
+            <select {...rest}>
+                <option value="">Select</option>
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>{option.text}</option>
+                ))}
+            </select>
+            {error && <div className="input-error">{error.message}</div>}
         </div>
-      );
-    }
-  }
-  
+    );
+}
 
-  export default DropDown;
+export default DropDown;

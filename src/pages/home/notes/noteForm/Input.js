@@ -1,26 +1,23 @@
 import React from 'react';
 
-export default class NoteInput extends React.Component {
-    render () {
-        let errorNotify;
+export default function NoteInput({ meta, input, type, label }) {
+    let errorNotify;
 
-        if (this.props.meta.touched && this.props.meta.error) {
-            errorNotify = (
-                <div className="input-error">{this.props.meta.error}</div>
-            )
-        }
-
-        return (
-            <div className="note-form-input">
-                <div className="error-message">{errorNotify}</div>
-                <label htmlFor={this.props.input.name}>{this.props.label}</label>
-                <input
-                    {...this.props.input}
-                    id={this.props.input.name}
-                    type={this.props.type}
-                    ref={input => (this.input = input)}
-                />
-            </div>
+    if (meta.touched && meta.error) {
+        errorNotify = (
+            <div className="input-error">{meta.error}</div>
         )
     }
+
+    return (
+        <div className="note-form-input">
+            <div className="error-message">{errorNotify}</div>
+            <label htmlFor={input.name}>{label}</label>
+            <input
+                {...input}
+                id={input.name}
+                type={type}
+            />
+        </div>
+    )
 }

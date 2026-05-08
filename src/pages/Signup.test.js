@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { renderWithProviders } from '../test-utils';
+import Signup from './Signup';
 
-import { Signup } from './Signup';
-
-describe('', () => {
-    it('Renders without crashing', () => {
-        shallow(<Signup />)
+describe('<Signup />', () => {
+    it('renders without crashing', () => {
+        renderWithProviders(<Signup />);
     });
-
-})
+});
