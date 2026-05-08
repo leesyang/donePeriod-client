@@ -1,26 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { fetchProtectedData } from '../modules/protectedData';
 
 export default () => Component => {
     function RequiresData(props) {
-        const { loggedIn, hasData, data, ...passThroughProps } = props;
+        const loggedIn = useSelector(state => state.auth.currentUser !== null);
+        const hasData = useSelector(state => state.protectedData.tickets !== undefined);
+        const data = useSelector(state => state.protectedData.tickets);
 
         if(!hasData){
             fetchProtectedData();
         }
-        return <Component {...passThroughProps} />;
+        return <Component {...props} />;
     }
 
     const displayName = Component.displayName || Component.name || 'Component';
     RequiresData.displayName = `RequiresData(${displayName})`;
 
-    const mapStateToProps = (state, props) => ({
-        loggedIn: state.auth.currentUser !== null,
-        hasData: state.protectedData.tickets !== undefined,
-        data: state.protectedData.tickets
-    });
-
-    return connect(mapStateToProps)(RequiresData);
+    return RequiresData;
 };

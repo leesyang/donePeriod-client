@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: doneperiod-client
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://doneperiod-server.onrender.com

@@ -1,16 +1,12 @@
 import React from 'react';
 
 import './PlusButton.css';
-import Ionicon from 'react-ionicons';
+import { Plus } from 'lucide-react';
 
-export default class PlusButton extends React.Component {
-    render() {
-        const { onClick } = this.props;
-
-        return (
-            <button className="plus-button">
-                <Ionicon icon="md-add" className="icon-plus"  onClick={onClick} />
-            </button>
-        )
-    }
+export default function PlusButton({ onClick }) {
+    return (
+        <button className="plus-button">
+            <Plus className="icon-plus" onClick={onClick} size={20} />
+        </button>
+    )
 }

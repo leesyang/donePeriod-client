@@ -1,92 +1,54 @@
-// ----- SIGNUP FORM -----
 import React from 'react';
-import { reduxForm , Field } from 'redux-form';
-
-// ----- components -----
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import Input from '../login/form/Input';
-
-// ----- actions -----
 import { registerUser } from '../../modules/users';
+import { required, nonEmpty, isTrimmed, length, email } from '../../utils/validators';
 
-// ----- validators -----
-import {required, nonEmpty, isTrimmed, length, matches, email } from '../../utils/validators';
-const passwordLength = length({min: 10, max: 72});
-const usernameLength = length({min: 2, max: 10});
-const matchesPassword = matches('password');
+const passwordLength = length({ min: 10, max: 72 });
+const usernameLength = length({ min: 2, max: 10 });
 
-export class SignUpForm extends React.Component {
-    onSubmit(values) {
-        const { dispatch, reset } = this.props;
-        return dispatch(registerUser(values)).then(() => reset('login'))
-    };
+export function SignUpForm() {
+    const dispatch = useDispatch();
+    const { register, handleSubmit, setError, getValues, formState: { errors, isSubmitting, isValid } } = useForm({ mode: 'onChange' });
 
-    render () {
-        const { handleSubmit, pristine, submitting, invalid } = this.props
-        return (
-            <form
-                onSubmit={handleSubmit(values => this.onSubmit(values))}
-                className="auth-form"
-                >
-                <label htmlFor="firstName">First Name</label>
-                <Field 
-                    component={Input}
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                />
-                <label htmlFor="lastName">Last Name</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    validate={[required, nonEmpty]}
-                    disabled={pristine || submitting}
-                />
-                <label htmlFor="username">Username</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="username"
-                    id="username"
-                    validate={[required, nonEmpty, usernameLength]}
-                    disabled={pristine || submitting}
-                />
-                <label htmlFor="email">Email</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="email"
-                    id="email"
-                    validate={[required, nonEmpty, isTrimmed, email]}
-                    disabled={pristine || submitting}
-                />
-                <label htmlFor="password">Password</label>
-                <Field 
-                    component={Input}
-                    type="password"
-                    name="password"
-                    id="password"
-                    validate={[required, nonEmpty, isTrimmed, passwordLength]}
-                    disabled={pristine || submitting}
-                />
-                <label htmlFor="confirm">Confirm Password</label>
-                <Field 
-                    component={Input}
-                    type="password"
-                    name="confirm"
-                    id="confirm"
-                    validate={[required, nonEmpty, matchesPassword]}
-                    disabled={pristine || submitting}
-                />                                
-                <button disabled={invalid}>Sign up</button>
-            </form>
-        )
-    };
+    async function onSubmit(values) {
+        try {
+            await dispatch(registerUser(values));
+        } catch (err) {
+            if (err?.location) setError(err.location, { message: err.message });
+        }
+    }
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+            <label htmlFor="firstName">First Name</label>
+            <Input type="text" error={errors.firstName}
+                {...register('firstName', { validate: { required, nonEmpty } })} />
+            <label htmlFor="lastName">Last Name</label>
+            <Input type="text" error={errors.lastName}
+                {...register('lastName', { validate: { required, nonEmpty } })} />
+            <label htmlFor="username">Username</label>
+            <Input type="text" error={errors.username}
+                {...register('username', { validate: { required, nonEmpty, usernameLength } })} />
+            <label htmlFor="email">Email</label>
+            <Input type="text" error={errors.email}
+                {...register('email', { validate: { required, nonEmpty, isTrimmed, email } })} />
+            <label htmlFor="password">Password</label>
+            <Input type="password" error={errors.password}
+                {...register('password', { validate: { required, nonEmpty, isTrimmed, passwordLength } })} />
+            <label htmlFor="confirm">Confirm Password</label>
+            <Input type="password" error={errors.confirm}
+                {...register('confirm', {
+                    validate: {
+                        required,
+                        nonEmpty,
+                        matches: v => v === getValues('password') || 'Does not match',
+                    }
+                })} />
+            <button disabled={!isValid || isSubmitting}>Sign up</button>
+        </form>
+    );
 }
 
-export default reduxForm ({
-    form: 'login'
-})(SignUpForm)
+export default SignUpForm;

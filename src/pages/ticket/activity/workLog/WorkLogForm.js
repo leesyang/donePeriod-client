@@ -1,54 +1,35 @@
 import React from 'react';
-import { reduxForm , Field } from 'redux-form';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import InputWorkLog from './InputWorkLog';
 import InputTextArea from '../../../../components/forms/InputTextArea';
-
-// ----- actions -----
 import { postWorkLog } from '../../../../modules/ticket';
 
-export class WorkLogForm extends React.Component {
-    onSubmit(formValues) {
-        const { ticketId } = this.props;
+export function WorkLogForm() {
+    const dispatch = useDispatch();
+    const ticketId = useSelector(s => s.ticket.ticketId);
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm();
+
+    function onSubmit(formValues) {
         const formData = new FormData();
         formData.append('comment', formValues.comment);
-        formData.append('ticketId', ticketId)
-        if(formValues.files){
+        formData.append('ticketId', ticketId);
+        if (formValues.files) {
             for (let i = 0; i < formValues.files.length; i++) {
-                formData.append(`files`, formValues.files.item(i))
+                formData.append('files', formValues.files.item(i));
             }
         }
         Object.defineProperty(formData, 'isFormData', { value: true });
-        this.props.dispatch(postWorkLog(formData));
-    };
-
-    render() {
-        const { submitting, handleSubmit } = this.props;
-        return (
-            <form 
-                onSubmit={handleSubmit(formValues => this.onSubmit(formValues))}
-                className="upload-ticket-files"
-                >
-                <Field
-                    component={InputTextArea}
-                    type="text"
-                    name="comment"
-                    id="worklogComment"
-                    label="Enter Work Log"
-                />
-                <Field 
-                    component={InputWorkLog}
-                    type="file"
-                    name="files"
-                    id="ticketFiles"
-                    disabled={submitting}
-                    label="Upload Files"
-                />
-                <button type="submit">Submit</button>
-            </form>
-        )
+        dispatch(postWorkLog(formData));
     }
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="upload-ticket-files">
+            <InputTextArea label="Enter Work Log" {...register('comment')} />
+            <InputWorkLog type="file" label="Upload Files" {...register('files')} />
+            <button type="submit" disabled={isSubmitting}>Submit</button>
+        </form>
+    );
 }
 
-export default reduxForm ({
-    form: 'workLogForm'
-})(WorkLogForm)
+export default WorkLogForm;

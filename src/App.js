@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Switch } from "react-router-dom";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
 // ----- imports: components -----
@@ -11,20 +10,17 @@ import Main from './components/containers/Main';
 import './pages/Login.css';
 import './pages/Signup.css';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-        { /* Routes*/}
-        <Router>
-          <Switch>
-            <Route exact path='/' component={Landing} />
-            <Main />
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/*" element={<Main />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

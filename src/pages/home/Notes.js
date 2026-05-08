@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // ----- components -----
 import Note from './notes/Note';
@@ -13,59 +13,49 @@ import { noteAdding, deleteNote } from '../../modules/auth';
 // ----- css -----
 import './Notes.css';
 
-export class Notes extends React.Component {
-    onClick() {
-        this.props.dispatch(noteAdding(true));
+export function Notes() {
+    const dispatch = useDispatch();
+    const noteadding = useSelector(state => state.auth.currentUser.noteadding);
+    const noteloading = useSelector(state => state.auth.currentUser.noteloading);
+    const notes = useSelector(state => state.auth.currentUser.notes);
+
+    function onClick() {
+        dispatch(noteAdding(true));
     }
 
-    onCancel() {
-        this.props.dispatch(noteAdding(false));
+    function onCancel() {
+        dispatch(noteAdding(false));
     }
 
-    onDelete(noteId) {
-        this.props.dispatch(deleteNote(noteId))
+    function onDelete(noteId) {
+        dispatch(deleteNote(noteId));
     }
 
-    render() { 
-        const { noteadding, noteloading, notes } = this.props;
+    let noteForm = noteadding?
+        (<div className="note-form">
+            <NoteForm onClick={() => onCancel()}/>
+        </div>) : undefined;
 
-        let noteForm = noteadding?
-            (<div className="note-form">
-                <NoteForm onClick={() => this.onCancel()}/>
-            </div>) : undefined;
+    if(noteloading) { noteForm = <LoaderSm /> }
 
-        if(noteloading) { noteForm = <LoaderSm /> }
-
-        let allNotes;
-        if(notes.length > 0){
-            allNotes = notes.map(note => {
-                return <Note key={note._id} note={note} onDelete={(noteId) => this.onDelete(noteId)} />
-                })
-        } else {
-            allNotes = undefined;
-        }
-
-        return (
-            <div className="notes">
-                <PlusButton onClick={() => this.onClick()}/>
-                {noteForm}
-                <ul className="all-notes">
-                    {allNotes}
-                </ul>
-            </div>
-        )
+    let allNotes;
+    if(notes.length > 0){
+        allNotes = notes.map(note => {
+            return <Note key={note._id} note={note} onDelete={(noteId) => onDelete(noteId)} />
+            })
+    } else {
+        allNotes = undefined;
     }
+
+    return (
+        <div className="notes">
+            <PlusButton onClick={() => onClick()}/>
+            {noteForm}
+            <ul className="all-notes">
+                {allNotes}
+            </ul>
+        </div>
+    )
 }
 
-const mapStateToProps = state => {
-
-    return {
-        noteadding: state.auth.currentUser.noteadding,
-        noteloading: state.auth.currentUser.noteloading,
-        notes: state.auth.currentUser.notes,
-        error: state.auth.currentUser.error,
-        errorInfo: state.auth.currentUser.errorInfo
-    }
-}
-
-export default connect(mapStateToProps)(Notes)
+export default Notes;

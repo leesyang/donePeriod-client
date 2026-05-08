@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Ionicon from 'react-ionicons';
+import { useDispatch } from 'react-redux';
+import { ChevronRight } from 'lucide-react';
 
 // ----- constants -----
 import { AMZ_S3_URL } from '../../../../config';
@@ -15,36 +15,34 @@ import { removeComment, removeWorkLog } from '../../../../modules/ticket';
 // ----- css -----
 import './Comment.css';
 
-export class Comment extends React.Component {
-    onDelete(e) {
+export function Comment({ comment }) {
+    const dispatch = useDispatch();
+
+    function onDelete(e) {
         e.preventDefault();
-        const { files } = this.props.comment;
-        const { _id } = this.props.comment;
-        files? this.props.dispatch(removeWorkLog(_id)) : this.props.dispatch(removeComment(_id));
+        const { files, _id } = comment;
+        files? dispatch(removeWorkLog(_id)) : dispatch(removeComment(_id));
     }
 
-    render() {
-        const {comment, dateAdded, files } = this.props.comment;
-        const { firstName, lastName, profilePicture } = this.props.comment.addedBy;
+    const { comment: commentText, dateAdded, files } = comment;
+    const { firstName, lastName, profilePicture } = comment.addedBy;
 
-        let attachments = files? <div className="worklog-attachments">Attachments: <FileList files={files}/></div> : undefined;
+    let attachments = files? <div className="worklog-attachments">Attachments: <FileList files={files}/></div> : undefined;
 
-        return (
-            <li className="comment">
-                <p className="comment-text">
-                    <img className="comment-user" src={AMZ_S3_URL+profilePicture} alt="user"></img>
-                    <Ionicon icon="md-arrow-dropright" className="arrow-icon" color="#172B4D" />
-                    {comment}
-                </p>
-                {attachments}
-                <p className="comment-info">
-                    Posted by {firstName} {lastName} on {formatDateShort(dateAdded)}
-                    <button onClick={(e) => this.onDelete(e)} className="button-delete">Delete</button>
-                </p>
-            </li>
-        )
-
-    }
+    return (
+        <li className="comment">
+            <p className="comment-text">
+                <img className="comment-user" src={AMZ_S3_URL+profilePicture} alt="user"></img>
+                <ChevronRight className="arrow-icon" color="#172B4D" size={16} />
+                {commentText}
+            </p>
+            {attachments}
+            <p className="comment-info">
+                Posted by {firstName} {lastName} on {formatDateShort(dateAdded)}
+                <button onClick={(e) => onDelete(e)} className="button-delete">Delete</button>
+            </p>
+        </li>
+    )
 }
 
-export default connect()(Comment)
+export default Comment;

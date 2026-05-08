@@ -1,36 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // ----- components -----
 import WorkLogForm from './workLog/WorkLogForm';
 import LoaderSm from '../../../components/LoaderSm';
 import Comment from '../activity/comments/Comment';
 
-export class WorkLog extends React.Component {
-    render () {
-        const { ticketId, uploading, worklog } = this.props;
-        
-        const workLogForm = uploading? <LoaderSm /> : <WorkLogForm ticketId={ticketId} />
+export function WorkLog() {
+    const ticketId = useSelector(state => state.ticket.ticketId);
+    const uploading = useSelector(state => state.ticket.workloguploading);
+    const worklog = useSelector(state => state.ticket.worklog);
 
-        const worklogEntries = worklog? worklog.map((log, index) => (
-            <Comment comment={log} key={index} ticketId={ticketId}/>
-        )) : undefined;
+    const workLogForm = uploading? <LoaderSm /> : <WorkLogForm />
 
-        return (
-            <div className="worklog-container">
-                {worklogEntries}
-                {workLogForm}
-            </div>
-        )
-    }
+    const worklogEntries = worklog? worklog.map((log, index) => (
+        <Comment comment={log} key={index} ticketId={ticketId}/>
+    )) : undefined;
+
+    return (
+        <div className="worklog-container">
+            {worklogEntries}
+            {workLogForm}
+        </div>
+    )
 }
 
-const mapStateToProps = state => {
-    return {
-        ticketId: state.ticket.ticketId,
-        uploading: state.ticket.workloguploading,
-        worklog: state.ticket.worklog
-    }
-}
-
-export default connect(mapStateToProps)(WorkLog)
+export default WorkLog;

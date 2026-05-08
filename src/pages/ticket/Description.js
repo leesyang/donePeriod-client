@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // ----- components -----
 import EditFormDescription from './description/EditForm';
@@ -11,55 +11,44 @@ import { updateDescriptionInit } from '../../modules/ticket';
 // ----- css -----
 import './Description.css';
 
-export class Description extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onClickEdit = this.onClickEdit.bind(this);
-        this.onCancel = this.onCancel.bind(this);
+export function Description() {
+    const dispatch = useDispatch();
+    const description = useSelector(state => state.ticket.description.text);
+    const isUpdating = useSelector(state => state.ticket.description.isUpdating);
+    const isEditing = useSelector(state => state.ticket.description.isEditing);
+
+    function onClickEdit() {
+        console.log('on click edit');
+        dispatch(updateDescriptionInit(true));
     }
 
-    onClickEdit() {
-        console.log('on click edit')
-        this.props.dispatch(updateDescriptionInit(true))
+    function onCancel() {
+        dispatch(updateDescriptionInit(false));
     }
 
-    onCancel() {
-        this.props.dispatch(updateDescriptionInit(false))
-    }
+    if(isUpdating) { return <Loader /> }
 
-    render () {
-        const { isEditing, isUpdating, description  } = this.props;
+    let editingForm;
 
-        if(isUpdating) { return <Loader /> }
+    if(isEditing){ editingForm = (
+        <div className="edit-form-container">
+            <EditFormDescription onCancel={onCancel}/>
+        </div>
+        )}
 
-        let editingForm;
+    let descriptionText = (
+        <p>
+            {description}
+            <button className="button-edit" onClick={onClickEdit}>Edit</button>
+        </p>
+    );
 
-        if(isEditing){ editingForm = (
-            <div className="edit-form-container">
-                <EditFormDescription onCancel={this.onCancel}/>
-            </div>
-            )}
-        
-        let descriptionText = (
-            <p>
-                {description}
-                <button className="button-edit" onClick={this.onClickEdit}>Edit</button>
-            </p>
-        );
-
-        return (
-            <section className="description border-top">
-                <header>Description</header>
-                {editingForm? editingForm  : descriptionText}
-            </section>
-        )
-    }
+    return (
+        <section className="description border-top">
+            <header>Description</header>
+            {editingForm? editingForm : descriptionText}
+        </section>
+    )
 }
 
-const mapStateToProps = state => ({
-    description: state.ticket.description.text,
-    isUpdating: state.ticket.description.isUpdating,
-    isEditing: state.ticket.description.isEditing
-})
-
-export default connect(mapStateToProps)(Description)
+export default Description;

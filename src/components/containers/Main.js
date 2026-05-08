@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 // ----- components -----
@@ -14,20 +13,18 @@ import NavBar from '../navigation/NavBar';
 import './Main.css'
 
 
-export class Main extends React.Component {
-    render() {
-      return (
-        <div className="main">
-          { /* Routes Requiring Login */}
-          <NavBar />
-          <Route exact path='/home' component={Home} />
-          <Route exact path='/overview/new' component={NewTicket} />
-          <Route exact path='/issues' component={Overview} />
-          <Route exact path='/issues/:ticketId' component={Ticket} />
-        </div>
-      );
-    }
-  }
+export function Main() {
+  return (
+    <div className="main">
+      <NavBar />
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/overview/new" element={<NewTicket />} />
+        <Route path="/issues" element={<Overview />} />
+        <Route path="/issues/:ticketId" element={<Ticket />} />
+      </Routes>
+    </div>
+  );
+}
 
-
-export default ProtectedRoute()(connect()(Main));
+export default ProtectedRoute()(Main);
